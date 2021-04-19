@@ -1,0 +1,50 @@
+[Event "Lichess Titled Arena 9"]
+[Site "https://lichess.org/8tu9cryM"]
+[Date "2018.12.15"]
+[White "DrNykterstein"]
+[Black "penguingim1"]
+[Result "1-0"]
+[UTCDate "2018.12.15"]
+[UTCTime "19:30:59"]
+[WhiteElo "2770"]
+[BlackElo "2954"]
+[WhiteRatingDiff "+32"]
+[BlackRatingDiff "-11"]
+[WhiteTitle "GM"]
+[BlackTitle "GM"]
+% A good pgn reader will ignore this line
+[Variant "Standard"]
+[TimeControl "60+0"]
+[ECO "A00"]
+[Opening "Saragossa Opening"]
+[Termination "Time forfeit"]
+
+1. c3 { [%clk 0:01:00] } 1... d5 { [%clk 0:01:00] } 2. Qa4+ { [%clk 0:00:59] } 2... Nc6 { [%clk 0:00:59] } 3. Qh4 { [%clk 0:00:59] } 3... Nf6 { [%clk 0:00:59] } 4. f3 { [%clk 0:00:58] } 4... g5 { [%clk 0:00:58] } 5. Qxg5 { [%clk 0:00:57] } 5... Rg8 { [%clk 0:00:58] } 6. Qh4 { [%clk 0:00:57] } 6... e5 { [%clk 0:00:57] } 7. Kd1 { [%clk 0:00:56] } 7... Bf5 { [%clk 0:00:57] } 8. Qe1 { [%clk 0:00:55] } 8... Qd6 { [%clk 0:00:56] } 9. d3 { [%clk 0:00:55] } 9... O-O-O { [%clk 0:00:55] } 10. Nd2 { [%clk 0:00:54] } 10... e4 { [%clk 0:00:55] } 11. d4 { [%clk 0:00:53] }
+% A good pgn reader will ignore this line
+% A good pgn reader will ignore this line
+ 11... e3 { [%clk 0:00:55] } 12. Nb3 { [%clk 0:00:52] } 12... Re8 { [%clk 0:00:52] } 13. g4 { [%clk 0:00:50] } 13... Rxg4 { [%clk 0:00:50] } 14. fxg4 { [%clk 0:00:50] } 14... Nxg4 { [%clk 0:00:50] } 15. Nh3 { [%clk 0:00:48] } 15... Qg6 { [%clk 0:00:49] } 16. Qg3 { [%clk 0:00:46] } 16... Bd6 { [%clk 0:00:48] } 17. Qh4 { [%clk 0:00:39] } 17... Be7 { [%clk 0:00:47] } 18. Qg3 { [%clk 0:00:37] } 18... Bd6 { [%clk 0:00:46] } 19. Qh4 { [%clk 0:00:37] } 19... h5 { [%clk 0:00:43] } 20. Ke1 { [%clk 0:00:34] } 20... Bc2 { [%clk 0:00:29] } 21. Bg2 { [%clk 0:00:32] } 21... Nxh2 { [%clk 0:00:27] } 22. Nf4 { [%clk 0:00:28] } 22... Bxf4 { [%clk 0:00:25] } 23. Qxf4 { [%clk 0:00:28] } 23... Qxg2 { [%clk 0:00:23] } 24. Qxh2 { [%clk 0:00:27] } 24... Qe4 { [%clk 0:00:20] } 25. Qxh5 { [%clk 0:00:25] } 25... Rg8 { [%clk 0:00:19] } 26. Qh3+ { [%clk 0:00:23] } 26... Kb8 { [%clk 0:00:19] } 27. Bxe3 { [%clk 0:00:22] } 27... Re8 { [%clk 0:00:18] } 28. Nc5 { [%clk 0:00:21] } 28... Qg6 { [%clk 0:00:16] } 29. Kd2 { [%clk 0:00:20] } 29... Bf5 { [%clk 0:00:15] } 30. Qh5 { [%clk 0:00:18] } 30... b6 { [%clk 0:00:14] } 31. Qxg6 { [%clk 0:00:17] } 31... ; end of line comment
+fxg6 { [%clk 0:00:14] } 32. Nb3 { [%clk 0:00:16] } 32... a5 { [%clk 0:00:13] } 33. Bf4 { [%clk 0:00:15] } 33... a4 { [%clk 0:00:12] } 34. Nc1 { [%clk 0:00:15] } 34... Na5 { [%clk 0:00:12] } 35. b3 { [%clk 0:00:14] } 35... Kb7 { [%clk 0:00:11] } 36. Rh7 { [%clk 0:00:13] } 36... Rc8 { [%clk 0:00:10] } 37. Be5 { [%clk 0:00:12] } 37... 
+% A good pgn reader will ignore this line
+Ka6 { [%clk 0:00:10] } 38. Rg7 { [%clk 0:00:12] } 38... c5 { [%clk 0:00:09] } 39. Nd3 { [%clk 0:00:10] } 39... cxd4 { [%clk 0:00:08] } 40. Nb4+ { [%clk 0:00:10] } 40... Kb5 { [%clk 0:00:08] } 41. Nxd5 { [%clk 0:00:10] } 41... axb3 { [%clk 0:00:06] } 42. a4+ { [%clk 0:00:08] } 42... Kc4 { [%clk 0:00:05] } 43. Nxb6+ { [%clk 0:00:07] } 43... Kc5 { [%clk 0:00:04] } 44. Bxd4+ { [%clk 0:00:06] } 44... Kd6 { [%clk 0:00:04] } 45. Nxc8+ { [%clk 0:00:06] } 45... Bxc8 { [%clk 0:00:03] } 46. c4 { [%clk 0:00:06] } 46... Bf5 { [%clk 0:00:03] } 47. Kc3 { [%clk 0:00:06] } 47... b2 { [%clk 0:00:02] } 48. c5+ { [%clk 0:00:06] } 48... Kd5 { [%clk 0:00:02] } 49. Kxb2 { [%clk 0:00:06] } 49... Nc4+ { [%clk 0:00:01] } 50. Kc3 { [%clk 0:00:06] } 50... Nd6 { [%clk 0:00:01] } 51. Kb4 { [%clk 0:00:06] } 51... Ne4 { [%clk 0:00:01] } 52. Rd7+ { [%clk 0:00:04] } 52... Ke6 { [%clk 0:00:01] } 53. c6 { [%clk 0:00:04] } 1-0
+
+[Event "Lichess Titled Arena"]
+[Site "https://lichess.org/L4BaPtoD"]
+[Date "2018.01.18"]
+[White "DrDrunkenstein"]
+[Black "Arka50"]
+[Result "1-0"]
+[UTCDate "2018.01.18"]
+[UTCTime "21:37:04"]
+[WhiteElo "2890"]
+[BlackElo "2699"]
+[WhiteRatingDiff "+8"]
+[BlackRatingDiff "-7"]
+[WhiteTitle "GM"]
+[BlackTitle "GM"]
+[Variant "Standard"]
+[TimeControl "60+0"]
+[ECO "A45"]
+[Opening "Indian Game"]
+[Termination "Normal"]
+
+1. d4 { [%clk 0:01:00] } 1... Nf6 { [%clk 0:01:00] } 2. c3 { [%clk 0:01:00] } 2... c5 { [%clk 0:01:00] } 3. Nf3 { [%clk 0:00:59] } 3... d5 { [%clk 0:01:00] } 4. dxc5 { [%clk 0:00:59] } 4... Nc6 { [%clk 0:01:00] } 5. b4 { [%clk 0:00:58] } 5... e5 { [%clk 0:00:59] } 6. a3 { [%clk 0:00:58] } 6... e4 { [%clk 0:00:59] } 7. Nd4 { [%clk 0:00:57] } 7... Bg4 { [%clk 0:00:58] } 8. Bg5 { [%clk 0:00:56] } 8... Ne5 { [%clk 0:00:58] } 9. h3 { [%clk 0:00:54] } 9... Nd3+ { [%clk 0:00:57] } 10. Qxd3 { [%clk 0:00:50] } 10... exd3 { [%clk 0:00:56] } 11. hxg4 { [%clk 0:00:50] } 11... dxe2 { [%clk 0:00:55] } 12. Bxe2 { [%clk 0:00:50] } 12... h6 { [%clk 0:00:54] } 13. Nd2 { [%clk 0:00:49] } 13... Be7 { [%clk 0:00:53] } 14. O-O-O { [%clk 0:00:48] } 14... O-O { [%clk 0:00:52] } 15. Be3 { [%clk 0:00:46] } 15... Ne4 { [%clk 0:00:51] } 16. Nxe4 { [%clk 0:00:45] } 16... dxe4 { [%clk 0:00:51] } 17. Nf5 { [%clk 0:00:45] } 17... Qc7 { [%clk 0:00:50] } 18. Bd4 { [%clk 0:00:45] } 18... Bg5+ { [%clk 0:00:46] } 19. Kc2 { [%clk 0:00:44] } 19... f6 { [%clk 0:00:46] } 20. Bc4+ { [%clk 0:00:43] } 20... Kh8 { [%clk 0:00:45] } 21. Nd6 { [%clk 0:00:43] } 21... Rad8 { [%clk 0:00:44] } 22. Nxe4 { [%clk 0:00:42] } 22... Rfe8 { [%clk 0:00:42] } 23. f3 { [%clk 0:00:40] } 23... Qf4 { [%clk 0:00:41] } 24. Kb3 { [%clk 0:00:39] } 24... a5 { [%clk 0:00:39] } 25. Nd6 { [%clk 0:00:37] } 25... Re7 { [%clk 0:00:36] } 26. Nf7+ { [%clk 0:00:34] } 26... Rxf7 { [%clk 0:00:36] } 27. Bxf7 { [%clk 0:00:34] } 27... axb4 { [%clk 0:00:35] } 28. axb4 { [%clk 0:00:34] } 28... Qc7 { [%clk 0:00:34] } 29. Bc4 { [%clk 0:00:32] } 29... Qc6 { [%clk 0:00:33] } 30. Rhe1 { [%clk 0:00:31] } 30... Ra8 { [%clk 0:00:32] } 31. b5 { [%clk 0:00:31] } 31... Qc7 { [%clk 0:00:31] } 32. Re6 { [%clk 0:00:29] } 32... Qa5 { [%clk 0:00:30] } 33. Kc2 { [%clk 0:00:29] } 33... Qa4+ { [%clk 0:00:28] } 34. Bb3 { [%clk 0:00:28] } 34... Qxb5 { [%clk 0:00:28] } 35. Rde1 { [%clk 0:00:28] } 35... Ra3 { [%clk 0:00:25] } 36. Re8+ { [%clk 0:00:26] } 36... Kh7 { [%clk 0:00:24] } 37. Be6 { [%clk 0:00:25] } 37... Kg6 { [%clk 0:00:23] } 38. Bf5+ { [%clk 0:00:24] } 38... Kf7 { [%clk 0:00:23] } 39. R1e7# { [%clk 0:00:24] } 1-0
