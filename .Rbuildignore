@@ -1,2 +1,4 @@
 ^rbitr\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^data-raw$
