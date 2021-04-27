@@ -6,9 +6,9 @@ pgnlog <- list(list(c(
   "bestmove d2d4"
 )))
 test_that('parse_pgnlog parses pgnlogs', {
-  expect_identical(parse_pgnlog(pgnlog, 'score'), list('146'))
-  expect_identical(parse_pgnlog(pgnlog, 'pv'), list('d2d4'))
-  expect_identical(parse_pgnlog(pgnlog, 'bestmove'), list('d2d4'))
+  expect_identical(parse_pgnlog(pgnlog, 'score'), list(list('146')))
+  expect_identical(parse_pgnlog(pgnlog, 'pv'), list(list('d2d4')))
+  expect_identical(parse_pgnlog(pgnlog, 'bestmove'), list(list('d2d4')))
   expect_error(parse_pgnlog(pgnlog, 'score', depth = 0))
   expect_error(parse_pgnlog(pgnlog, 'score', depth = 3))
 })

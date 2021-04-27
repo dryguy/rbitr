@@ -1,6 +1,8 @@
 #' Analyze a chess game.
 #'
-#' Chess games are analyzed using a UCI compatible chess engine.
+#' Chess games are analyzed using a
+#' [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
+#' engine.
 #'
 #' @details The rbitr package relies on the
 #'   [bigchess](https://github.com/rosawojciech/bigchess) package to handle the
@@ -15,13 +17,19 @@
 #'   annotations, or variations should comply with the
 #'   [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm).
 #'   If variations are present, they will not be analyzed. The game is passed
-#'   into the function as a single-element character vector via the movetext
-#'   parameter. The movetext is typically obtained from `get_pgn()`, where it
-#'   would be found in the $Movetext column of that function's output.
+#'   into `evaluate_game()` as a single-element character vector via the
+#'   movetext parameter. The movetext is typically obtained from `get_pgn()`,
+#'   where it would be found in the $Movetext column of `get_pgn()`'s output.
 #'
 #' @details The number of principal variations to be analyzed is set using the
-#'   n_pv parameter, while the depth of analysis (in plies) is set by the depth
-#'   parameter. Both parameters are required, and must be positive integers.
+#'   n_pv parameter, while the depth of analysis is controlled by choosing a
+#'   UCI command to set the criteria for search termination as either 'depth'
+#'   (to search a fixed  number of plies), 'nodes' (to search a fixed number of
+#'   positions), or 'movetime' (to search a fixed number of milliseconds). The
+#'   selection is controlled by the go_command and go_value parameters. Note
+#'   that the values apply to each position analyzed. For example, if the game
+#'   has 80 plies, and 'movetime' is set to 1000 milliseconds, the analysis will
+#'   take 80 seconds.
 #'
 #' @param movetext A single-element character vector containing a sequence of
 #'   moves in standard algebraic notation (SAN).
@@ -30,8 +38,12 @@
 #'   `uci_engine()`.
 #' @param n_pv A single-element integer vector of the desired number of
 #'   principal variations.
-#' @param depth A single-element integer vector of the desired search depth, in
-#'   plies.
+#' @param go_mode A single-element character vector indicating the desired
+#'   mode of search termination. Allowed values are 'depth' (to search a fixed
+#'   number of plies), 'nodes' (to search a fixed number of nodes), and
+#'   'movetime' (to search a fixed number of milliseconds).
+#' @param go_value A single-element integer vector of the desired search depth
+#'   (# of plies), search nodes (# of nodes), or search time (# of mseconds).
 #'
 #' @return A list containing character vectors of the engine output. Each
 #'   element in the list corresponds to a position in the game, beginning with
@@ -44,13 +56,16 @@
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 #' engine <- uci_engine(engine_path)
-#' evaluate_game(movetext, engine, n_pv = 1, depth = 1)
-evaluate_game <- function(movetext, engine, n_pv, depth) {
+#' evaluate_game(movetext, engine, n_pv = 1, go_mode = 'depth', go_value = 1)
+evaluate_game <- function(movetext, engine, n_pv, go_mode, go_value) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(movetext))
   assertthat::assert_that(class(engine$pipe)[1] == 'process')
   assertthat::assert_that(assertthat::is.count(n_pv))
-  assertthat::assert_that(assertthat::is.count(depth))
+  assertthat::assert_that(go_mode == 'depth' |
+                          go_mode == 'nodes' |
+                          go_mode == 'movetime')
+  assertthat::assert_that(assertthat::is.count(go_value))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
   moves <- bigchess::san2lan(moves)
@@ -62,14 +77,22 @@ evaluate_game <- function(movetext, engine, n_pv, depth) {
   engine <- bigchess::uci_ucinewgame(engine)
   engine <- bigchess::uci_isready(engine)
   engine <- bigchess::uci_position(engine)
+  go_command <- paste('go', go_mode, go_value)
   # Analyze the game
-  analyze_move <- function(move_index, moves, engine, depth) {
+  analyze_move <- function(move_index, moves, engine, go_command) {
     moves <- paste0(moves[1:move_index], collapse = ' ')
     move_command <- paste0('position startpos moves ', moves)
     engine <- bigchess::uci_cmd(engine, command = move_command)
-    engine <- bigchess::uci_go(engine, depth = depth)
+    engine <- bigchess::uci_cmd(engine, command = go_command)
+    rr <- ''
+    while (length(grep("bestmove", rr)) < 1) {
+      engine <- bigchess::uci_read(engine)
+      rl <- engine$temp
+      rr <- rl[length(rl)]
+    }
     bigchess::uci_read(engine)$temp
   }
   move_index <- 1:length(moves)
-  lapply(move_index, analyze_move, moves = moves, engine = engine, depth = depth)
+  lapply(move_index, analyze_move, moves = moves, engine = engine,
+         go_command = go_command)
 }

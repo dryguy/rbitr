@@ -20,7 +20,8 @@ or greater than the maximum depth reported by the engine. A value of NULL
 returns data for the maximum depth.}
 }
 \value{
-A vector of the extracted data.
+A list of vectors of the extracted data, where each list entry
+corresponds to a position.
 }
 \description{
 The output of rbitr's \code{evaluate_game()} function consists of a list of UCI

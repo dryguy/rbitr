@@ -7,8 +7,8 @@
 #'
 #' @return A list with the same structure as x, where the root level elements
 #'   have been replaced with the outputs of `input_function`.
-nested_lapply <- function (x, input_function, ...) {
-  lapply_input_function <- function (x, ...) {
+nested_lapply <- function(x, input_function, ...) {
+  lapply_input_function <- function(x, ...) {
     lapply(x, input_function, ...)
   }
   lapply(x, lapply_input_function, ...)

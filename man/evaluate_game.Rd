@@ -4,7 +4,7 @@
 \alias{evaluate_game}
 \title{Analyze a chess game.}
 \usage{
-evaluate_game(movetext, engine, n_pv, depth)
+evaluate_game(movetext, engine, n_pv, go_mode, go_value)
 }
 \arguments{
 \item{movetext}{A single-element character vector containing a sequence of
@@ -17,8 +17,13 @@ moves in standard algebraic notation (SAN).}
 \item{n_pv}{A single-element integer vector of the desired number of
 principal variations.}
 
-\item{depth}{A single-element integer vector of the desired search depth, in
-plies.}
+\item{go_mode}{A single-element character vector indicating the desired
+mode of search termination. Allowed values are 'depth' (to search a fixed
+number of plies), 'nodes' (to search a fixed number of nodes), and
+'movetime' (to search a fixed number of milliseconds).}
+
+\item{go_value}{A single-element integer vector of the desired search depth
+(# of plies), search nodes (# of nodes), or search time (# of mseconds).}
 }
 \value{
 A list containing character vectors of the engine output. Each
@@ -26,7 +31,9 @@ element in the list corresponds to a position in the game, beginning with
 the initial position before any move has been made.
 }
 \description{
-Chess games are analyzed using a UCI compatible chess engine.
+Chess games are analyzed using a
+\href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
+engine.
 }
 \details{
 The rbitr package relies on the
@@ -42,13 +49,19 @@ is, moves should be in standard algebraic notation (SAN) and any comments,
 annotations, or variations should comply with the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm}{pgn specification}.
 If variations are present, they will not be analyzed. The game is passed
-into the function as a single-element character vector via the movetext
-parameter. The movetext is typically obtained from \code{get_pgn()}, where it
-would be found in the $Movetext column of that function's output.
+into \code{evaluate_game()} as a single-element character vector via the
+movetext parameter. The movetext is typically obtained from \code{get_pgn()},
+where it would be found in the $Movetext column of \code{get_pgn()}'s output.
 
 The number of principal variations to be analyzed is set using the
-n_pv parameter, while the depth of analysis (in plies) is set by the depth
-parameter. Both parameters are required, and must be positive integers.
+n_pv parameter, while the depth of analysis is controlled by choosing a
+UCI command to set the criteria for search termination as either 'depth'
+(to search a fixed  number of plies), 'nodes' (to search a fixed number of
+positions), or 'movetime' (to search a fixed number of milliseconds). The
+selection is controlled by the go_command and go_value parameters. Note
+that the values apply to each position analyzed. For example, if the game
+has 80 plies, and 'movetime' is set to 1000 milliseconds, the analysis will
+take 80 seconds.
 }
 \examples{
 library(bigchess)
@@ -56,5 +69,5 @@ movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 # Modify engine_path as required for your engine location & operating system
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 engine <- uci_engine(engine_path)
-evaluate_game(movetext, engine, n_pv = 1, depth = 1)
+evaluate_game(movetext, engine, n_pv = 1, go_mode = 'depth', go_value = 1)
 }

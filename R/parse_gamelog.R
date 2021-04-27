@@ -21,7 +21,8 @@
 #'   or greater than the maximum depth reported by the engine. A value of NULL
 #'   returns data for the maximum depth.
 #'
-#' @return A vector of the extracted data.
+#' @return A list of vectors of the extracted data, where each list entry
+#'   corresponds to a position.
 #' @export
 #'
 #' @examples
@@ -42,34 +43,45 @@ parse_gamelog <- function(gamelog, target, depth = NULL) {
   assertthat::assert_that(target == 'score' |
                           target == 'pv'    |
                           target == 'bestmove')
-  parse_log <- function(gamelog, depth) {
-    # Get the best moves
-    bestmoves <- gamelog[grepl('bestmove ', gamelog, fixed = TRUE)]
-    bestmoves <- stringr::str_replace(bestmoves, 'bestmove ', '')
-    # Remove lines from the log that aren't results
-    gamelog <- gamelog[grepl('info depth ', gamelog, fixed = TRUE)]
-    # Parse the log
-    depths <- stringr::str_match(gamelog, '(?<=depth ).*(?= seldepth)')[, 1]
-    if (!is.null(depth)) {
-      max_depth <- max(depths)
-      if (depth > max_depth) {
-        error_message <- paste(
-          'Maximum available search depth was ', max_depth, '.',
-          '\n * You requested a depth of ', depth, '.', sep = ''
-        )
-        stop(error_message)
-      }
+  # Get the maximum depth
+  depths <- stringr::str_match(gamelog[[1]], 'depth (.*) seldepth')[, 2]
+  depths <- as.integer(depths)
+  if (!is.null(depth)) {
+    max_depth <- max(depths, na.rm = TRUE)
+    if (depth > max_depth) {
+      error_message <- paste(
+        'Maximum available search depth was ', max_depth, '.',
+        '\n * You requested a depth of ', depth, '.', sep = ''
+      )
+      stop(error_message)
     }
-    if (is.null(depth)) {depth <- max(depths)}
-    # Parse out the move lines and scores for each PV
-    pv_lines <- stringr::str_match(gamelog, '(?<= pv ).*')[, 1]
-    pv_lines <- pv_lines[depths == depth]
-    pv_scores <- stringr::str_match(gamelog, '(?<=score ).*(?= nodes)')[, 1]
-    pv_scores <- stringr::str_replace(pv_scores, 'cp ', '')
-    pv_scores <- pv_scores[depths == depth]
-    bestmoves <- bestmoves[depths == depth]
-    list(score = pv_scores, pv = pv_lines, bestmove = bestmoves)
+  } else {
+    depth <- max(depths, na.rm = TRUE)
   }
-  processed_gamelog <- lapply(gamelog, parse_log, depth)
-  unlist(lapply(processed_gamelog, '[', target), use.names = FALSE)
+  # Set the regex
+  if (target == 'score') {
+    target_regex <- ' score (.*) nodes'
+  } else if (target == 'pv') {
+    target_regex <- ' pv (.*)$'
+  } else {
+    target_regex <- 'bestmove (\\w*)'
+  }
+  # Parse the gamelog
+  ply <- 1:length(gamelog)
+  parse_ply <- function(ply, gamelog, target_regex, depth) {
+    depths <- stringr::str_match(gamelog[[ply]], 'depth (.*) seldepth')[, 2]
+    depths <- as.integer(depths)
+    result <- stringr::str_match(gamelog[[ply]], target_regex)[, 2]
+    if (target_regex == 'bestmove (\\w*)') {
+      result <- result[!is.na(result)]
+    } else {
+      result <- result[which(depths == depth)]
+    }
+    if (target_regex == ' score (.*) nodes') {
+      result <- stringr::str_replace(result, 'cp ', '')
+    }
+    result
+  }
+  parsed_log <- lapply(ply, parse_ply, gamelog, target_regex, depth)
+  lapply(parsed_log, unlist, use.names = FALSE)
 }

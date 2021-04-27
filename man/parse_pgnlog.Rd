@@ -28,7 +28,7 @@ for a single game The evaluations and variations are embedded within a lot
 of other data. The \code{parse_pgnlog()} function can extract positional
 evaluations in centipawns (score), principal variations (pv), or best moves
 (bestmove). The \code{parse_pgnlog()} function is essentially a wrapper for the
-\code{parse_gamelog()} function that iterates over all the games.
+\code{parse_gamelog()} function that iterates over all the games in the pgn.
 }
 \examples{
 pgnlog <- list(list(c(

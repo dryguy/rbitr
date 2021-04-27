@@ -1,15 +1,17 @@
 Package: rbitr
-Title: What the Package Does (One Line, Title Case)
+Title: Arbiter: One who ensures adherence to the rules and laws of chess
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
            family = "Last",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "dryguy@comcast.net",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: rbitr is a suite of tools for calculating chess game metrics used
+  by some game arbiters to look for signs of the clandestine use of chess
+  engines. The author makes NO claim that any metric obtained using rbitr can
+  either confirm or refute the use of cheating in any game.
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -17,3 +19,9 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports: 
+    stringr,
+    bigchess,
+    dplyr,
+    assertthat,
+    tibble

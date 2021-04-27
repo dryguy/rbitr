@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' clean_movetext('1. e4! {Best by test.} e5')
+#' clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
 clean_movetext <- function(movetext) {
   assertthat::assert_that(is.character(movetext))
   # Remove semicolon format comments
@@ -26,6 +26,8 @@ clean_movetext <- function(movetext) {
   movetext <- stringr::str_replace_all(movetext, '[?|!]', '')
   # Remove numeric annotation glyphs (NAGs)
   movetext <- stringr::str_replace_all(movetext, '\\$[0-9]+', '')
+  # Remove recursive variations
+  movetext <- gsub('\\((?>[^()]|(?R))*\\)', ' ', movetext, perl = TRUE)
   # Remove extra spaces
   movetext <- stringr::str_replace_all(movetext, '\\s+', ' ')
   # Remove game termination markers

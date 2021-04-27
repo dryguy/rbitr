@@ -19,5 +19,5 @@ oddities that may not play well with all software. The \code{clean_movetext()}
 function removes everything but the moves and move numbers.
 }
 \examples{
-clean_movetext('1. e4! {Best by test.} e5')
+clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
 }

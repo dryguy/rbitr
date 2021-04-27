@@ -6,7 +6,7 @@
 #'   of other data. The `parse_pgnlog()` function can extract positional
 #'   evaluations in centipawns (score), principal variations (pv), or best moves
 #'   (bestmove). The `parse_pgnlog()` function is essentially a wrapper for the
-#'   `parse_gamelog()` function that iterates over all the games.
+#'   `parse_gamelog()` function that iterates over all the games in the pgn.
 #'
 #' @param pgnlog A list of gamelogs from rbitr's `evaluate_pgn()` function.
 #' @param target A single-element character vector of the output to return.

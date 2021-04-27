@@ -10,20 +10,15 @@ get_pgn(pgn_path)
 \item{pgn_path}{A single-element character vector of the path to the pgn.}
 }
 \value{
-A data frame where each row is a game, and each pgn tag is a column.
+A tibble where each row is a game, and each pgn tag is a column.
 The pgn's movetext field is also a column.
 }
 \description{
 Get the contents of a pgn file.
 }
 \details{
-A no-frills function to read a pgn file into a data frame. Every tag
-in the  pgn will be read. Unlike the \code{read.pgn()} function from the
-\href{https://github.com/rosawojciech/bigchess}{bigchess} package, \code{get_pgn()}
-does no data processing, and has no provision to handle large files. However,
-it reads pgn files about 3x faster than \code{read.pgn()}, and is somewhat
-simpler, requiring only a single argument that gives the path to a valid pgn
-file.
+A no-frills function to read a pgn file into a tibble. Every tag
+in the  pgn will be read.
 
 See the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1}{pgn specification}
