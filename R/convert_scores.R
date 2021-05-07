@@ -12,6 +12,8 @@
 #' @param scores A character vector of scores from a
 #'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
 #'   engine.
+#' @param mate (Default = 5000) A single-element integer or numeric vector of
+#'   the value to assign for 'mate in x'.
 #'
 #' @return An integer vector of scores (in centipawns).
 #' @export
@@ -19,20 +21,20 @@
 #' @examples
 #' scores <- c("90", "-26", "26 upperbound", "mate -2" , "mate 1", "mate -1", "mate 0", NA)
 #' convert_scores(scores)
-convert_scores <- function(scores) {
+convert_scores <- function(scores, mate = 5000) {
   # Validate input
   assertthat::assert_that(is.character(scores))
   # Convert 'mate x' to numeric value
   ply <- 1:length(scores)
   mate0 <- which(stringr::str_detect(scores, 'mate 0'))
   if (ply[mate0] %% 2 == 1) {
-    scores[mate0] <- 5000
+    scores[mate0] <- mate
   }
   if (ply[mate0] %% 2 == 0) {
-    scores[mate0] <- -5000
+    scores[mate0] <- -mate
   }
-  scores[stringr::str_detect(scores, 'mate [0-9]+')] <- 5000
-  scores[stringr::str_detect(scores, 'mate -[0-9]+')] <- -5000
+  scores[stringr::str_detect(scores, 'mate [0-9]+')] <- mate
+  scores[stringr::str_detect(scores, 'mate -[0-9]+')] <- -mate
   # Convert upperbound & lowerbound to numeric
   bounds <- stringr::str_detect(scores, 'bound')
   if (any(bounds, na.rm = TRUE)) {

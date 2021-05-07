@@ -4,12 +4,15 @@
 \alias{convert_scores}
 \title{Convert parsed score values to numeric scores.}
 \usage{
-convert_scores(scores)
+convert_scores(scores, mate = 5000)
 }
 \arguments{
 \item{scores}{A character vector of scores from a
 \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
 engine.}
+
+\item{mate}{(Default = 5000) A single-element integer or numeric vector of
+the value to assign for 'mate in x'.}
 }
 \value{
 An integer vector of scores (in centipawns).

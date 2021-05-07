@@ -4,7 +4,14 @@
 \alias{get_acpl}
 \title{Calculate the average centipawn loss.}
 \usage{
-get_acpl(scores, color, cap = NULL, cap_action = "none", first_ply = 1)
+get_acpl(
+  scores,
+  color,
+  cap = NULL,
+  cap_action = "none",
+  first_ply = 1,
+  to_move = "white"
+)
 }
 \arguments{
 \item{scores}{A numeric or integer vector of evaluations, in centipawns.}
@@ -22,8 +29,11 @@ replace them with the cap. Allowed values are 'exclude', 'replace', or
 'none'.}
 
 \item{first_ply}{(Default = 1) A single-element integer vector indicating the
-first ply to be included in the calculation. May not be larger than  the
+first ply to be included in the calculation. May not be larger than the
 number of elements in \code{score}}
+
+\item{to_move}{(Default = 'white') A single-element character vector
+indicating which side's turn it is.}
 }
 \value{
 A single-element integer vector of the average centipawn loss.
@@ -36,25 +46,37 @@ Calculates the average centipawn loss (ACPL) for the side indicated
 by the \code{color} parameter. The \code{score} parameter is assumed to begin with a
 score for the initial position, prior to the first move. Note that when
 pgn files store evaluation scores, the score for the initial position is
-omitted.
+omitted. It is up to the user to supply a score for the initial position
+before calling \code{get_acpl()}.
+
+Evaluations may be capped to avoid having blunders or missed mates
+result in excessively large ACPL. If the \code{cap} parameter is set, then
+evaluations outside the range [-cap, cap] will be handled as indicated
+by the \code{cap_action} parameter.
+
+For positions evaluated as 'mate in x', it is up to the user to
+convert these to numeric scores before calling \code{get_acpl()}. In general,
+if a cap will be applied to evaluations, it is only necessary to convert
+'mate x' or 'mate -x' to values outside the range [-cap, cap]. The rbitr
+function \code{convert_scores()} may be used for this conversion.
 
 The method for calculating average centipawn loss varies.
 In Guid & Bratko, 'MeanLoss' is calculated only after excluding
-the first 12 moves, and also excluding moves where both the best move and
-the played move result in evaluations outside the range [-200, 200]. To
-replicate MeanLoss, set \code{cap} to 200, \code{cap_action} to 'exclude' and,
-\code{first_ply} to 25.
+the first 12 moves, and also after excluding moves where both the best move
+and the played move result in evaluations outside the range [-200, 200].
+To replicate Guid & Bratko's MeanLoss, set \code{cap} to 200, \code{cap_action} to
+'exclude' and, \code{first_ply} to 25.
 
 The website lichess.org uses a different method, in which
 evaluations outside the range [-1000, 1000] are replaced with +-1000, and
 the initial position is always given a score of 15. To replicate the
 lichess ACPL, set \code{cap} to 1000, \code{cap_action} to 'replace', and make sure
-that the first element of \code{scores} is equal to 15.
+that the first element of the \code{scores} parameter is equal to 15.
 }
 \note{
-To calculate ACPL for games that start at a position other than the
-initial position, the \code{score} parameter may begin at a later position,
-provided that it begins with a position where white is to move.
+For games that use alternative starting positions, it is possible for
+black to have first move. In these situations, set the \code{to_move} parameter
+to 'black'.
 }
 \examples{
 scores <- c(5, 29, -94, 67, 76, 154, -31, 1000, 1000)
