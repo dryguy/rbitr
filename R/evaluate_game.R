@@ -57,8 +57,7 @@
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 #' engine <- uci_engine(engine_path)
 #' evaluate_game(movetext, engine, n_pv = 1, go_mode = 'depth', go_value = 1)
-evaluate_game <- function(movetext, engine, n_pv, go_mode, go_value,
-                          cpl = FALSE) {
+evaluate_game <- function(movetext, engine, n_pv, go_mode, go_value) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(movetext))
   assertthat::assert_that(class(engine$pipe)[1] == 'process')
@@ -67,7 +66,6 @@ evaluate_game <- function(movetext, engine, n_pv, go_mode, go_value,
                           go_mode == 'nodes' |
                           go_mode == 'movetime')
   assertthat::assert_that(assertthat::is.count(go_value))
-  assertthat::assert_that(assertthat::is.flag(cpl))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
   moves <- bigchess::san2lan(moves)

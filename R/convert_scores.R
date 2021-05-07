@@ -1,3 +1,24 @@
+#' Convert parsed score values to numeric scores.
+#'
+#' @details The scores obtained from parsing the output of a
+#' [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
+#' engine are a mix of centipawn scores, mate in x, and/or bounds on the score.
+#' In addition, the scores for white will have opposite sign from the scores for
+#' black. The function `convert_scores()` will convert bounds or mate in x into
+#' numeric values. It will also change the sign of black's scores, so that
+#' positive evaluations will mean white is ahead, and negative will mean black
+#' is ahead.
+#'
+#' @param scores A character vector of scores from a
+#'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
+#'   engine.
+#'
+#' @return An integer vector of scores (in centipawns).
+#' @export
+#'
+#' @examples
+#' scores <- c("90", "-26", "26 upperbound", "mate -2" , "mate 1", "mate -1", "mate 0", NA)
+#' convert_scores(scores)
 convert_scores <- function(scores) {
   # Validate input
   assertthat::assert_that(is.character(scores))
