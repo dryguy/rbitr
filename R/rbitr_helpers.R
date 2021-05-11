@@ -1,3 +1,8 @@
+# To prevent notes like:
+# plot_2_color_area: no visible binding for global variable 'x'
+# See: https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+if (getRversion() >= "2.15.1") (utils::globalVariables(c('x', 'y')))
+
 #' Apply `input_function` to the root level elements of a nested list.
 #'
 #' @param x A nested list.
@@ -13,7 +18,6 @@ nested_lapply <- function(x, input_function, ...) {
   }
   lapply(x, lapply_input_function, ...)
 }
-
 
 # Axis scaling
 scale_move_times <- function(move_times) {

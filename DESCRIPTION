@@ -25,4 +25,6 @@ Imports:
     dplyr,
     assertthat,
     tibble,
-    patchwork
+    patchwork,
+    scales,
+    ggplot2
