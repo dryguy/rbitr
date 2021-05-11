@@ -11,7 +11,7 @@ lichess_advantage_plot <- function(scores) {
   plot_2_color_area(score_frame, 'ply', 'scores') +
     #ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::geom_point(data    = data.frame(x = c(1, 1), y = c(-1, 1)),
-                        mapping = ggplot2::aes(x = x, y = y),
+                        mapping = ggplot2::aes(x = .data$x, y = .data$y),
                         alpha   = 0) +
     ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0, xend = .data$n_ply, yend = 0),
                           color = grDevices::rgb(160, 160, 160,

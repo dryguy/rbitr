@@ -1,8 +1,3 @@
-# To prevent notes like:
-# plot_2_color_area: no visible binding for global variable 'x'
-# See: https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-if (getRversion() >= "2.15.1") (utils::globalVariables(c('x', 'y')))
-
 #' Apply `input_function` to the root level elements of a nested list.
 #'
 #' @param x A nested list.
@@ -149,12 +144,12 @@ plot_2_color_area <- function(dataframe, x_name, y_name) {
                                                 width  = grid::unit(1, 'npc'),
                                                 height = grid::unit(1, 'npc'))) +
     ggplot2::geom_area(data    = dataframe[dataframe$y <= 0, ],
-                       mapping = ggplot2::aes(x = x, y = y),
+                       mapping = ggplot2::aes(x = .data$x, y = .data$y),
                        fill    = grDevices::rgb(190, 188, 186,
                                                 maxColorValue = 255),
                        alpha   = 0.75) +
     ggplot2::geom_area(data    = dataframe[dataframe$y >= 0, ],
-                       mapping = ggplot2::aes(x = x, y = y),
+                       mapping = ggplot2::aes(x = .data$x, y = .data$y),
                        fill    = grDevices::rgb(252, 251, 250,
                                                 maxColorValue = 255),
                        alpha   = 0.75)
