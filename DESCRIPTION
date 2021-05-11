@@ -24,4 +24,5 @@ Imports:
     bigchess,
     dplyr,
     assertthat,
-    tibble
+    tibble,
+    patchwork
