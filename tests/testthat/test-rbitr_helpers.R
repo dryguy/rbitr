@@ -29,17 +29,13 @@ dataframe <- data.frame(
   x = 1:4,
   y = c(1, -1, 1, -1)
 )
-new_dataframe <- add_x_intercepts(dataframe, 'x', 'y')
 test_that('add_x_intercepts adds x-intercepts', {
+  new_dataframe <- add_x_intercepts(dataframe, 'x', 'y')
   expect_equal(new_dataframe$x, c(1, 1.5, 2, 2.5, 3, 3.5, 4))
 })
 
 
-dataframe <- data.frame(
-  x = 1:4,
-  y = c(1, -1, 1, -1)
-)
-p1 <- plot_2_color_area(dataframe, 'x', 'y')
-test_that("plot_2_color_area plots 2 color area", {
+test_that("plot_2_color_area returns a ggplot", {
+  p1 <- plot_2_color_area(dataframe, 'x', 'y')
   expect_equal(class(p1), c('gg', 'ggplot'))
 })

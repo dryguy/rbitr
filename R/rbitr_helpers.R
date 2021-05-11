@@ -131,16 +131,29 @@ plot_2_color_area <- function(dataframe, x_name, y_name) {
   # Find the x-intercepts
   dataframe <- add_x_intercepts(dataframe, x_name, y_name)
 
+  # Load background gradient
+  gradient_path <- file.path(
+    system.file(package = 'rbitr'),
+    'extdata',
+    'gradient.png'
+  )
+  gradient_background <- png::readPNG(gradient_path)
+
   # Generate and return a 2-color area plot
-  names(dataframe[, x_name]) <- 'x'
-  names(dataframe[, y_name]) <- 'y'
+  x_index <- which(colnames(dataframe) %in% x_name)
+  y_index <- which(colnames(dataframe) %in% y_name)
+  names(dataframe)[x_index] <- 'x'
+  names(dataframe)[y_index] <- 'y'
   p1 <- ggplot2::ggplot() +
-    ggplot2::geom_area(data    = dataframe[dataframe[, y_name] <= 0, ],
+    ggplot2::annotation_custom(grid::rasterGrob(gradient_background,
+                                                width  = grid::unit(1, 'npc'),
+                                                height = grid::unit(1, 'npc'))) +
+    ggplot2::geom_area(data    = dataframe[dataframe$y <= 0, ],
                        mapping = ggplot2::aes(x = x, y = y),
                        fill    = grDevices::rgb(190, 188, 186,
                                                 maxColorValue = 255),
                        alpha   = 0.75) +
-    ggplot2::geom_area(data    = dataframe[dataframe[, y_name] >= 0, ],
+    ggplot2::geom_area(data    = dataframe[dataframe$y >= 0, ],
                        mapping = ggplot2::aes(x = x, y = y),
                        fill    = grDevices::rgb(252, 251, 250,
                                                 maxColorValue = 255),
