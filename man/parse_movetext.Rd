@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_movetext.R
 \name{parse_movetext}
 \alias{parse_movetext}
-\title{Get command tags from pgn movetext}
+\title{Parse movetext}
 \usage{
 parse_movetext(movetext, cmd_name)
 }
@@ -10,24 +10,14 @@ parse_movetext(movetext, cmd_name)
 \item{movetext}{A character vector of pgn movetext, where each vector entry
 is for a separate game.}
 
-\item{cmd_name}{A single-element character vector of the pgn command to parse.}
+\item{cmd_name}{A single-element character vector of the command to parse}
 }
 \value{
 A list containing numeric vectors of the specified tag value. Each
-list entry is for a separate game. For the clk tag, the value will be
+list entry is for a separate game. For \code{get_clocks()}, the value will be
 converted to seconds.
 }
 \description{
-Get the specified command tag (if present) from the movetext taken from a
-pgn file.
-}
-\details{
-See the
-\href{http://www.enpassant.dk/chess/palview/enhancedpgn.htm}{Portable Game Notation Specification and Implementation Guide (Supplement)}
-for details on command tags in pgn files.
-
-The \code{parse_movetext()} function is intended for use with data read
-from a pgn using the \code{get_pgn()} function. A tibble obtained using
-\code{get_pgn()} will have a $Movetext column from which the tag data can be
-extracted if it is present.
+The function \code{parse_movetext()} is the parser behind \code{get_clocks()} and
+\code{get_evals()}.
 }

@@ -45,3 +45,105 @@ inv_winning_chances <- function(scaled_scores) {
 }
 winning_chances_trans <- function() scales::trans_new(
   "winning_chances", winning_chances, inv_winning_chances)
+
+
+#' Add x-intercepts
+#'
+#' Given a data frame of x-y coordinates, find where the x-intercepts would be.
+#'
+#' @details The input data frame is expected to have two columns, with each row
+#'   being the Cartesian coordinates of a point in the x-y plane. If the points
+#'   are arranged in order of increasing x values and connected by line
+#'   segments, `add_x_intercepts` will find the points where the segments
+#'   intersect the x-axis and add those points to the data frame.
+#'
+#' @param dataframe A 2-column data frame with numeric or integer columns, where
+#'   each row is a point in the x-y plane.
+#' @param x_name A single-element character vector with the name of the column
+#'   containing the x-coordinates.
+#' @param y_name A single-element character vector with the name of the column
+#'   containing the y-coordinates.
+#'
+#' @return A new data frame consisting of the original data frame with new rows
+#'   added for each intersection with the x-axis.
+add_x_intercepts <- function(dataframe, x_name, y_name) {
+  # Validate input
+  assertthat::assert_that(is.data.frame(dataframe))
+  assertthat::assert_that(assertthat::is.string(x_name))
+  assertthat::assert_that(assertthat::is.string(y_name))
+  assertthat::assert_that(x_name %in% names(dataframe))
+  assertthat::assert_that(y_name %in% names(dataframe))
+  assertthat::assert_that(is.integer(dataframe[, x_name]) |
+                            is.numeric(dataframe[, x_name]))
+  assertthat::assert_that(is.integer(dataframe[, y_name]) |
+                            is.numeric(dataframe[, y_name]))
+  assertthat::assert_that(ncol(dataframe) == 2)
+
+  # Make new rows to hold the x-intercept coordinates
+  n_row <- nrow(dataframe)
+  crossings <- which(abs(diff(sign(dataframe[, y_name]))) == 2) + 1
+  new_y <- 1:(n_row + length(crossings))
+  new_y[crossings] <- 0
+  new_y[-crossings] <- dataframe[, y_name]
+  new_x <- 1:(n_row + length(crossings))
+  new_x[-crossings] <- dataframe[, x_name]
+
+  # Calculate the x-intercept coordinates
+  x1 <- dataframe[crossings - 1, x_name]
+  x2 <- dataframe[crossings, x_name]
+  y1 <- dataframe[crossings - 1, y_name]
+  y2 <- dataframe[crossings, y_name]
+  new_x[crossings] <- (x2 * y1 - x1 * y2) / (y1 - y2)
+
+  # Update the data frame and return
+  new_d <- data.frame(x = new_x, y = new_y)
+  new_d <- new_d[order(new_d$x), ]
+  names(new_d) <- c(x_name, y_name)
+  new_d
+}
+
+
+#' Two color area plot
+#'
+#' @details The input data frame is expected to have two columns, with each row
+#'   being the Cartesian coordinates of a point in the x-y plane. The function
+#'   `plot_2_color_area` will create an area plot where the area above the
+#'   x-axis is filled with white (actually light grey), and the area below the
+#'   x-axis is filled with black (actually dark grey).
+#'
+#' @param dataframe A 2-column data frame with numeric or integer columns, where
+#'   each row is a point in the x-y plane.
+#' @param x_name A single-element character vector with the name of the column
+#'   containing the x-coordinates.
+#' @param y_name A single-element character vector with the name of the column
+#'   containing the y-coordinates.
+#'
+#' @return A two-color area plot.
+plot_2_color_area <- function(dataframe, x_name, y_name) {
+  # Validate input
+  assertthat::assert_that(is.data.frame(dataframe))
+  assertthat::assert_that(ncol(dataframe) == 2)
+  assertthat::assert_that(is.integer(dataframe[, x_name]) |
+                            is.numeric(dataframe[, x_name]))
+  assertthat::assert_that(is.integer(dataframe[, y_name]) |
+                            is.numeric(dataframe[, y_name]))
+
+  # Find the x-intercepts
+  dataframe <- add_x_intercepts(dataframe, x_name, y_name)
+
+  # Generate and return a 2-color area plot
+  names(dataframe[, x_name]) <- 'x'
+  names(dataframe[, y_name]) <- 'y'
+  p1 <- ggplot2::ggplot() +
+    ggplot2::geom_area(data    = dataframe[dataframe[, y_name] <= 0, ],
+                       mapping = ggplot2::aes(x = x, y = y),
+                       fill    = grDevices::rgb(190, 188, 186,
+                                                maxColorValue = 255),
+                       alpha   = 0.75) +
+    ggplot2::geom_area(data    = dataframe[dataframe[, y_name] >= 0, ],
+                       mapping = ggplot2::aes(x = x, y = y),
+                       fill    = grDevices::rgb(252, 251, 250,
+                                                maxColorValue = 255),
+                       alpha   = 0.75)
+  p1
+}
