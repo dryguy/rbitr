@@ -30,3 +30,14 @@ inv_scale_move_times <- function(scaled_times) {
 }
 move_time_trans <- function() scales::trans_new(
   "move_time", scale_move_times, scale_move_times)
+winning_chances <- function(scores) {
+  # Use the same exponential scale as lichess
+  # https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/acpl.js
+  # y: 2 / (1 + Math.exp(-0.004 * cp)) - 1
+  2 / (1 + exp(-0.004 * scores)) - 1
+}
+inv_winning_chances <- function(scaled_scores) {
+  250 * log((-scaled_scores - 1)/(scaled_scores - 1))
+}
+winning_chances_trans <- function() scales::trans_new(
+  "winning_chances", winning_chances, inv_winning_chances)
