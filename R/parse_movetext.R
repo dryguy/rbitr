@@ -67,9 +67,12 @@ parse_movetext <- function(movetext, cmd_name) {
   if (cmd_name == 'clk') {
     result <- lapply(result, as.difftime, units = 'secs')
   }
-  result <- lapply(result, as.numeric)
   if (cmd_name == 'eval') {
+    result <- lapply(result, stringr::str_replace_all, '#-\\d+', '-50')
+    result <- lapply(result, stringr::str_replace_all, '#\\d+', '50')
+    result <- lapply(result, as.numeric)
     result <- lapply(result, '*', 100)
   }
+  result <- lapply(result, as.numeric)
   result
 }

@@ -1,6 +1,6 @@
 #' Lichess time plot
 #'
-#' #' Generate a move times plot similar to the ones in the "Computer analysis"
+#' Generate a move times plot similar to the ones in the "Computer analysis"
 #'   tab on lichess.org.
 #'
 #' @details Given vectors of move times (in seconds), the results are scaled
@@ -31,7 +31,7 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
   black_move_times <- c(0, scale_move_times(black_move_times))
   max_y <- max(c(white_move_times, black_move_times))
   y_offset <- 0.01 * max_y
-  y_lim <- 1.4 * max_y
+  y_lim <- 1.1 * max_y
   if (length(black_move_times) < length(white_move_times)) {
     black_move_times <- c(black_move_times, NA)
   }
