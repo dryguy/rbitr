@@ -15,5 +15,5 @@ movetext <- c(
 )
 test_that('get_evals gets evals', {
   evals <- get_evals(movetext)
-  expect_equal(evals, list(c(0.05, 0.29, -0.94)))
+  expect_equal(evals, list(c(5, 29, -94)))
 })
