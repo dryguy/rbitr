@@ -1,9 +1,11 @@
+#' Lichess advantage plot
+#'
 #' Generate an advantage plot similar to the ones in the "Computer analysis" tab
 #'   on lichess.org.
 #'
 #' @details Given a vector of positional evaluations (in centipawns), the
-#'   results are scaled using the same logarithmic function used by lichess.org,
-#'   and the results are plotted using the same color scheme as lichess.org.
+#'   results are scaled using the same exponential function used by lichess.org,
+#'   and the results are plotted using the same color scheme.
 #'
 #' @param scores A numeric or integer vector of positional evaluations (in
 #'   centipawns.)
