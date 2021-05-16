@@ -77,6 +77,9 @@ add_x_intercepts <- function(dataframe, x_name, y_name) {
   # Make new rows to hold the x-intercept coordinates
   n_row <- nrow(dataframe)
   crossings <- which(abs(diff(sign(dataframe[, y_name]))) == 2) + 1
+  if (identical(crossings, numeric(0))) {
+    return(dataframe)
+  }
   new_y <- 1:(n_row + length(crossings))
   new_y[crossings] <- 0
   new_y[-crossings] <- dataframe[, y_name]
