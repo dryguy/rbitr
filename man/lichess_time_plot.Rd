@@ -15,7 +15,7 @@ lichess_time_plot(white_move_times, black_move_times)
 A ggplot object of the plotted data.
 }
 \description{
-#' Generate a move times plot similar to the ones in the "Computer analysis"
+Generate a move times plot similar to the ones in the "Computer analysis"
 tab on lichess.org.
 }
 \details{
