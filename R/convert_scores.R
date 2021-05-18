@@ -27,11 +27,13 @@ convert_scores <- function(scores, mate = 5000) {
   # Convert 'mate x' to numeric value
   ply <- 1:length(scores)
   mate0 <- which(stringr::str_detect(scores, 'mate 0'))
-  if (ply[mate0] %% 2 == 1) {
-    scores[mate0] <- mate
-  }
-  if (ply[mate0] %% 2 == 0) {
-    scores[mate0] <- -mate
+  if (length(mate0) > 0) {
+    if (ply[mate0] %% 2 == 1) {
+      scores[mate0] <- mate
+    }
+    if (ply[mate0] %% 2 == 0) {
+      scores[mate0] <- -mate
+    }
   }
   scores[stringr::str_detect(scores, 'mate [0-9]+')] <- mate
   scores[stringr::str_detect(scores, 'mate -[0-9]+')] <- -mate
