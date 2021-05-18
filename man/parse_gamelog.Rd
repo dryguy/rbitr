@@ -20,15 +20,14 @@ or greater than the maximum depth reported by the engine. A value of NULL
 returns data for the maximum depth.}
 }
 \value{
-A list of vectors of the extracted data, where each list entry
-corresponds to a position.
+A list of character vectors of the extracted data, where each list
+entry corresponds to a position.
 }
 \description{
-The output of rbitr's \code{evaluate_game()} function consists of a list of UCI
-engine output, where each entry in the list is for a single position. The
-evaluations and variations are embedded within a lot of other data. The
-\code{parse_gamelog()} function can extract positional evaluations in centipawns
-(score), principal variations (pv), or best moves (bestmove).
+The output of rbitr's \code{evaluate_game()} function is a list, where each entry
+is the engine output for a single position. The \code{parse_gamelog()} function
+can extract the positional evaluations in centipawns (score), principal
+variations (pv), or best moves (bestmove).
 }
 \details{
 The data for the deepest available search depth is returned by
