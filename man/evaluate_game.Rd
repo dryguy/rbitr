@@ -63,6 +63,10 @@ that the values apply to each position analyzed. For example, if the game
 has 80 plies, and 'movetime' is set to 1000 milliseconds, the analysis will
 take 80 seconds.
 }
+\note{
+The server analysis on lichess.org use a limit of 2250000 nodes. To
+mimic this, set go_mode = 'nodes', and go_value = 2250000.
+}
 \examples{
 library(bigchess)
 movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
