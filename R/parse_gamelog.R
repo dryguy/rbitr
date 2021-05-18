@@ -1,10 +1,9 @@
 #' Extract data from the output of rbitr's `evaluate_game()` function.
 #'
-#' The output of rbitr's `evaluate_game()` function consists of a list of UCI
-#'   engine output, where each entry in the list is for a single position. The
-#'   evaluations and variations are embedded within a lot of other data. The
-#'   `parse_gamelog()` function can extract positional evaluations in centipawns
-#'   (score), principal variations (pv), or best moves (bestmove).
+#' The output of rbitr's `evaluate_game()` function is a list, where each entry
+#'   is the engine output for a single position. The `parse_gamelog()` function
+#'   can extract the positional evaluations in centipawns (score), principal
+#'   variations (pv), or best moves (bestmove).
 #'
 #' @details The data for the deepest available search depth is returned by
 #' default. See
@@ -21,8 +20,8 @@
 #'   or greater than the maximum depth reported by the engine. A value of NULL
 #'   returns data for the maximum depth.
 #'
-#' @return A list of vectors of the extracted data, where each list entry
-#'   corresponds to a position.
+#' @return A list of character vectors of the extracted data, where each list
+#'   entry corresponds to a position.
 #' @export
 #'
 #' @examples
