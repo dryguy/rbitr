@@ -13,11 +13,9 @@
 #'   be extracted if it is present.
 #'
 #' @note For games stored in pgn format, the evaluation of the first position
-#'   before any moves are made is commonly not included. Likewise, no evaluation
-#'   is commonly included for the last position of the game if it is a mate.
-#'   As a result, `get_evals()` can produce a vector that is one or two
-#'   evaluations shorter than the one produced by `parse_gamelog()` for the same
-#'   game.
+#'   before any moves are made is not commonly included. As a result,
+#'   `get_evals()` produces a vector that is one evaluation shorter than the
+#'   one produced by `parse_gamelog()` for the same game.
 #'
 #' @param movetext A character vector of pgn movetext, where each vector entry
 #'   is for a separate game.
@@ -79,7 +77,19 @@ parse_movetext <- function(movetext, cmd_name) {
     result <- lapply(result, stringr::str_replace_all, '#\\d+', '50')
     result <- lapply(result, as.numeric)
     result <- lapply(result, '*', 100)
+    cleaned_movetext <- clean_movetext(movetext)
+    white_regex <- '\\d+\\.\\s\\w+#'
+    black_regex <- '\\d+\\.\\s\\w+\\s\\w+#'
+    is_mate <- function(cleaned_movetext, pattern) {
+      stringr::str_detect(cleaned_movetext, pattern)
+    }
+    white_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, white_regex)))
+    black_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, black_regex)))
+    add_mate <- function(result, mate_value) {
+      c(result, mate_value)
+    }
+    result[white_mate_index] <- lapply(result[white_mate_index], add_mate, 5000)
+    result[black_mate_index] <- lapply(result[black_mate_index], add_mate, -5000)
   }
-  result <- lapply(result, as.numeric)
-  result
+  lapply(result, as.numeric)
 }

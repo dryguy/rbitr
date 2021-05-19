@@ -32,6 +32,12 @@ with data read from a pgn using the \code{get_pgn()} function. A tibble obtained
 using \code{get_pgn()} will have a $Movetext column from which the tag data can
 be extracted if it is present.
 }
+\note{
+For games stored in pgn format, the evaluation of the first position
+before any moves are made is not commonly included. As a result,
+\code{get_evals()} produces a vector that is one evaluation shorter than the
+one produced by \code{parse_gamelog()} for the same game.
+}
 \examples{
 movetext <- c(
   '1. d4 {[\%clk 0:15:00]} d5 {[\%clk 0:15:00]} 2. Nc3 {[\%clk 0:14:48]}',
