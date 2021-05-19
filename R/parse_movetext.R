@@ -12,6 +12,13 @@
 #'   using `get_pgn()` will have a $Movetext column from which the tag data can
 #'   be extracted if it is present.
 #'
+#' @note For games stored in pgn format, the evaluation of the first position
+#'   before any moves are made is commonly not included. Likewise, no evaluation
+#'   is commonly included for the last position of the game if it is a mate.
+#'   As a result, `get_evals()` can produce a vector that is one or two
+#'   evaluations shorter than the one produced by `parse_gamelog()` for the same
+#'   game.
+#'
 #' @param movetext A character vector of pgn movetext, where each vector entry
 #'   is for a separate game.
 #'
