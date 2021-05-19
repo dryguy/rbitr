@@ -78,8 +78,8 @@ parse_movetext <- function(movetext, cmd_name) {
     result <- lapply(result, as.numeric)
     result <- lapply(result, '*', 100)
     cleaned_movetext <- clean_movetext(movetext)
-    white_regex <- '\\d+\\.\\s\\w+#'
-    black_regex <- '\\d+\\.\\s\\w+\\s\\w+#'
+    white_regex <- '\\d+\\.\\s\\w+\\+?#'
+    black_regex <- '\\d+\\.\\s\\w+\\+?\\s\\w+#'
     is_mate <- function(cleaned_movetext, pattern) {
       stringr::str_detect(cleaned_movetext, pattern)
     }
