@@ -15,7 +15,7 @@
 #' @param mate (Default = 5000) A single-element integer or numeric vector of
 #'   the value to assign for 'mate in x'.
 #'
-#' @return An integer vector of scores (in centipawns).
+#' @return An integer or numeric vector of scores (in centipawns).
 #' @export
 #'
 #' @examples
@@ -24,6 +24,7 @@
 convert_scores <- function(scores, mate = 5000) {
   # Validate input
   assertthat::assert_that(is.character(scores))
+  assertthat::assert_that(is.integer(mate) | is.numeric(mate))
   # Convert 'mate x' to numeric value
   ply <- 1:length(scores)
   mate0 <- which(stringr::str_detect(scores, 'mate 0'))
