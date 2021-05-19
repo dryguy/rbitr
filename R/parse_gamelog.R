@@ -83,7 +83,6 @@ parse_gamelog <- function(gamelog, target, depth = NULL) {
       result <- result[!is.na(result)]
     } else {
       result <- result[which(depth_lines == depth)]
-      result <- result[length(result)]
     }
     if (target == 'score') {
       result <- stringr::str_replace(result, 'cp ', '')
