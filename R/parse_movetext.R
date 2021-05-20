@@ -37,13 +37,13 @@
 #' )
 #' get_evals(movetext)
 get_clocks <- function(movetext) {
-  parse_movetext(movetext, 'clk')
+  parse_movetext(movetext, cmd_name = 'clk')
 }
 
 #' @rdname get_clocks
 #' @export
 get_evals <- function(movetext) {
-  parse_movetext(movetext, 'eval')
+  parse_movetext(movetext, cmd_name = 'eval')
 }
 
 #' Parse movetext
