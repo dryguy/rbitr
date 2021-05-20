@@ -7,11 +7,17 @@
 \usage{
 get_clocks(movetext)
 
-get_evals(movetext)
+get_evals(movetext, initial_position = NULL, mate0 = TRUE)
 }
 \arguments{
 \item{movetext}{A character vector of pgn movetext, where each vector entry
 is for a separate game.}
+
+\item{mate0}{}
+
+\item{first_eval}{(Default = NULL) A single-element integer vector indicating
+what value should be assigned to the initial position, before white's first
+move. The default (NULL) omits the first evaluation.}
 }
 \value{
 A list containing numeric vectors of the specified tag value. Each
@@ -36,7 +42,12 @@ be extracted if it is present.
 For games stored in pgn format, the evaluation of the first position
 before any moves are made is not commonly included. As a result,
 \code{get_evals()} produces a vector that is one evaluation shorter than the
-one produced by \code{parse_gamelog()} for the same game.
+one produced by \code{parse_gamelog()} for the same game. To include a value for
+the initial position, set the parameter first_eval to the desired value.
+To use the same default as \href{http://lichess.org}{lichess.org}, set
+first_eval to 15.
+
+For games ending in mate, the pgn format
 }
 \examples{
 movetext <- c(

@@ -15,10 +15,26 @@
 #' @note For games stored in pgn format, the evaluation of the first position
 #'   before any moves are made is not commonly included. As a result,
 #'   `get_evals()` produces a vector that is one evaluation shorter than the
-#'   one produced by `parse_gamelog()` for the same game.
+#'   one produced by `parse_gamelog()` for the same game. To include a value for
+#'   the initial position, set the parameter first_eval to the desired value.
+#'   To use the same default as [lichess.org](http://lichess.org), set
+#'   first_eval to 15.
+#'
+#' @note For games ending in mate, a uci engine gives the final position an
+#'   evaluation of 'mate 0', however, in a pgn, any '#x' notation is omitted for
+#'   the final position when it is mate. When the final position is mate,
+#'   [lichess.org](http://lichess.org) advantage plots show an advantage of 1
+#'   for the final position, but the value is not used in calculating acpl. To
+#'   include an evaluation for mated positions, set the mate0 parameter to TRUE.
+#'
 #'
 #' @param movetext A character vector of pgn movetext, where each vector entry
 #'   is for a separate game.
+#' @param first_eval (Default = NULL) A single-element integer vector indicating
+#'   what value should be assigned to the initial position, before white's first
+#'   move. The default (NULL) omits the first evaluation.
+#' @param mate0 (Default = FALSE) A single-element boolean vector indicating
+#'   whether to include a value for mated positions.
 #'
 #' @return A list containing numeric vectors of the specified tag value. Each
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
@@ -37,13 +53,15 @@
 #' )
 #' get_evals(movetext)
 get_clocks <- function(movetext) {
-  parse_movetext(movetext, cmd_name = 'clk')
+  parse_movetext(movetext, cmd_name = 'clk', first_eval = NULL,
+                 mate0 = NULL)
 }
 
 #' @rdname get_clocks
 #' @export
-get_evals <- function(movetext) {
-  parse_movetext(movetext, cmd_name = 'eval')
+get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE) {
+  parse_movetext(movetext, cmd_name = 'eval',
+                 first_eval = first_eval, mate0 = mate0)
 }
 
 #' Parse movetext
@@ -54,16 +72,25 @@ get_evals <- function(movetext) {
 #' @param movetext A character vector of pgn movetext, where each vector entry
 #'   is for a separate game.
 #' @param cmd_name A single-element character vector of the command to parse
+#' @param first_eval (Default = NULL) A single-element integer vector indicating
+#'   what value should be assigned to the initial position, before white's first
+#'   move. The default (NULL) omits the first evaluation.
+#' @param mate0 (Default = FALSE) A single-element boolean vector indicating
+#'   whether to include a value for mated positions.
 #'
 #' @return A list containing numeric vectors of the specified tag value. Each
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
 #'   converted to seconds.
-parse_movetext <- function(movetext, cmd_name) {
+parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE) {
   # Validate input
   assertthat::assert_that(is.character(movetext))
   assertthat::assert_that(cmd_name == 'clk' |
                           cmd_name == 'eval')
-
+  assertthat::assert_that(is.integer(first_eval) |
+                          is.numeric(first_eval) |
+                          is.null(first_eval))
+  assertthat::assert_that(assertthat::is.flag(mate0) |
+                          is.null(mate0))
   # Parse the movetext
   cmd_regex <- paste0('\\[%', cmd_name, '\\s*([^]]*)')
   result <- lapply(
@@ -77,19 +104,27 @@ parse_movetext <- function(movetext, cmd_name) {
     result <- lapply(result, stringr::str_replace_all, '#\\d+', '50')
     result <- lapply(result, as.numeric)
     result <- lapply(result, '*', 100)
-    cleaned_movetext <- clean_movetext(movetext)
-    white_regex <- '\\d+\\.\\s\\w+\\+?#'
-    black_regex <- '\\d+\\.\\s\\w+\\+?\\s\\w+#'
-    is_mate <- function(cleaned_movetext, pattern) {
-      stringr::str_detect(cleaned_movetext, pattern)
+    if (mate0) {
+      cleaned_movetext <- clean_movetext(movetext)
+      white_regex <- '\\d+\\.\\s\\w+\\+?#'
+      black_regex <- '\\d+\\.\\s\\w+\\+?\\s\\w+#'
+      is_mate <- function(cleaned_movetext, pattern) {
+        stringr::str_detect(cleaned_movetext, pattern)
+      }
+      white_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, white_regex)))
+      black_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, black_regex)))
+      add_mate <- function(result, mate_value) {
+        c(result, mate_value)
+      }
+      result[white_mate_index] <- lapply(result[white_mate_index], add_mate, 5000)
+      result[black_mate_index] <- lapply(result[black_mate_index], add_mate, -5000)
     }
-    white_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, white_regex)))
-    black_mate_index <- which(unlist(lapply(cleaned_movetext, is_mate, black_regex)))
-    add_mate <- function(result, mate_value) {
-      c(result, mate_value)
+  }
+  if (!is.null(first_eval)) {
+    add_first_eval <- function(result, first_eval) {
+      c(first_eval, result)
     }
-    result[white_mate_index] <- lapply(result[white_mate_index], add_mate, 5000)
-    result[black_mate_index] <- lapply(result[black_mate_index], add_mate, -5000)
+    result <- lapply(result, add_first_eval, first_eval)
   }
   lapply(result, as.numeric)
 }
