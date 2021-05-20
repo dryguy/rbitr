@@ -15,7 +15,7 @@ engine.}
 the value to assign for 'mate in x'.}
 }
 \value{
-An integer vector of scores (in centipawns).
+An integer or numeric vector of scores (in centipawns).
 }
 \description{
 Convert parsed score values to numeric scores.
@@ -29,6 +29,10 @@ black. The function \code{convert_scores()} will convert bounds or mate in x int
 numeric values. It will also change the sign of black's scores, so that
 positive evaluations will mean white is ahead, and negative will mean black
 is ahead.
+}
+\note{
+The function \code{convert_scores()} assumes that the scores begin with a
+position where white is to move.
 }
 \examples{
 scores <- c("90", "-26", "26 upperbound", "mate -2" , "mate 1", "mate -1", "mate 0", NA)
