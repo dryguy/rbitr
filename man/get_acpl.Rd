@@ -30,7 +30,7 @@ replace them with the cap. Allowed values are 'exclude', 'replace', or
 
 \item{first_ply}{(Default = 1) A single-element integer vector indicating the
 first ply to be included in the calculation. May not be larger than the
-number of elements in \code{score}}
+number of elements in \code{score}.}
 
 \item{to_move}{(Default = 'white') A single-element character vector
 indicating which side's turn it is.}
