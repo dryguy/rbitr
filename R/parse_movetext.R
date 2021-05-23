@@ -35,6 +35,8 @@
 #'   move. The default (NULL) omits the first evaluation.
 #' @param mate0 (Default = FALSE) A single-element boolean vector indicating
 #'   whether to include a value for mated positions.
+#' @param mate_value (Default = 50000) A single-element integer or numeric
+#'   vector of the centipawn value to assign for mate.
 #'
 #' @return A list containing numeric vectors of the specified tag value. Each
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
