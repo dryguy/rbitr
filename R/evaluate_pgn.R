@@ -9,6 +9,9 @@
 #'   be stopped and restarted, it will skip games that have already been
 #'   analyzed and pick up where it left off.
 #'
+#' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
+#'    mimic this, set go_mode = 'nodes', and go_value = 2250000.
+#'
 #' @param pgn_path A single-element character vector of the path to the pgn.
 #' @param engine_path A single-element character vector of the path to a UCI
 #'    chess engine.
