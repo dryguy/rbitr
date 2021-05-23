@@ -47,7 +47,7 @@
 #'   'none'.
 #' @param first_ply (Default = 1) A single-element integer vector indicating the
 #'   first ply to be included in the calculation. May not be larger than the
-#'   number of elements in `score`
+#'   number of elements in `score`.
 #' @param to_move (Default = 'white') A single-element character vector
 #'   indicating which side's turn it is.
 #'
