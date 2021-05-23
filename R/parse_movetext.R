@@ -54,13 +54,13 @@
 #' get_evals(movetext)
 get_clocks <- function(movetext) {
   parse_movetext(movetext, cmd_name = 'clk', first_eval = NULL,
-                 mate0 = NULL, mate_value = 35000)
+                 mate0 = NULL, mate_value = 50000)
 }
 
 #' @rdname get_clocks
 #' @export
 get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE,
-                      mate_value = 35000) {
+                      mate_value = 50000) {
   parse_movetext(movetext, cmd_name = 'eval',
                  first_eval = first_eval, mate0 = mate0,
                  mate_value = mate_value)
@@ -86,7 +86,7 @@ get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE,
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
 #'   converted to seconds.
 parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE,
-                           mate_value = 35000) {
+                           mate_value = 50000) {
   # Validate input
   assertthat::assert_that(is.character(movetext))
   assertthat::assert_that(cmd_name == 'clk' |
