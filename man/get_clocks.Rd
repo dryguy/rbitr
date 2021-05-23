@@ -7,17 +7,21 @@
 \usage{
 get_clocks(movetext)
 
-get_evals(movetext, initial_position = NULL, mate0 = TRUE)
+get_evals(movetext, first_eval = NULL, mate0 = FALSE, mate_value = 50000)
 }
 \arguments{
 \item{movetext}{A character vector of pgn movetext, where each vector entry
 is for a separate game.}
 
-\item{mate0}{}
-
 \item{first_eval}{(Default = NULL) A single-element integer vector indicating
 what value should be assigned to the initial position, before white's first
 move. The default (NULL) omits the first evaluation.}
+
+\item{mate0}{(Default = FALSE) A single-element boolean vector indicating
+whether to include a value for mated positions.}
+
+\item{mate_value}{(Default = 50000) A single-element integer or numeric
+vector of the centipawn value to assign for mate.}
 }
 \value{
 A list containing numeric vectors of the specified tag value. Each
@@ -47,7 +51,12 @@ the initial position, set the parameter first_eval to the desired value.
 To use the same default as \href{http://lichess.org}{lichess.org}, set
 first_eval to 15.
 
-For games ending in mate, the pgn format
+For games ending in mate, a uci engine gives the final position an
+evaluation of 'mate 0', however, in a pgn, any '#x' notation is omitted for
+the final position when it is mate. When the final position is mate,
+\href{http://lichess.org}{lichess.org} advantage plots show an advantage of 1
+for the final position, but the value is not used in calculating acpl. To
+include an evaluation for mated positions, set the mate0 parameter to TRUE.
 }
 \examples{
 movetext <- c(
