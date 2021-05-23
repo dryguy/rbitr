@@ -54,14 +54,16 @@
 #' get_evals(movetext)
 get_clocks <- function(movetext) {
   parse_movetext(movetext, cmd_name = 'clk', first_eval = NULL,
-                 mate0 = NULL)
+                 mate0 = NULL, mate_value = 35000)
 }
 
 #' @rdname get_clocks
 #' @export
-get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE) {
+get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE,
+                      mate_value = 35000) {
   parse_movetext(movetext, cmd_name = 'eval',
-                 first_eval = first_eval, mate0 = mate0)
+                 first_eval = first_eval, mate0 = mate0,
+                 mate_value = mate_value)
 }
 
 #' Parse movetext
@@ -75,13 +77,16 @@ get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE) {
 #' @param first_eval (Default = NULL) A single-element integer vector indicating
 #'   what value should be assigned to the initial position, before white's first
 #'   move. The default (NULL) omits the first evaluation.
+#' @param mate_value (Default = 35000) The value (in centipawns) to assign to
+#'   positions evaluated as 'mate in x'.
 #' @param mate0 (Default = FALSE) A single-element boolean vector indicating
-#'   whether to include a value for mated positions.
+#'   whether to include a value for mated positions ('mate in 0').
 #'
 #' @return A list containing numeric vectors of the specified tag value. Each
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
 #'   converted to seconds.
-parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE) {
+parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE,
+                           mate_value = 35000) {
   # Validate input
   assertthat::assert_that(is.character(movetext))
   assertthat::assert_that(cmd_name == 'clk' |
@@ -91,6 +96,7 @@ parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE)
                           is.null(first_eval))
   assertthat::assert_that(assertthat::is.flag(mate0) |
                           is.null(mate0))
+  assertthat::assert_that(is.numeric(mate_value) | is.integer(mate_value))
   # Parse the movetext
   cmd_regex <- paste0('\\[%', cmd_name, '\\s*([^]]*)')
   result <- lapply(
@@ -100,8 +106,10 @@ parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE)
     result <- lapply(result, as.difftime, units = 'secs')
   }
   if (cmd_name == 'eval') {
-    result <- lapply(result, stringr::str_replace_all, '#-\\d+', '-50')
-    result <- lapply(result, stringr::str_replace_all, '#\\d+', '50')
+    result <- lapply(result, stringr::str_replace_all, '#-\\d+',
+                     as.character(-mate_value / 100))
+    result <- lapply(result, stringr::str_replace_all, '#\\d+',
+                     as.character(mate_value / 100))
     result <- lapply(result, as.numeric)
     result <- lapply(result, '*', 100)
     if (mate0) {
@@ -116,8 +124,8 @@ parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE)
       add_mate <- function(result, mate_value) {
         c(result, mate_value)
       }
-      result[white_mate_index] <- lapply(result[white_mate_index], add_mate, 5000)
-      result[black_mate_index] <- lapply(result[black_mate_index], add_mate, -5000)
+      result[white_mate_index] <- lapply(result[white_mate_index], add_mate, mate_value)
+      result[black_mate_index] <- lapply(result[black_mate_index], add_mate, -mate_value)
     }
   }
   if (!is.null(first_eval)) {
