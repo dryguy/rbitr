@@ -7,21 +7,20 @@
 lichess_time_plot(white_move_times, black_move_times)
 }
 \arguments{
-\item{white_move_times}{A vector of move times for white, in seconds.}
+\item{white_move_times}{A numeric vector of move times for white, in seconds.}
 
-\item{black_move_times}{A vector of move times for black, in seconds.}
+\item{black_move_times}{A numeric vector of move times for black, in seconds.}
 }
 \value{
 A ggplot object of the plotted data.
 }
 \description{
-Generate a move times plot similar to the ones in the "Computer analysis"
-tab on lichess.org.
+Generate a plot of move times in the style of
+\href{http://lichess.org}{lichess.org}.
 }
 \details{
-Given vectors of move times (in seconds), the results are scaled
-using the same logarithmic function used by lichess.org, and the results
-are plotted using the same color scheme.
+Move times (in seconds) are plotted using the same scaling and
+color scheme used by \href{http://lichess.org}{lichess.org}.
 }
 \examples{
   white_move_times <- c(4, 10, 5, 10)

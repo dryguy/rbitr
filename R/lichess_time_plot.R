@@ -1,14 +1,13 @@
 #' Lichess time plot
 #'
-#' Generate a move times plot similar to the ones in the "Computer analysis"
-#'   tab on lichess.org.
+#' Generate a plot of move times in the style of
+#'   [lichess.org](http://lichess.org).
 #'
-#' @details Given vectors of move times (in seconds), the results are scaled
-#'   using the same logarithmic function used by lichess.org, and the results
-#'   are plotted using the same color scheme.
+#' @details Move times (in seconds) are plotted using the same scaling and
+#'   color scheme used by [lichess.org](http://lichess.org).
 #'
-#' @param white_move_times A vector of move times for white, in seconds.
-#' @param black_move_times A vector of move times for black, in seconds.
+#' @param white_move_times A numeric vector of move times for white, in seconds.
+#' @param black_move_times A numeric vector of move times for black, in seconds.
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
