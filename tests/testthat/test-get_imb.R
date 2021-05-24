@@ -3,5 +3,7 @@ moves <- c("g2g4", "e7e6", "f2f4", "d8h4")
 bestmoves <- c("d2d4", "d7d5", "g1f3", "d8h4")
 imb <- get_imb(scores, moves, bestmoves, color = 'white')
 test_that('get_imb gets inaccuracies, mistakes, and blunders', {
-  expect_equal(imb, list(inaccuracies = 0, mistakes = 0, blunders = 2))
+  expect_equal(imb, list(inaccuracies = integer(0),
+                         mistakes     = integer(0),
+                         blunders     = c(2, 1)))
 })

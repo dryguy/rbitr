@@ -43,7 +43,7 @@
 #'   the setting for cap. It should also be higher than the highest numerical
 #'   evaluation in the game to avoid unexpected behaviour.
 #'
-#' @return A named list with the number of inaccuracies, mistakes, and blunders.
+#' @return A named list of $inaccuracies, $mistakes, and $blunders.
 #' @export
 #'
 #' @examples
@@ -150,8 +150,8 @@ get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
                                  wcl  < 0.2 &
                                  moves != bestmoves)))
   return(list(
-    inaccuracies = length(inaccuracies),
-    mistakes = length(mistakes),
-    blunders = length(blunders)
+    inaccuracies = inaccuracies,
+    mistakes = mistakes,
+    blunders = blunders
   ))
 }

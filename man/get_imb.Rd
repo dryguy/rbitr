@@ -49,7 +49,7 @@ the setting for cap. It should also be higher than the highest numerical
 evaluation in the game to avoid unexpected behaviour.}
 }
 \value{
-A named list with the number of inaccuracies, mistakes, and blunders.
+A named list of $inaccuracies, $mistakes, and $blunders.
 }
 \description{
 The function \code{get_imb()} is meant to mimic the inaccuracy, mistake, and
