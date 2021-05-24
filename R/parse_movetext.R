@@ -93,12 +93,11 @@ parse_movetext <- function(movetext, cmd_name, first_eval = NULL, mate0 = FALSE,
   assertthat::assert_that(is.character(movetext))
   assertthat::assert_that(cmd_name == 'clk' |
                           cmd_name == 'eval')
-  assertthat::assert_that(is.integer(first_eval) |
-                          is.numeric(first_eval) |
+  assertthat::assert_that(is.numeric(first_eval) |
                           is.null(first_eval))
   assertthat::assert_that(assertthat::is.flag(mate0) |
                           is.null(mate0))
-  assertthat::assert_that(is.numeric(mate_value) | is.integer(mate_value))
+  assertthat::assert_that(is.numeric(mate_value))
   # Parse the movetext
   cmd_regex <- paste0('\\[%', cmd_name, '\\s*([^]]*)')
   result <- lapply(

@@ -55,11 +55,11 @@ get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
                     cap_action = 'replace', first_ply = 1, to_move = 'white',
                     mate = 50000) {
   # Validate input
-  assertthat::assert_that(is.integer(scores) | is.numeric(scores))
+  assertthat::assert_that(is.numeric(scores))
   assertthat::assert_that(is.character(moves))
   assertthat::assert_that(is.character(bestmoves))
   assertthat::assert_that(color == 'white' | color == 'black')
-  assertthat::assert_that(is.integer(cap) | is.numeric(cap) | is.null(cap))
+  assertthat::assert_that(is.numeric(cap) | is.null(cap))
   assertthat::assert_that(length(cap) == 1 | length(cap) == 0)
   assertthat::assert_that(cap_action == 'exclude' |
                           cap_action == 'replace' |
@@ -68,7 +68,7 @@ get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
   assertthat::assert_that(max(first_ply, na.rm = TRUE) <= length(scores))
   assertthat::assert_that(assertthat::is.count(min(first_ply, na.rm = TRUE)))
   assertthat::assert_that(to_move == 'white' | to_move == 'black')
-  assertthat::assert_that(is.integer(mate) | is.numeric(mate))
+  assertthat::assert_that(is.numeric(mate))
   assertthat::assert_that(mate > cap)
   # Whose turn is it?
   if (to_move == 'black') {

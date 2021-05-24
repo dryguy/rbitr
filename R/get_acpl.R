@@ -63,9 +63,9 @@
 get_acpl <- function(scores, color, cap = NULL, cap_action = 'none',
                      first_ply = 1, to_move = 'white') {
   # Validate input
-  assertthat::assert_that(is.integer(scores) | is.numeric(scores))
+  assertthat::assert_that(is.numeric(scores))
   assertthat::assert_that(color == 'white' | color == 'black')
-  assertthat::assert_that(is.integer(cap) | is.numeric(cap) | is.null(cap))
+  assertthat::assert_that(is.numeric(cap) | is.null(cap))
   assertthat::assert_that(length(cap) == 1 | length(cap) == 0)
   assertthat::assert_that(cap_action == 'exclude' |
                           cap_action == 'replace' |

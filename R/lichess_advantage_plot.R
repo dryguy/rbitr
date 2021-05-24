@@ -18,8 +18,7 @@
 #'   lichess_advantage_plot(scores)
 lichess_advantage_plot <- function(scores) {
   # Validate input
-  assertthat::assert_that(is.numeric(scores) |
-                          is.integer(scores))
+  assertthat::assert_that(is.numeric(scores))
 
   # Make the 2 color area plot
   n_ply <- length(scores)

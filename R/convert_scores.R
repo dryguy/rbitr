@@ -27,7 +27,7 @@
 convert_scores <- function(scores, mate = 5000) {
   # Validate input
   assertthat::assert_that(is.character(scores))
-  assertthat::assert_that(is.integer(mate) | is.numeric(mate))
+  assertthat::assert_that(is.numeric(mate))
   # Convert 'mate x' to numeric value
   mate0 <- which(stringr::str_detect(scores, 'mate 0'))
   if (length(mate0) > 0) {

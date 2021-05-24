@@ -19,10 +19,8 @@
 #'   lichess_time_plot(white_move_times, black_move_times)
 lichess_time_plot <- function(white_move_times, black_move_times) {
   # Validate input
-  assertthat::assert_that(is.numeric(white_move_times) |
-                          is.integer(white_move_times))
-  assertthat::assert_that(is.numeric(black_move_times) |
-                          is.integer(black_move_times))
+  assertthat::assert_that(is.numeric(white_move_times))
+  assertthat::assert_that(is.numeric(black_move_times))
   assertthat::assert_that(length(white_move_times) -
                           length(black_move_times) < 2)
 

@@ -34,8 +34,8 @@
 #' get_move_times(clock, 8, 'white')
 #' get_move_times(clock, 8, 'black')
 get_move_times <- function(clock, increment, color) {
-  assertthat::assert_that(is.integer(clock) | is.numeric(clock))
-  assertthat::assert_that(is.integer(increment) | is.numeric(increment))
+  assertthat::assert_that(is.numeric(clock))
+  assertthat::assert_that(is.numeric(increment))
   assertthat::assert_that(increment >= 0)
   assertthat::assert_that(length(increment) == 1)
   assertthat::assert_that(color == 'white' | color == 'black')

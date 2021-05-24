@@ -68,10 +68,8 @@ add_x_intercepts <- function(dataframe, x_name, y_name) {
   assertthat::assert_that(assertthat::is.string(y_name))
   assertthat::assert_that(x_name %in% names(dataframe))
   assertthat::assert_that(y_name %in% names(dataframe))
-  assertthat::assert_that(is.integer(dataframe[, x_name]) |
-                            is.numeric(dataframe[, x_name]))
-  assertthat::assert_that(is.integer(dataframe[, y_name]) |
-                            is.numeric(dataframe[, y_name]))
+  assertthat::assert_that(is.numeric(dataframe[, x_name]))
+  assertthat::assert_that(is.numeric(dataframe[, y_name]))
   assertthat::assert_that(ncol(dataframe) == 2)
 
   # Make new rows to hold the x-intercept coordinates
