@@ -55,6 +55,10 @@ each game to a folder with the same name as the pgn. If the analysis has to
 be stopped and restarted, it will skip games that have already been
 analyzed and pick up where it left off.
 }
+\note{
+The server analysis on lichess.org use a limit of 2250000 nodes. To
+mimic this, set go_mode = 'nodes', and go_value = 2250000.
+}
 \examples{
 library(bigchess)
 # Modify engine_path as required for your engine location & operating system
