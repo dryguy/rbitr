@@ -33,13 +33,13 @@ get_pgn <- function(pgn_path) {
   # Make sure to check for end of game/file every time readLines is called
   get_newline <- function(con) {
     # Omit blank lines and escaped lines (% = escape)
-    newline <<- readLines(con, 1)
+    newline <<- readLines(con, 1, warn = FALSE)
     if (length(newline) == 0) {
       end_of_file <<- TRUE
       return()
     }
     while (newline == '') {
-      newline <<- readLines(con, 1)
+      newline <<- readLines(con, 1, warn = FALSE)
       if (length(newline) == 0) {
         end_of_file <<- TRUE
         return()
@@ -50,7 +50,7 @@ get_pgn <- function(pgn_path) {
       return()
     }
     while (stringr::str_sub(newline, 1, 1) == '%') {
-      newline <<- readLines(con, 1)
+      newline <<- readLines(con, 1, warn = FALSE)
       if (length(newline) == 0) {
         end_of_file <<- TRUE
         return()
