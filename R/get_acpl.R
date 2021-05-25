@@ -60,6 +60,7 @@
 #' @examples
 #' scores <- c(5, 29, -94, 67, 76, 154, -31, 1000, 1000)
 #' get_acpl(scores, 'white', first_ply = 2)
+
 get_acpl <- function(scores, color, cap = NULL, cap_action = 'none',
                      first_ply = 1, to_move = 'white') {
   # Validate input

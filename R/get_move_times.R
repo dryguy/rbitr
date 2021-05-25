@@ -33,6 +33,7 @@
 #' clock <- c(900, 900, 888, 878, 878, 858)
 #' get_move_times(clock, 8, 'white')
 #' get_move_times(clock, 8, 'black')
+
 get_move_times <- function(clock, increment, color) {
   assertthat::assert_that(is.numeric(clock))
   assertthat::assert_that(is.numeric(increment))

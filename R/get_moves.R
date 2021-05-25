@@ -13,6 +13,7 @@
 #' @examples
 #' movetext <- c('1. e4 e5', '1. h3 h6')
 #' get_moves(movetext)
+
 get_moves <- function(movetext) {
   assertthat::assert_that(is.character(movetext))
   movetext <- clean_movetext(movetext)

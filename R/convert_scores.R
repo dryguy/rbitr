@@ -24,6 +24,7 @@
 #' @examples
 #' scores <- c("90", "-26", "26 upperbound", "mate -2" , "mate 1", "mate -1", "mate 0", NA)
 #' convert_scores(scores)
+
 convert_scores <- function(scores, mate = 5000) {
   # Validate input
   assertthat::assert_that(is.character(scores))

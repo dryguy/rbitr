@@ -12,6 +12,7 @@
 #'
 #' @examples
 #' clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
+
 clean_movetext <- function(movetext) {
   assertthat::assert_that(is.character(movetext))
   # Remove semicolon format comments

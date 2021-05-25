@@ -59,6 +59,7 @@
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 #' evaluate_game(movetext, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+
 evaluate_game <- function(movetext, engine_path, n_cpus = 1, n_pv, go_mode,
                           go_value) {
   # Validate the input

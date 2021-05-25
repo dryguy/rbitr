@@ -41,6 +41,7 @@
 #'   'fools_mate.pgn'
 #' )
 #' evaluate_pgn(pgn_path, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+
 evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1, n_pv, go_mode,
                          go_value, mute = FALSE, save_logs = FALSE) {
   # Validate input

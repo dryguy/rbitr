@@ -51,6 +51,7 @@
 #' moves <- c("g2g4", "e7e6", "f2f4", "d8h4")
 #' bestmoves <- c("d2d4", "d7d5", "g1f3", "d8h4")
 #' get_imb(scores, moves, bestmoves, color = 'white')
+
 get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
                     cap_action = 'replace', first_ply = 1, to_move = 'white',
                     mate = 50000) {
