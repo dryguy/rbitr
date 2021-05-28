@@ -1,0 +1,12 @@
+[Event "Casual Game"]
+[Site "Castle Dracula"]
+[Date "1897"]
+[Round "?"]
+[White "Prof. Abraham van Helsing"]
+[Black "Count Dracula"]
+[Result "1-0"]
+[TimeControl "300+8"]
+
+1. e4 { [%eval 0.05] [%clk 0:05:00] } 1... e5 { [%eval 0.21] [%clk 0:05:00] } 2. d4 { [%eval 0.0] [%clk 0:05:07] } 2... f6 { [%eval 1.94] [%clk 0:05:02] } 3. dxe5 { [%eval 1.43] [%clk 0:05:13] } 3... fxe5 { [%eval 8.27] [%clk 0:05:07] } 4. Qh5+ { [%eval 8.55] [%clk 0:05:21] } 4... Ke7 { [%eval 10.78] [%clk 0:05:05] } 5. Qxe5+ { [%eval 10.82] [%clk 0:05:22] } 5... Kf7 { [%eval 10.94] [%clk 0:05:12] } 6. Bc4+ { [%eval 12.62] [%clk 0:05:27] } 6... Kg6 { [%eval #1] [%clk 0:05:12] } 7. Qf5# { [%clk 0:05:23] } 1-0
+
+
