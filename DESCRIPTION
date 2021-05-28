@@ -21,15 +21,18 @@ Suggests:
 Config/testthat/edition: 3
 Imports:
     grid,
+    patchwork,
     stringr,
     bigchess,
     dplyr,
     assertthat,
     tibble,
-    patchwork,
     scales,
     ggplot2,
     png,
     grDevices,
     rlang,
-    ggpmisc
+    ggpmisc,
+    flextable,
+    webshot,
+    magick

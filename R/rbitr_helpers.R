@@ -156,3 +156,33 @@ plot_2_color_area <- function(dataframe, x_name, y_name) {
                        alpha   = 0.71)
   p1
 }
+
+add_spaces <- function(my_text, to) {
+  # Validate input
+  assertthat::assert_that(is.vector(my_text))
+  assertthat::assert_that(to == 'head' | to == 'tail')
+  n_char <- unlist(lapply(my_text, nchar))
+  max_char <- max(n_char, na.rm = TRUE)
+  n_spaces <- max_char - n_char
+  add_to_head <- function(index, my_text, n_spaces) {
+    paste0(paste0(rep(' ', n_spaces[[index]]), collapse = ''), my_text[[index]], ' ')
+  }
+  add_to_tail <- function(index, my_text, n_spaces) {
+    paste0(my_text[[index]], paste0(rep(' ', n_spaces[[index]]), collapse = ''), '\n')
+  }
+  index <- 1:length(my_text)
+  if (to == 'head') {
+    return(unlist(lapply(index, add_to_head, my_text, n_spaces)))
+  }
+  if (to == 'tail') {
+    return(unlist(lapply(index, add_to_tail, my_text, n_spaces)))
+  }
+}
+
+make_table <- function(col_a, col_b) {
+  col_a <- add_spaces(col_a, 'head')
+  col_b <- add_spaces(col_b, 'tail')
+  new_table <- matrix(c(col_a, col_b), ncol = 2)
+  new_table <- as.vector(t(new_table))
+  paste0(new_table, collapse = '')
+}
