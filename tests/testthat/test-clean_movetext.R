@@ -23,9 +23,12 @@ test_that('clean_movetext removes recursive variations', {
 test_that('clean_movetext removes extra spaces', {
   expect_identical(clean_movetext('1. e4    e5'), '1. e4 e5')
 })
-test_that('clean_movetext removes results', {
+test_that('clean_movetext removes game termination markers', {
   expect_identical(clean_movetext('1. e4 1-0'), '1. e4')
   expect_identical(clean_movetext('1. e4 0-1'), '1. e4')
   expect_identical(clean_movetext('1. e4 1/2-1/2'), '1. e4')
   expect_identical(clean_movetext('1. e4 *'), '1. e4')
+})
+test_that('clean_movetext trims whitespace' ,{
+  expect_identical(clean_movetext(' 1. e4 e5 '), '1. e4 e5')
 })
