@@ -28,7 +28,7 @@ clean_movetext <- function(movetext) {
   movetext <- stringr::str_replace_all(movetext, '[0-9]+\\.\\.\\.', ' ')
   # Remove traditional annotations (!, !!, ?, ??, !?, ?!) and literal glyphs
   # Instead of NAGs, some websites use actual glyph characters which is not
-  # compliant with the pgn specification. The actual unicode characters are not
+  # compliant with the pgn specification. The actual glyph characters are not
   # used here as the code would be less portable. Instead the characters are
   # identified by their unicode codepoints.
   literal_glyph_regex <- paste0(
