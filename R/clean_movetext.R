@@ -26,8 +26,19 @@ clean_movetext <- function(movetext) {
   movetext <- stringr::str_replace_all(movetext, '\\{[^}]*\\}', ' ')
   # Remove 1... style numbering
   movetext <- stringr::str_replace_all(movetext, '[0-9]+\\.\\.\\.', ' ')
-  # Remove traditional annotations (!, !!, ?, ??, !?, ?!)
-  movetext <- stringr::str_replace_all(movetext, '[?|!]', '')
+  # Remove traditional annotations (!, !!, ?, ??, !?, ?!) and literal glyphs
+  # Instead of NAGs, some websites use actual glyph characters which is not
+  # compliant with the pgn specification. The actual unicode characters are not
+  # used here as the code would be less portable. Instead the characters are
+  # identified by their unicode codepoints.
+  literal_glyph_regex <- paste0(
+    '[!?]+| = | N |-\\+|\\+-',
+    '|=/\u221e|\u221e/=|\u221e',
+    '|\u2a72|\u2a71|\u00b1|\u2213',
+    '|\u2a00|\u2192|\u2191|\u25a1',
+    '|\u21c6|\u2295|\u2206'
+  )
+  movetext <- stringr::str_replace_all(movetext, literal_glyph_regex, ' ')
   # Remove numeric annotation glyphs (NAGs)
   movetext <- stringr::str_replace_all(movetext, '\\$[0-9]+', '')
   # Remove recursive variations
