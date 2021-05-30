@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_gamelog.R
 \name{parse_gamelog}
 \alias{parse_gamelog}
-\title{Extract data from the output of rbitr's \code{evaluate_game()} function.}
+\title{Extract data from rbitr's \code{evaluate_game()} output}
 \usage{
 parse_gamelog(gamelog, target, depth = NULL)
 }
@@ -25,7 +25,7 @@ entry corresponds to a position.
 }
 \description{
 The output of rbitr's \code{evaluate_game()} function is a list, where each entry
-is the engine output for a single position. The \code{parse_gamelog()} function
+is the engine output after analyzing a position. The \code{parse_gamelog()} function
 can extract the positional evaluations in centipawns (score), principal
 variations (pv), or best moves (bestmove).
 }

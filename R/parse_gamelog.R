@@ -1,7 +1,7 @@
-#' Extract data from the output of rbitr's `evaluate_game()` function.
+#' Extract data from rbitr's `evaluate_game()` output
 #'
 #' The output of rbitr's `evaluate_game()` function is a list, where each entry
-#'   is the engine output for a single position. The `parse_gamelog()` function
+#'   is the engine output after analyzing a position. The `parse_gamelog()` function
 #'   can extract the positional evaluations in centipawns (score), principal
 #'   variations (pv), or best moves (bestmove).
 #'
