@@ -2,9 +2,9 @@
 % Please edit documentation in R/evaluate_game.R
 \name{evaluate_game}
 \alias{evaluate_game}
-\title{Analyze a chess game.}
+\title{Analyze a chess game}
 \usage{
-evaluate_game(movetext, engine_path, n_cpus = 1, n_pv, go_mode, go_value)
+evaluate_game(movetext, engine_path, limiter, limit, n_cpus = 1L, n_pv = 1L)
 }
 \arguments{
 \item{movetext}{A single-element character vector containing a sequence of
@@ -13,18 +13,19 @@ moves in standard algebraic notation (SAN).}
 \item{engine_path}{A single-element character vector of the path to a UCI
 chess engine.}
 
-\item{n_cpus}{A single-element integer vector of the number of cpus to use.}
-
-\item{n_pv}{A single-element integer vector of the desired number of
-principal variations.}
-
-\item{go_mode}{A single-element character vector indicating the desired
+\item{limiter}{A single-element character vector indicating the desired
 mode of search termination. Allowed values are 'depth' (to search a fixed
 number of plies), 'nodes' (to search a fixed number of nodes), and
 'movetime' (to search a fixed number of milliseconds).}
 
-\item{go_value}{A single-element integer vector of the desired search depth
+\item{limit}{A single-element integer vector of the desired search depth
 (# of plies), search nodes (# of nodes), or search time (# of mseconds).}
+
+\item{n_cpus}{(Default = 1) A single-element integer vector of the number of
+cpus to use.}
+
+\item{n_pv}{(Default = 1) A single-element integer vector of the desired
+number of principal variations.}
 }
 \value{
 A list containing character vectors of the engine output. Each
@@ -59,19 +60,19 @@ n_pv parameter, while the depth of analysis is controlled by choosing a
 UCI command to set the criteria for search termination as either 'depth'
 (to search a fixed  number of plies), 'nodes' (to search a fixed number of
 positions), or 'movetime' (to search a fixed number of milliseconds). The
-selection is controlled by the go_command and go_value parameters. Note
+selection is controlled by the limiter and limit parameters. Note
 that the values apply to each position analyzed. For example, if the game
 has 80 plies, and 'movetime' is set to 1000 milliseconds, the analysis will
 take 80 seconds.
 }
 \note{
 The server analysis on lichess.org use a limit of 2250000 nodes. To
-mimic this, set go_mode = 'nodes', and go_value = 2250000.
+mimic this, set limiter = 'nodes', and limit = 2250000.
 }
 \examples{
 library(bigchess)
 movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 # Modify engine_path as required for your engine location & operating system
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
-evaluate_game(movetext, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 }

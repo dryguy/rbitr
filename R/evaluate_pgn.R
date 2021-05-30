@@ -10,7 +10,7 @@
 #'   analyzed and pick up where it left off.
 #'
 #' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
-#'    mimic this, set go_mode = 'nodes', and go_value = 2250000.
+#'    mimic this, set limiter = 'nodes', and limit = 2250000.
 #'
 #' @param pgn_path A single-element character vector of the path to the pgn.
 #' @param engine_path A single-element character vector of the path to a UCI
@@ -18,11 +18,11 @@
 #' @param n_cpus A single-element integer vector of the number of cpus to use.
 #' @param n_pv A single-element integer vector of the desired number of
 #'   principal variations.
-#' @param go_mode A single-element character vector indicating the desired
+#' @param limiter A single-element character vector indicating the desired
 #'   mode of search termination. Allowed values are 'depth' (to search a fixed
 #'   number of plies), 'nodes' (to search a fixed number of nodes), and
 #'   'movetime' (to search a fixed number of milliseconds).
-#' @param go_value A single-element integer vector of the desired search depth
+#' @param limit A single-element integer vector of the desired search depth
 #'   (# of plies), search nodes (# of nodes), or search time (# of mseconds).
 #' @param mute (Boolean, default = FALSE) Suppress progress report?
 #' @param save_logs (Boolean, default = FALSE) Save progress? Recommended for
@@ -40,19 +40,19 @@
 #'   'extdata',
 #'   'fools_mate.pgn'
 #' )
-#' evaluate_pgn(pgn_path, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+#' evaluate_pgn(pgn_path, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 
-evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1, n_pv, go_mode,
-                         go_value, mute = FALSE, save_logs = FALSE) {
+evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1L, n_pv, limiter,
+                         limit, mute = FALSE, save_logs = FALSE) {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
   assertthat::assert_that(assertthat::is.string(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
   assertthat::assert_that(assertthat::is.count(n_pv))
-  assertthat::assert_that(go_mode == 'depth' |
-                          go_mode == 'nodes' |
-                          go_mode == 'movetime')
-  assertthat::assert_that(assertthat::is.count(go_value))
+  assertthat::assert_that(limiter == 'depth' |
+                          limiter == 'nodes' |
+                          limiter == 'movetime')
+  assertthat::assert_that(assertthat::is.count(limit))
   assertthat::assert_that(assertthat::is.flag(mute))
   assertthat::assert_that(assertthat::is.flag(save_logs))
   # Check for directory of saved progress
@@ -71,13 +71,13 @@ evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1, n_pv, go_mode,
   # Read the pgn
   pgn <- get_pgn(pgn_path)
   # Evaluate the games
-  evaluation_loop <- function(row_number, pgn, engine_path, n_pv, go_mode,
-                              go_value, start_time, progress_path, pgn_basename,
+  evaluation_loop <- function(row_number, pgn, engine_path, n_pv, limiter,
+                              limit, start_time, progress_path, pgn_basename,
                               file_count) {
     # Check for saved progress
     save_path <- file.path(
       progress_path,
-      paste0(pgn_basename, '_', go_mode, go_value, 'pv', n_pv, '_', row_number,
+      paste0(pgn_basename, '_', limiter, limit, 'pv', n_pv, '_', row_number,
              '.Rdata')
     )
     if (dir.exists(progress_path)) {
@@ -92,7 +92,7 @@ evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1, n_pv, go_mode,
       print(paste0('game ', row_number, ' of ', total_rows))
     }
     movetext <- clean_movetext(pgn$Movetext[row_number])
-    evaluation <- evaluate_game(movetext, engine_path, n_cpus, n_pv, go_mode, go_value)
+    evaluation <- evaluate_game(movetext, engine_path, limiter, limit, n_cpus, n_pv)
     # Show progress
     if (!mute) {
       total_time <- difftime(Sys.time(), start_time, units = 'secs')
@@ -127,11 +127,11 @@ evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1, n_pv, go_mode,
   start_time <- Sys.time()
   if (dir.exists(progress_path)) {
     existing_filenames <- list.files(progress_path)
-    file_regex <- paste0(pgn_basename, '_', go_mode, go_value, 'pv', n_pv)
+    file_regex <- paste0(pgn_basename, '_', limiter, limit, 'pv', n_pv)
     file_count <- sum(stringr::str_detect(existing_filenames, file_regex))
   } else {
     file_count <- 0
   }
-  lapply(row_numbers, evaluation_loop, pgn, engine_path , n_pv, go_mode,
-         go_value, start_time, progress_path, pgn_basename, file_count)
+  lapply(row_numbers, evaluation_loop, pgn, engine_path , n_pv, limiter,
+         limit, start_time, progress_path, pgn_basename, file_count)
 }

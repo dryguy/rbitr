@@ -7,10 +7,10 @@
 evaluate_pgn(
   pgn_path,
   engine_path,
-  n_cpus = 1,
+  n_cpus = 1L,
   n_pv,
-  go_mode,
-  go_value,
+  limiter,
+  limit,
   mute = FALSE,
   save_logs = FALSE
 )
@@ -26,12 +26,12 @@ chess engine.}
 \item{n_pv}{A single-element integer vector of the desired number of
 principal variations.}
 
-\item{go_mode}{A single-element character vector indicating the desired
+\item{limiter}{A single-element character vector indicating the desired
 mode of search termination. Allowed values are 'depth' (to search a fixed
 number of plies), 'nodes' (to search a fixed number of nodes), and
 'movetime' (to search a fixed number of milliseconds).}
 
-\item{go_value}{A single-element integer vector of the desired search depth
+\item{limit}{A single-element integer vector of the desired search depth
 (# of plies), search nodes (# of nodes), or search time (# of mseconds).}
 
 \item{mute}{(Boolean, default = FALSE) Suppress progress report?}
@@ -57,7 +57,7 @@ analyzed and pick up where it left off.
 }
 \note{
 The server analysis on lichess.org use a limit of 2250000 nodes. To
-mimic this, set go_mode = 'nodes', and go_value = 2250000.
+mimic this, set limiter = 'nodes', and limit = 2250000.
 }
 \examples{
 library(bigchess)
@@ -68,5 +68,5 @@ pgn_path <- file.path(
   'extdata',
   'fools_mate.pgn'
 )
-evaluate_pgn(pgn_path, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+evaluate_pgn(pgn_path, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 }

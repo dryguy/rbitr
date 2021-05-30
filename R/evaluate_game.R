@@ -1,4 +1,4 @@
-#' Analyze a chess game.
+#' Analyze a chess game
 #'
 #' Chess games are analyzed using a
 #' [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
@@ -26,27 +26,28 @@
 #'   UCI command to set the criteria for search termination as either 'depth'
 #'   (to search a fixed  number of plies), 'nodes' (to search a fixed number of
 #'   positions), or 'movetime' (to search a fixed number of milliseconds). The
-#'   selection is controlled by the go_command and go_value parameters. Note
+#'   selection is controlled by the limiter and limit parameters. Note
 #'   that the values apply to each position analyzed. For example, if the game
 #'   has 80 plies, and 'movetime' is set to 1000 milliseconds, the analysis will
 #'   take 80 seconds.
 #'
 #' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
-#'    mimic this, set go_mode = 'nodes', and go_value = 2250000.
+#'    mimic this, set limiter = 'nodes', and limit = 2250000.
 #'
 #' @param movetext A single-element character vector containing a sequence of
 #'   moves in standard algebraic notation (SAN).
 #' @param engine_path A single-element character vector of the path to a UCI
 #'    chess engine.
-#' @param n_cpus A single-element integer vector of the number of cpus to use.
-#' @param n_pv A single-element integer vector of the desired number of
-#'   principal variations.
-#' @param go_mode A single-element character vector indicating the desired
+#' @param limiter A single-element character vector indicating the desired
 #'   mode of search termination. Allowed values are 'depth' (to search a fixed
 #'   number of plies), 'nodes' (to search a fixed number of nodes), and
 #'   'movetime' (to search a fixed number of milliseconds).
-#' @param go_value A single-element integer vector of the desired search depth
+#' @param limit A single-element integer vector of the desired search depth
 #'   (# of plies), search nodes (# of nodes), or search time (# of mseconds).
+#' @param n_cpus (Default = 1) A single-element integer vector of the number of
+#'    cpus to use.
+#' @param n_pv (Default = 1) A single-element integer vector of the desired
+#'   number of principal variations.
 #'
 #' @return A list containing character vectors of the engine output. Each
 #'   element in the list corresponds to a position in the game, beginning with
@@ -58,19 +59,19 @@
 #' movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
-#' evaluate_game(movetext, engine_path, n_pv = 1, go_mode = 'depth', go_value = 1)
+#' evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 
-evaluate_game <- function(movetext, engine_path, n_cpus = 1, n_pv, go_mode,
-                          go_value) {
+evaluate_game <- function(movetext, engine_path, limiter, limit,
+                          n_cpus = 1L, n_pv = 1L) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(movetext))
   assertthat::assert_that(assertthat::is.string(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
   assertthat::assert_that(assertthat::is.count(n_pv))
-  assertthat::assert_that(go_mode == 'depth' |
-                          go_mode == 'nodes' |
-                          go_mode == 'movetime')
-  assertthat::assert_that(assertthat::is.count(go_value))
+  assertthat::assert_that(limiter == 'depth' |
+                          limiter == 'nodes' |
+                          limiter == 'movetime')
+  assertthat::assert_that(assertthat::is.count(limit))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
   moves <- bigchess::san2lan(moves)
@@ -85,7 +86,7 @@ evaluate_game <- function(movetext, engine_path, n_cpus = 1, n_pv, go_mode,
   engine <- bigchess::uci_ucinewgame(engine)
   engine <- bigchess::uci_isready(engine)
   engine <- bigchess::uci_position(engine)
-  go_command <- paste('go', go_mode, go_value)
+  go_command <- paste('go', limiter, limit)
   # Analyze the game
   analyze_move <- function(move_index, moves, engine, go_command) {
     moves <- paste0(moves[1:move_index], collapse = ' ')

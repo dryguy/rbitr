@@ -68,7 +68,7 @@ lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
     load(save_path)
   } else {
     evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
-                                n_pv = 1, go_mode = 'nodes', go_value = 2250000)
+                                n_pv = 1, limiter = 'nodes', limit = 2250000)
   }
   if (!use_pgn_evals | identical(evals, numeric(0))) {
     evals <- parse_gamelog(evaluation, target = 'score')
