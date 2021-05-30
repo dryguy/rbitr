@@ -11,11 +11,11 @@ convert_scores(scores, mate = 5000)
 \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
 engine.}
 
-\item{mate}{(Default = 5000) A single-element numeric vector of the value to
+\item{mate}{(Default = 5000) A single-element integer vector of the value to
 use for 'mate x'.}
 }
 \value{
-An integer vector of scores (in centipawns).
+An numeric vector of scores (in centipawns).
 }
 \description{
 A function to convert "mate x", "x upperbound", and "x lowerbound" into
