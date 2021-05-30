@@ -7,7 +7,7 @@
 clean_movetext(movetext)
 }
 \arguments{
-\item{movetext}{A character vector of pgn movetext fields.}
+\item{movetext}{A character vector of pgn movetext data}
 }
 \value{
 A character vector of clean movetext.
