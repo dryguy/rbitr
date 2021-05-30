@@ -52,7 +52,9 @@ lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
   # Get evals
     # Look in pgn first
   evals <- get_evals(pgn$Movetext[[game_number]])[[1]]
-  evals <- c(15, evals)
+  if (!identical(evals, numeric(0))) {
+    evals <- c(15, evals)
+  }
     # Then look for analysis log; analyze game if log is missing
   progress_path <- tools::file_path_sans_ext(pgn_path)
   pgn_basename <- basename(pgn_path)
@@ -65,10 +67,10 @@ lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
   if (file.exists(save_path)) {
     load(save_path)
   } else {
-    evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path, n_pv = 1,
-                                go_mode = 'nodes', go_value = 2250000)
+    evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
+                                n_pv = 1, go_mode = 'nodes', go_value = 2250000)
   }
-  if (!use_pgn_evals & !identical(evals, list(numeric(0)))) {
+  if (!use_pgn_evals | identical(evals, numeric(0))) {
     evals <- parse_gamelog(evaluation, target = 'score')
     evals <- unlist(evals)
     evals <- convert_scores(evals)
