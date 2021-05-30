@@ -5,10 +5,13 @@
 #' oddities that may not play well with all software. The `clean_movetext()`
 #' function removes everything but the moves and move numbers.
 #'
-#' @param movetext A character vector of pgn movetext fields.
+#' @param movetext A character vector of pgn movetext data
 #'
 #' @return A character vector of clean movetext.
 #' @export
+#'
+#' @seealso [rbitr::get_pgn()] to get the movetext and other data from a pgn
+#'   file.
 #'
 #' @examples
 #' clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')

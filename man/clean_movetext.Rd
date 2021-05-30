@@ -21,3 +21,7 @@ function removes everything but the moves and move numbers.
 \examples{
 clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
 }
+\seealso{
+\code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a pgn
+file.
+}
