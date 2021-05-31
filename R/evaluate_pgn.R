@@ -1,13 +1,24 @@
-#' Evaluate each chess game in a pgn file.
+#' Analyze each chess game in a pgn file
 #'
-#' @details A wrapper for rbitr's `evaluate_game()` function that evaluates each
-#'   game in the specified pgn file. Note that this can take a very long time
-#'   for pgn files with a lot of games, and even longer when searching high
-#'   numbers of principal variations and/or deep evaluations. For long runs, it
-#'   is recommended to set save_logs = TRUE. This will save the evaluation of
-#'   each game to a folder with the same name as the pgn. If the analysis has to
-#'   be stopped and restarted, it will skip games that have already been
-#'   analyzed and pick up where it left off.
+#' Chess games are analyzed using a
+#'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
+#'   engine.
+#'
+#' @details The function `evaluate_pgn()` wrapper for rbitr's `evaluate_game()`
+#'   function that applies `evaluate_game()` to each game in the specified pgn
+#'   file. Note that this can take a very long time for pgn files with a lot of
+#'   games, and even longer when searching high numbers of principal variations
+#'   or running deep evaluations. For long runs, it is recommended to set
+#'   save_logs = TRUE. This will save the evaluation of each game to a folder
+#'   with the same name as the pgn file. If the analysis has to be stopped and
+#'   restarted, it will pick up where it left off if the save_logs option was
+#'   activated.
+#'
+#' @details Since analysis can take a long time, progress is reported as each
+#'   game is completed, along with a rough estimate of the time remaining.
+#'   Progress reports may be turned off by setting mute = TRUE.
+#'
+#' @details See [rbitr::evaluate_game()] for further details.
 #'
 #' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
 #'    mimic this, set limiter = 'nodes', and limit = 2250000.
@@ -15,15 +26,16 @@
 #' @param pgn_path A single-element character vector of the path to the pgn.
 #' @param engine_path A single-element character vector of the path to a UCI
 #'    chess engine.
-#' @param n_cpus A single-element integer vector of the number of cpus to use.
-#' @param n_pv A single-element integer vector of the desired number of
-#'   principal variations.
 #' @param limiter A single-element character vector indicating the desired
 #'   mode of search termination. Allowed values are 'depth' (to search a fixed
 #'   number of plies), 'nodes' (to search a fixed number of nodes), and
 #'   'movetime' (to search a fixed number of milliseconds).
 #' @param limit A single-element integer vector of the desired search depth
 #'   (# of plies), search nodes (# of nodes), or search time (# of mseconds).
+#' @param n_cpus (Default = 1) A single-element integer vector of the number of
+#'   cpus to use.
+#' @param n_pv (Default = 1) A single-element integer vector of the desired
+#'   number of principal variations.
 #' @param mute (Boolean, default = FALSE) Suppress progress report?
 #' @param save_logs (Boolean, default = FALSE) Save progress? Recommended for
 #'   long analyses in case it has to be stopped before finishing all games.
@@ -31,8 +43,12 @@
 #' @return A list of gamelogs (see `evaluate_game()` for details).
 #' @export
 #'
+#' @seealso
+#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated pgn.
+#'   * [rbitr::get_pgn()] for loading pgn files.
+#'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'
 #' @examples
-#' library(bigchess)
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 #' pgn_path <- file.path(
@@ -40,10 +56,10 @@
 #'   'extdata',
 #'   'fools_mate.pgn'
 #' )
-#' evaluate_pgn(pgn_path, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
-
-evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1L, n_pv, limiter,
-                         limit, mute = FALSE, save_logs = FALSE) {
+#' evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
+evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
+                         n_cpus = 1L, n_pv = 1L,
+                         mute = FALSE, save_logs = FALSE) {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
   assertthat::assert_that(assertthat::is.string(engine_path))
@@ -92,7 +108,8 @@ evaluate_pgn <- function(pgn_path, engine_path, n_cpus = 1L, n_pv, limiter,
       print(paste0('game ', row_number, ' of ', total_rows))
     }
     movetext <- clean_movetext(pgn$Movetext[row_number])
-    evaluation <- evaluate_game(movetext, engine_path, limiter, limit, n_cpus, n_pv)
+    evaluation <- evaluate_game(movetext, engine_path, limiter, limit,
+                                n_cpus, n_pv)
     # Show progress
     if (!mute) {
       total_time <- difftime(Sys.time(), start_time, units = 'secs')

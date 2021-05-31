@@ -2,15 +2,15 @@
 % Please edit documentation in R/evaluate_pgn.R
 \name{evaluate_pgn}
 \alias{evaluate_pgn}
-\title{Evaluate each chess game in a pgn file.}
+\title{Analyze each chess game in a pgn file}
 \usage{
 evaluate_pgn(
   pgn_path,
   engine_path,
-  n_cpus = 1L,
-  n_pv,
   limiter,
   limit,
+  n_cpus = 1L,
+  n_pv = 1L,
   mute = FALSE,
   save_logs = FALSE
 )
@@ -21,11 +21,6 @@ evaluate_pgn(
 \item{engine_path}{A single-element character vector of the path to a UCI
 chess engine.}
 
-\item{n_cpus}{A single-element integer vector of the number of cpus to use.}
-
-\item{n_pv}{A single-element integer vector of the desired number of
-principal variations.}
-
 \item{limiter}{A single-element character vector indicating the desired
 mode of search termination. Allowed values are 'depth' (to search a fixed
 number of plies), 'nodes' (to search a fixed number of nodes), and
@@ -33,6 +28,12 @@ number of plies), 'nodes' (to search a fixed number of nodes), and
 
 \item{limit}{A single-element integer vector of the desired search depth
 (# of plies), search nodes (# of nodes), or search time (# of mseconds).}
+
+\item{n_cpus}{(Default = 1) A single-element integer vector of the number of
+cpus to use.}
+
+\item{n_pv}{(Default = 1) A single-element integer vector of the desired
+number of principal variations.}
 
 \item{mute}{(Boolean, default = FALSE) Suppress progress report?}
 
@@ -43,24 +44,32 @@ long analyses in case it has to be stopped before finishing all games.}
 A list of gamelogs (see \code{evaluate_game()} for details).
 }
 \description{
-Evaluate each chess game in a pgn file.
+Chess games are analyzed using a
+\href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
+engine.
 }
 \details{
-A wrapper for rbitr's \code{evaluate_game()} function that evaluates each
-game in the specified pgn file. Note that this can take a very long time
-for pgn files with a lot of games, and even longer when searching high
-numbers of principal variations and/or deep evaluations. For long runs, it
-is recommended to set save_logs = TRUE. This will save the evaluation of
-each game to a folder with the same name as the pgn. If the analysis has to
-be stopped and restarted, it will skip games that have already been
-analyzed and pick up where it left off.
+The function \code{evaluate_pgn()} wrapper for rbitr's \code{evaluate_game()}
+function that applies \code{evaluate_game()} to each game in the specified pgn
+file. Note that this can take a very long time for pgn files with a lot of
+games, and even longer when searching high numbers of principal variations
+or running deep evaluations. For long runs, it is recommended to set
+save_logs = TRUE. This will save the evaluation of each game to a folder
+with the same name as the pgn file. If the analysis has to be stopped and
+restarted, it will pick up where it left off if the save_logs option was
+activated.
+
+Since analysis can take a long time, progress is reported as each
+game is completed, along with a rough estimate of the time remaining.
+Progress reports may be turned off by setting mute = TRUE.
+
+See \code{\link[=evaluate_game]{evaluate_game()}} for further details.
 }
 \note{
 The server analysis on lichess.org use a limit of 2250000 nodes. To
 mimic this, set limiter = 'nodes', and limit = 2250000.
 }
 \examples{
-library(bigchess)
 # Modify engine_path as required for your engine location & operating system
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 pgn_path <- file.path(
@@ -68,5 +77,12 @@ pgn_path <- file.path(
   'extdata',
   'fools_mate.pgn'
 )
-evaluate_pgn(pgn_path, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
+evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
+}
+\seealso{
+\itemize{
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from an evaluated pgn.
+\item \code{\link[=get_pgn]{get_pgn()}} for loading pgn files.
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+}
 }
