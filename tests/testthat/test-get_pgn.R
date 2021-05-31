@@ -13,11 +13,11 @@ fools_mate <- tibble::tibble(
   Movetext = '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 )
 test_that('get_pgn gets an export format pgn', {
-  pgn <- get_pgn(file.path(pgn_path, 'fools_mate.pgn'))
+  pgn <- get_pgn(file.path(pgn_path, 'export_format.pgn'))
   expect_identical(pgn[1, ], fools_mate)
 })
 test_that('get_pgn gets an import format pgn', {
-  pgn <- get_pgn(file.path(pgn_path, 'pathological_spacing.pgn'))
+  pgn <- get_pgn(file.path(pgn_path, 'import_format.pgn'))
   expect_identical(pgn, fools_mate)
 })
 test_that('get_pgn gets an empty pgn', {
@@ -26,5 +26,5 @@ test_that('get_pgn gets an empty pgn', {
 })
 test_that('get_pgn handles 2 empty lines', {
   pgn <- get_pgn(file.path(pgn_path, 'double_blank_eof.pgn'))
-  expect_identical(pgn$ECO, 'D11')
+  expect_identical(pgn$Date, '1886.01.11')
 })

@@ -1,12 +1,10 @@
-[Event "World Championship 1st"]
-[Site "USA"]
+[Event "World Chess Championship 1886"]
+[Site "New York City, New York, U.S.A."]
 [Date "1886.01.11"]
 [Round "1"]
 [White "Zukertort, Johannes H"]
 [Black "Steinitz, Wilhelm"]
 [Result "0-1"]
-[ECO "D11"]
-[EventDate "1886.01.11"]
 
 1.d4 d5 2.c4 c6 3.e3 Bf5 4.Nc3 e6 5.Nf3 Nd7 6.a3 Bd6 7.c5 Bc7 8.b4 e5 9.Be2
 Ngf6 10.Bb2 e4 11.Nd2 h5 12.h3 Nf8 13.a4 Ng6 14.b5 Nh4 15.g3 Ng2+ 16.Kf1 Nxe3+
