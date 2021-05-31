@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_acpl.R
 \name{get_acpl}
 \alias{get_acpl}
-\title{Calculate the average centipawn loss.}
+\title{Calculate the average centipawn loss}
 \usage{
 get_acpl(
   scores,
@@ -14,14 +14,14 @@ get_acpl(
 )
 }
 \arguments{
-\item{scores}{A numeric or integer vector of evaluations, in centipawns.}
+\item{scores}{A numeric vector of evaluations, in centipawns.}
 
 \item{color}{A single-element character vector indicating which side to
 evaluate. Allowed values are 'black' or 'white'.}
 
-\item{cap}{(Default = NULL) A single-element numeric or integer vector
-indicating the threshold for capping a move's loss (or excluding the move
-from the average).}
+\item{cap}{(Default = NULL) A single-element numeric vector indicating the
+threshold for capping a move's loss (or excluding the move from the
+average).}
 
 \item{cap_action}{(Default = NULL) A single-element character vector
 indicating whether to exclude scores outside the range [-cap, cap], or to
@@ -30,7 +30,7 @@ replace them with the cap. Allowed values are 'exclude', 'replace', or
 
 \item{first_ply}{(Default = 1) A single-element integer vector indicating the
 first ply to be included in the calculation. May not be larger than the
-number of elements in \code{score}.}
+number of elements in \code{scores}.}
 
 \item{to_move}{(Default = 'white') A single-element character vector
 indicating which side's turn it is.}
@@ -39,15 +39,17 @@ indicating which side's turn it is.}
 A single-element integer vector of the average centipawn loss.
 }
 \description{
-Calculate the average centipawn loss.
+A function to calculate average centipawn loss (ACPL) using any of several
+different definitions.
 }
 \details{
-Calculates the average centipawn loss (ACPL) for the side indicated
-by the \code{color} parameter. The \code{score} parameter is assumed to begin with a
-score for the initial position, prior to the first move. Note that when
-pgn files store evaluation scores, the score for the initial position is
-omitted. It is up to the user to supply a score for the initial position
-before calling \code{get_acpl()}.
+The function \code{get_acpl()} calculates the average centipawn loss
+(ACPL) for the side indicated by the \code{color} parameter. The \code{scores}
+parameter is assumed to begin with a score for the initial position, prior
+to the first move. Note that pgn files do not store an evaluation of the
+initial position, whereas chess engines usually will provide an evaluation
+of the initial position. When using data from a pgn, it is up to the user
+to supply a score for the initial position before calling \code{get_acpl()}.
 
 Evaluations may be capped to avoid having blunders or missed mates
 result in excessively large ACPL. If the \code{cap} parameter is set, then
@@ -71,18 +73,27 @@ The website lichess.org uses a different method, in which
 evaluations outside the range [-1000, 1000] are replaced with +-1000, and
 the initial position is always given a score of 15. To replicate the
 lichess ACPL, set \code{cap} to 1000, \code{cap_action} to 'replace', and make sure
-that the first element of the \code{scores} parameter is equal to 15.
+that the first element of the \code{scores} parameter is an evaluation of the
+initial position and is equal to 15.
 }
 \note{
-For games that use alternative starting positions, it is possible for
-black to have first move. In these situations, set the \code{to_move} parameter
-to 'black'.
+For games that use alternative starting positions, or for partial
+games, it is possible for black to have the first move. In these
+situations, set the \code{to_move} parameter to 'black'.
 }
 \examples{
-scores <- c(5, 29, -94, 67, 76, 154, -31, 1000, 1000)
-get_acpl(scores, 'white', first_ply = 2)
+scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
+get_acpl(scores, 'white')
 }
 \references{
 M. Guid, I. Bratko. Computer analysis of world chess champions.
-ICGA Journal, 29(2):65–73, 2006.
+ICGA Journal, 29(2):65-73, 2006.
+}
+\seealso{
+\itemize{
+\item \code{\link[=get_imb]{get_imb()}} to determine inaccuracies, mistakes, and blunders.
+\item \code{\link[=get_evals]{get_evals()}} to load scores from a pgn file.
+\item \code{\link[=evaluate_game]{evaluate_game()}} or \code{\link[=evaluate_pgn]{evaluate_pgn()}} to calculate scores.
+\item \code{\link[=convert_scores]{convert_scores()}} to set values for 'mate x'.
+}
 }

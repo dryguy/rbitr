@@ -1,11 +1,15 @@
-#' Calculate the average centipawn loss.
+#' Calculate the average centipawn loss
 #'
-#' @details Calculates the average centipawn loss (ACPL) for the side indicated
-#'   by the `color` parameter. The `score` parameter is assumed to begin with a
-#'   score for the initial position, prior to the first move. Note that when
-#'   pgn files store evaluation scores, the score for the initial position is
-#'   omitted. It is up to the user to supply a score for the initial position
-#'   before calling `get_acpl()`.
+#' A function to calculate average centipawn loss (ACPL) using any of several
+#'   different definitions.
+#'
+#' @details The function `get_acpl()` calculates the average centipawn loss
+#'   (ACPL) for the side indicated by the `color` parameter. The `scores`
+#'   parameter is assumed to begin with a score for the initial position, prior
+#'   to the first move. Note that pgn files do not store an evaluation of the
+#'   initial position, whereas chess engines usually will provide an evaluation
+#'   of the initial position. When using data from a pgn, it is up to the user
+#'   to supply a score for the initial position before calling `get_acpl()`.
 #'
 #' @details Evaluations may be capped to avoid having blunders or missed mates
 #'   result in excessively large ACPL. If the `cap` parameter is set, then
@@ -29,25 +33,26 @@
 #'   evaluations outside the range \[-1000, 1000\] are replaced with +-1000, and
 #'   the initial position is always given a score of 15. To replicate the
 #'   lichess ACPL, set `cap` to 1000, `cap_action` to 'replace', and make sure
-#'   that the first element of the `scores` parameter is equal to 15.
+#'   that the first element of the `scores` parameter is an evaluation of the
+#'   initial position and is equal to 15.
 #'
-#' @note For games that use alternative starting positions, it is possible for
-#'   black to have first move. In these situations, set the `to_move` parameter
-#'   to 'black'.
+#' @note For games that use alternative starting positions, or for partial
+#'   games, it is possible for black to have the first move. In these
+#'   situations, set the `to_move` parameter to 'black'.
 #'
-#' @param scores A numeric or integer vector of evaluations, in centipawns.
+#' @param scores A numeric vector of evaluations, in centipawns.
 #' @param color A single-element character vector indicating which side to
 #'   evaluate. Allowed values are 'black' or 'white'.
-#' @param cap (Default = NULL) A single-element numeric or integer vector
-#'   indicating the threshold for capping a move's loss (or excluding the move
-#'   from the average).
+#' @param cap (Default = NULL) A single-element numeric vector indicating the
+#'   threshold for capping a move's loss (or excluding the move from the
+#'   average).
 #' @param cap_action (Default = NULL) A single-element character vector
 #'   indicating whether to exclude scores outside the range \[-cap, cap\], or to
 #'   replace them with the cap. Allowed values are 'exclude', 'replace', or
 #'   'none'.
 #' @param first_ply (Default = 1) A single-element integer vector indicating the
 #'   first ply to be included in the calculation. May not be larger than the
-#'   number of elements in `score`.
+#'   number of elements in `scores`.
 #' @param to_move (Default = 'white') A single-element character vector
 #'   indicating which side's turn it is.
 #'
@@ -55,12 +60,17 @@
 #' @export
 #'
 #' @references M. Guid, I. Bratko. Computer analysis of world chess champions.
-#'   ICGA Journal, 29(2):65–73, 2006.
+#'   ICGA Journal, 29(2):65-73, 2006.
+#'
+#' @seealso
+#' * [rbitr::get_imb()] to determine inaccuracies, mistakes, and blunders.
+#' * [rbitr::get_evals()] to load scores from a pgn file.
+#' * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
+#' * [rbitr::convert_scores()] to set values for 'mate x'.
 #'
 #' @examples
-#' scores <- c(5, 29, -94, 67, 76, 154, -31, 1000, 1000)
-#' get_acpl(scores, 'white', first_ply = 2)
-
+#' scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
+#' get_acpl(scores, 'white')
 get_acpl <- function(scores, color, cap = NULL, cap_action = 'none',
                      first_ply = 1, to_move = 'white') {
   # Validate input
@@ -75,6 +85,9 @@ get_acpl <- function(scores, color, cap = NULL, cap_action = 'none',
   assertthat::assert_that(max(first_ply, na.rm = TRUE) <= length(scores))
   assertthat::assert_that(assertthat::is.count(min(first_ply, na.rm = TRUE)))
   assertthat::assert_that(to_move == 'white' | to_move == 'black')
+  if (cap_action == 'replace' | cap_action == 'exclude') {
+    assertthat::assert_that(!is.null(cap))
+  }
   # Whose turn is it?
   if (to_move == 'black') {
     scores <- c(NA, scores)
