@@ -1,9 +1,13 @@
-#' Remove comments and annotations from movetext.
+#' Remove comments and annotations from movetext
+#'
+#' Removes comments, annotations, and other formatting that would interfere with
+#'   engine analysis.
 #'
 #' The [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2)
-#' allows comments, annotations, game termination markers, and other formatting
-#' oddities that may not play well with all software. The `clean_movetext()`
-#' function removes everything but the moves and move numbers.
+#'   allows comments, annotations, game termination markers, and other
+#'   formatting oddities that may not play well with all software. The
+#'   `clean_movetext()` function removes everything but the moves and move
+#'   numbers.
 #'
 #' @param movetext A character vector of pgn movetext data
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_movetext.R
 \name{clean_movetext}
 \alias{clean_movetext}
-\title{Remove comments and annotations from movetext.}
+\title{Remove comments and annotations from movetext}
 \usage{
 clean_movetext(movetext)
 }
@@ -13,10 +13,15 @@ clean_movetext(movetext)
 A character vector of clean movetext.
 }
 \description{
+Removes comments, annotations, and other formatting that would interfere with
+engine analysis.
+}
+\details{
 The \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2}{pgn specification}
-allows comments, annotations, game termination markers, and other formatting
-oddities that may not play well with all software. The \code{clean_movetext()}
-function removes everything but the moves and move numbers.
+allows comments, annotations, game termination markers, and other
+formatting oddities that may not play well with all software. The
+\code{clean_movetext()} function removes everything but the moves and move
+numbers.
 }
 \examples{
 clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
