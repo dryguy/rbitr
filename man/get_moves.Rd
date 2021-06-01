@@ -2,23 +2,36 @@
 % Please edit documentation in R/get_moves.R
 \name{get_moves}
 \alias{get_moves}
-\title{Gets LAN format moves from a pgn movetext vector}
+\title{Get the chess moves from a character vector containing movetext}
 \usage{
 get_moves(movetext)
 }
 \arguments{
-\item{movetext}{A character vector of one or more movetext fields from a pgn.}
+\item{movetext}{A character vector of movetext.}
 }
 \value{
 A list of character vectors, where each vector contains the LAN
 format moves of the corresponding movetext.
 }
 \description{
-Given a character vector of movetext (typically obtained from a pgn using
-rbitr's \code{get_pgn()} function), return a list of character vectors of LAN
-format moves.
+Given a character vector of movetext, return a list of character vectors
+each containing moves in long algebraic notation (LAN).
+}
+\details{
+The movetext field of a pgn record contains chess moves in standard
+algebraic notation, along with optional annotations and comments. The
+\code{get_moves()} function extracts the individual moves and converts them to
+long algebraic notation (LAN). The movetext vectors are typically obtained
+from a pgn file using the \code{get_pgn()} function.
 }
 \examples{
-movetext <- c('1. e4 e5', '1. h3 h6')
+movetext <- c('1. e4 {Best by test.} e5', '1. h3?! h6')
 get_moves(movetext)
+}
+\seealso{
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a pgn file.
+\item \code{\link[=clean_movetext]{clean_movetext()}} to remove comments and annotations from
+movetext.
+}
 }
