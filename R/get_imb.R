@@ -1,47 +1,60 @@
-#' Identify inaccuracies, mistakes, and blunders.
+#' Identify chess inaccuracies, mistakes, and blunders
 #'
-#' The function `get_imb()` is meant to mimic the inaccuracy, mistake, and
-#'   blunder stats provided by the analysis tool on
-#'   [lichess.org](http://lichess.org). When analyzing using the same engine and
-#'   the same engine settings that lichess uses, `get_imb()` should produce
-#'   numbers very close to those given by lichess. Some differences are expected
-#'   however, since most chess engines are non-deterministic for a variety of
-#'   reasons.
-#'
-#' @note The engine used by lichess.org changes from time to time as engine
-#'   technology improves. Refer to their website for information on the engine
-#'   currently in use.
+#' The function `get_imb()` identifies inaccuracies, mistakes, and blunders in a
+#'    chess game, based on how much the evaluation changes after a move.
 #'
 #' @details The user must provide a vector of evaluations for the game
 #'   (`scores`). These should include an evaluation for the initial position,
 #'   before white has moved. In addition, a vector of the game's moves
 #'   (`moves`), and a vector of the engine's preferred moves (`bestmoves`) must
-#'   also be provided. The move data is used to avoid marking the best available
-#'   move as an inaccuracy, mistake, or blunder. The `color` parameter is used
-#'   to indicate which side to evaluate.
+#'   also be provided. The move data is used to avoid marking a move as an
+#'   inaccuracy, mistake, or blunder when it is the best move available. The
+#'   `color` parameter is used to indicate which side to evaluate.
 #'
-#' @param scores A numeric or integer vector of chess engine evaluations.
+#' @details The thresholds for marking moves are based on evaluations after
+#'   applying an
+#'   [exponential scaling function](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes)
+#'   (2 / (1 + exp(-0.004 * scores)) - 1), borrowed from
+#'   [lichess.org](lichess.org). This function was designed to downplay the
+#'   impact of less-than-perfect play when one side is far ahead. The idea being
+#'   that the player who is ahead may avoid moves that lead to material gain if
+#'   such moves lead to complicated tactics. In such positions players often go
+#'   for simple and solid moves that maintain a clear advantage. Such moves
+#'   aren't really blunders. Similarly, a player in a lost position may make
+#'   moves designed to complicate the position and create chances for a
+#'   comeback, even if the move objectively loses material with perfect play by
+#'   the opponent.
+#'
+#' @note Since the calculations are based on the ones used by
+#'   [lichess.org](lichess.org), `get_imb()` should produce numbers very close
+#'   to those given by lichess. To replicate the lichess calculation, use the
+#'   default settings for `cap` (1000), `cap_action` ('replace'), `first_ply`
+#'   (1), `to_move` ('white'), and `mate` (> 1000). In addition, the first
+#'   element of `scores` should be an evaluation of the initial position, and be
+#'   equal to 15. The results may not be identical to lichess (even if the same
+#'   engine is used) since most chess engines are non-deterministic for a
+#'   variety of reasons, but they should be fairly close.
+#'
+#' @param scores A numeric vector of chess engine evaluations.
 #' @param moves A character vector of moves in the same format as `bestmoves`.
 #' @param bestmoves A character vector of moves in the same format as `moves`.
 #' @param color A single-element character vector indicating which side to
 #'   analyze. Allowed values are 'black' or 'white'.
-#' @param cap (Default = 1000) A single-element integer or numeric vector of the
-#'   maximum allowed value for centipawn score. The default of 1000 centipawns
-#'   is the value used by lichess.
+#' @param cap (Default = 1000) A single-element numeric vector of the
+#'   maximum allowed value for centipawn score.
 #' @param cap_action (Default = 'replace') A single-element character vector
 #'   indicating whether to exclude scores outside the range \[-cap, cap\], or to
 #'   replace them with the cap. Allowed values are 'exclude', 'replace', or
-#'   'none'. The default of 'replace' is required to mimic lichess.
+#'   'none'.
 #' @param first_ply (Default = 1) A single-element integer vector indicating the
 #'   first ply to be included in the calculation. May not be larger than the
-#'   number of elements in `score`. A value of 1 is required to mimic lichess.
+#'   number of elements in `score`.
 #' @param to_move (Default = 'white') A single-element character vector
-#'   indicating which side's turn it is. The default value of 'white' is
-#'   required to mimic lichess.
-#' @param mate (Default = 50000) A single-element integer or numeric vector of
+#'   indicating which side's turn it is.
+#' @param mate (Default = 50000) A single-element numeric vector of
 #'   the centipawn value to assign for mate. Should always be set higher than
 #'   the setting for cap. It should also be higher than the highest numerical
-#'   evaluation in the game to avoid unexpected behaviour.
+#'   evaluation in the game to avoid unexpected behavior.
 #'
 #' @return A named list of $inaccuracies, $mistakes, and $blunders.
 #' @export
@@ -150,6 +163,9 @@ get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
                                  wcl >= 0.1 &
                                  wcl  < 0.2 &
                                  moves != bestmoves)))
+  blunders <- blunders[order(blunders)]
+  mistakes <- mistakes[order(mistakes)]
+  inaccuracies <- inaccuracies[order(inaccuracies)]
   return(list(
     inaccuracies = inaccuracies,
     mistakes = mistakes,
