@@ -63,10 +63,10 @@
 #'   ICGA Journal, 29(2):65-73, 2006.
 #'
 #' @seealso
-#' * [rbitr::get_imb()] to determine inaccuracies, mistakes, and blunders.
-#' * [rbitr::get_evals()] to load scores from a pgn file.
-#' * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
-#' * [rbitr::convert_scores()] to set values for 'mate x'.
+#'   * [rbitr::get_imb()] to determine inaccuracies, mistakes, and blunders.
+#'   * [rbitr::get_evals()] to load scores from a pgn file.
+#'   * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
+#'   * [rbitr::convert_scores()] to set values for 'mate x'.
 #'
 #' @examples
 #' scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
