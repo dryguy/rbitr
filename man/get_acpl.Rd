@@ -64,10 +64,12 @@ function \code{convert_scores()} may be used for this conversion.
 
 The method for calculating average centipawn loss varies.
 In Guid & Bratko, 'MeanLoss' is calculated only after excluding
-the first 12 moves, and also after excluding moves where both the best move
+the first 11 moves, and also after excluding moves where both the best move
 and the played move result in evaluations outside the range [-200, 200].
 To replicate Guid & Bratko's MeanLoss, set \code{cap} to 200, \code{cap_action} to
-'exclude' and, \code{first_ply} to 25.
+'exclude' and, \code{first_ply} to 23. (The ply count starts with the initial
+position, so the beginning of the second move occurs at ply 3, and each
+subsequent move begins on an odd ply.)
 
 The website lichess.org uses a different method, in which
 evaluations outside the range [-1000, 1000] are replaced with +-1000, and
