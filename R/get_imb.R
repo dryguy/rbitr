@@ -4,8 +4,15 @@
 #'    chess game, based on how much the evaluation changes after a move.
 #'
 #' @details The user must provide a vector of evaluations for the game
-#'   (`scores`). These should include an evaluation for the initial position,
-#'   before white has moved. In addition, a vector of the game's moves
+#'   via the `scores` parameter. The sign convention is that positive values
+#'   indicate white is ahead, while negative values indicate black is ahead.
+#'   Evaluation produced using a UCI chess engine use a different convention,
+#'   where the score is from the player's point of view. Use the function
+#'   `convert_scores` to change the sign convention before passing the
+#'   evaluations to `get_imb()`.
+#'
+#' @details The `scores` parameter should include an evaluation for the initial
+#'   position, before white has moved. In addition, a vector of the game's moves
 #'   (`moves`), and a vector of the engine's preferred moves (`bestmoves`) must
 #'   also be provided. The move data is used to avoid marking a move as an
 #'   inaccuracy, mistake, or blunder when it is the best move available. The
@@ -15,15 +22,28 @@
 #'   applying an
 #'   [exponential scaling function](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes)
 #'   (2 / (1 + exp(-0.004 * scores)) - 1), borrowed from
-#'   [lichess.org](lichess.org). This function was designed to downplay the
-#'   impact of less-than-perfect play when one side is far ahead. The idea being
-#'   that the player who is ahead may avoid moves that lead to material gain if
-#'   such moves lead to complicated tactics. In such positions players often go
-#'   for simple and solid moves that maintain a clear advantage. Such moves
-#'   aren't really blunders. Similarly, a player in a lost position may make
-#'   moves designed to complicate the position and create chances for a
+#'   [lichess.org](lichess.org). This function downplays the impact of
+#'   less-than-perfect play when one side is far ahead. The idea being that the
+#'   player who is ahead may avoid moves that lead to material gain if those
+#'   moves lead to complicated tactics. In such positions players often go for
+#'   simple and solid moves that maintain a clear advantage. These types of
+#'   moves aren't really blunders. Similarly, a player in a lost position may
+#'   make moves designed to complicate the position and create chances for a
 #'   comeback, even if the move objectively loses material with perfect play by
 #'   the opponent.
+#'
+#' @details The value of `cap` serves a similar purpose to move scaling. That is
+#'   the player with a decisive advantage can have valid reasons not to play the
+#'   best move. The cap can be disabled by setting the parameter `cap_action` to
+#'   'none'.
+#'
+#' @details Some engines may give poor evaluations to valid opening moves. To
+#'   skip the classification of opening moves, set the `first_ply` parameter to
+#'   indicate the desired starting ply. For example, to start from move 8, set
+#'   `first_ply` to 15. (The ply count starts with the initial position, so the
+#'   beginning of the second move occurs at ply 3, and each subsequent move
+#'   begins on an odd ply.) If starting from a position where black is to move,
+#'   the parameter `to_move` must be set to 'black'.
 #'
 #' @note Since the calculations are based on the ones used by
 #'   [lichess.org](lichess.org), `get_imb()` should produce numbers very close
@@ -35,29 +55,40 @@
 #'   engine is used) since most chess engines are non-deterministic for a
 #'   variety of reasons, but they should be fairly close.
 #'
-#' @param scores A numeric vector of chess engine evaluations.
+#' @param scores A numeric vector of chess engine evaluations. Positions that
+#'   are mate in x should be indicated by the same numeric value as the `mate`
+#'   parameter (with negative values when black is to give mate).
 #' @param moves A character vector of moves in the same format as `bestmoves`.
 #' @param bestmoves A character vector of moves in the same format as `moves`.
 #' @param color A single-element character vector indicating which side to
 #'   analyze. Allowed values are 'black' or 'white'.
 #' @param cap (Default = 1000) A single-element numeric vector of the
-#'   maximum allowed value for centipawn score.
+#'   maximum allowed value for centipawn score. Should always be less than the
+#'   setting for mate.
 #' @param cap_action (Default = 'replace') A single-element character vector
-#'   indicating whether to exclude scores outside the range \[-cap, cap\], or to
-#'   replace them with the cap. Allowed values are 'exclude', 'replace', or
-#'   'none'.
+#'   indicating whether to exclude scores outside the range \[-cap, cap\], to
+#'   replace them with the cap, or to not use a cap. Allowed values are
+#'   'exclude', 'replace', or 'none'.
 #' @param first_ply (Default = 1) A single-element integer vector indicating the
 #'   first ply to be included in the calculation. May not be larger than the
 #'   number of elements in `score`.
 #' @param to_move (Default = 'white') A single-element character vector
 #'   indicating which side's turn it is.
-#' @param mate (Default = 50000) A single-element numeric vector of
-#'   the centipawn value to assign for mate. Should always be set higher than
-#'   the setting for cap. It should also be higher than the highest numerical
-#'   evaluation in the game to avoid unexpected behavior.
+#' @param mate (Default = 50000) A single-element numeric vector indicating
+#'   what centipawn value was used to represent mate in the `scores` parameter.
+#'   Should always be greater than the setting for `cap`. It should also be
+#'   greater than the largest non-mating evaluation in the game to avoid
+#'   unexpected behavior.
 #'
-#' @return A named list of $inaccuracies, $mistakes, and $blunders.
+#' @return A named list of move numbers for the $inaccuracies, $mistakes, and
+#'   $blunders.
 #' @export
+#'
+#' @seelaso
+#'   * [rbitr::get_acpl()] for calculating average centipawn loss.
+#'   * [rbitr::get_evals()] to load scores from a pgn file.
+#'   * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
+#'   * [rbitr::convert_scores()] to set values for 'mate x'.
 #'
 #' @examples
 #' scores <- c(12, -171, -72, -50000, -50000)
@@ -118,17 +149,8 @@ get_imb <- function(scores, moves, bestmoves, color, cap = 1000,
     bestmoves <- bestmoves[black_ply]
     color_index <- -1
   }
-  #mate <- 5000
   mid  <-  999
   low  <-  700
-  if (length(current_cp) != length(moves)) {
-    print('moves != current_cp')
-    print(moves)
-    print(current_cp)
-  }
-  if (length(bestmoves) > length(moves)) {
-    bestmoves <- bestmoves[1:length(moves)]
-  }
   blunders <- unique(c(which(previous_cp ==  mate &
                              current_cp  <=   low &
                              moves != bestmoves),

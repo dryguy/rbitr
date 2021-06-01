@@ -17,7 +17,9 @@ get_imb(
 )
 }
 \arguments{
-\item{scores}{A numeric vector of chess engine evaluations.}
+\item{scores}{A numeric vector of chess engine evaluations. Positions that
+are mate in x should be indicated by the same numeric value as the \code{mate}
+parameter (with negative values when black is to give mate).}
 
 \item{moves}{A character vector of moves in the same format as \code{bestmoves}.}
 
@@ -27,12 +29,13 @@ get_imb(
 analyze. Allowed values are 'black' or 'white'.}
 
 \item{cap}{(Default = 1000) A single-element numeric vector of the
-maximum allowed value for centipawn score.}
+maximum allowed value for centipawn score. Should always be less than the
+setting for mate.}
 
 \item{cap_action}{(Default = 'replace') A single-element character vector
-indicating whether to exclude scores outside the range [-cap, cap], or to
-replace them with the cap. Allowed values are 'exclude', 'replace', or
-'none'.}
+indicating whether to exclude scores outside the range [-cap, cap], to
+replace them with the cap, or to not use a cap. Allowed values are
+'exclude', 'replace', or 'none'.}
 
 \item{first_ply}{(Default = 1) A single-element integer vector indicating the
 first ply to be included in the calculation. May not be larger than the
@@ -41,13 +44,15 @@ number of elements in \code{score}.}
 \item{to_move}{(Default = 'white') A single-element character vector
 indicating which side's turn it is.}
 
-\item{mate}{(Default = 50000) A single-element numeric vector of
-the centipawn value to assign for mate. Should always be set higher than
-the setting for cap. It should also be higher than the highest numerical
-evaluation in the game to avoid unexpected behavior.}
+\item{mate}{(Default = 50000) A single-element numeric vector indicating
+what centipawn value was used to represent mate in the \code{scores} parameter.
+Should always be greater than the setting for \code{cap}. It should also be
+greater than the largest non-mating evaluation in the game to avoid
+unexpected behavior.}
 }
 \value{
-A named list of $inaccuracies, $mistakes, and $blunders.
+A named list of move numbers for the $inaccuracies, $mistakes, and
+$blunders.
 }
 \description{
 The function \code{get_imb()} identifies inaccuracies, mistakes, and blunders in a
@@ -55,8 +60,15 @@ chess game, based on how much the evaluation changes after a move.
 }
 \details{
 The user must provide a vector of evaluations for the game
-(\code{scores}). These should include an evaluation for the initial position,
-before white has moved. In addition, a vector of the game's moves
+via the \code{scores} parameter. The sign convention is that positive values
+indicate white is ahead, while negative values indicate black is ahead.
+Evaluation produced using a UCI chess engine use a different convention,
+where the score is from the player's point of view. Use the function
+\code{convert_scores} to change the sign convention before passing the
+evaluations to \code{get_imb()}.
+
+The \code{scores} parameter should include an evaluation for the initial
+position, before white has moved. In addition, a vector of the game's moves
 (\code{moves}), and a vector of the engine's preferred moves (\code{bestmoves}) must
 also be provided. The move data is used to avoid marking a move as an
 inaccuracy, mistake, or blunder when it is the best move available. The
@@ -66,15 +78,28 @@ The thresholds for marking moves are based on evaluations after
 applying an
 \href{https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes}{exponential scaling function}
 (2 / (1 + exp(-0.004 * scores)) - 1), borrowed from
-\url{lichess.org}. This function was designed to downplay the
-impact of less-than-perfect play when one side is far ahead. The idea being
-that the player who is ahead may avoid moves that lead to material gain if
-such moves lead to complicated tactics. In such positions players often go
-for simple and solid moves that maintain a clear advantage. Such moves
-aren't really blunders. Similarly, a player in a lost position may make
-moves designed to complicate the position and create chances for a
+\url{lichess.org}. This function downplays the impact of
+less-than-perfect play when one side is far ahead. The idea being that the
+player who is ahead may avoid moves that lead to material gain if those
+moves lead to complicated tactics. In such positions players often go for
+simple and solid moves that maintain a clear advantage. These types of
+moves aren't really blunders. Similarly, a player in a lost position may
+make moves designed to complicate the position and create chances for a
 comeback, even if the move objectively loses material with perfect play by
 the opponent.
+
+The value of \code{cap} serves a similar purpose to move scaling. That is
+the player with a decisive advantage can have valid reasons not to play the
+best move. The cap can be disabled by setting the parameter \code{cap_action} to
+'none'.
+
+Some engines may give poor evaluations to valid opening moves. To
+skip the classification of opening moves, set the \code{first_ply} parameter to
+indicate the desired starting ply. For example, to start from move 8, set
+\code{first_ply} to 15. (The ply count starts with the initial position, so the
+beginning of the second move occurs at ply 3, and each subsequent move
+begins on an odd ply.) If starting from a position where black is to move,
+the parameter \code{to_move} must be set to 'black'.
 }
 \note{
 Since the calculations are based on the ones used by
