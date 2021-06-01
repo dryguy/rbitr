@@ -14,15 +14,15 @@ An integer vector of the increments, in seconds. Time controls with
 no increment return 0.
 }
 \description{
-Extract the increment from a pgn time control tag. For allowed time control
-formats, see the
+Extract the increments from a pgn file's time control tags. For allowed time
+control formats, see the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c9.6}{pgn specification}
 .
 }
 \details{
-The \code{get_increments()} function is intended for use with data read
-from a pgn file using the \code{get_pgn()} function. If a TimeControl tag was
-present in the pgn, a tibble obtained using \code{get_pgn()} will have a
+The \code{get_increments()} function is intended for use with data that
+was read from a pgn file with the \code{get_pgn()} function. If a TimeControl
+tag was present in the pgn, a tibble obtained using \code{get_pgn()} will have a
 $TimeControl column from which the increment data can be extracted. Note
 that there are six different time control formats recognized by the pgn
 specification, only one of which uses increments. All other formats will
@@ -31,4 +31,15 @@ return an increment of 0 (see example).
 \examples{
 time_control <- c('?', '-', '40/9000', '300', '4500+60', '*180')
 get_increments(time_control)
+}
+\seealso{
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} to load the time control and other data from a pgn
+file.
+\item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a pgn file.
+\item \code{\link[=get_move_times]{get_move_times()}} to calculate move times from clock and
+increment data.
+\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} and \code{\link[=lichess_plot]{lichess_plot()}} to plot move
+times.
+}
 }
