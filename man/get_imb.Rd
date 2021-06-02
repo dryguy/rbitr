@@ -118,3 +118,14 @@ moves <- c("g2g4", "e7e6", "f2f4", "d8h4")
 bestmoves <- c("d2d4", "d7d5", "g1f3", "d8h4")
 get_imb(scores, moves, bestmoves, color = 'white')
 }
+\seealso{
+\itemize{
+\item \code{\link[=get_acpl]{get_acpl()}} for calculating average centipawn loss.
+\item \code{\link[=get_evals]{get_evals()}} to load scores from a pgn file.
+\item \code{\link[=get_moves]{get_moves()}} to get moves from movetext.
+\item \code{\link[=evaluate_game]{evaluate_game()}} or \code{\link[=evaluate_pgn]{evaluate_pgn()}} to calculate scores.
+\item \code{\link[=convert_scores]{convert_scores()}} to set values for 'mate x'.
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} and \code{\link[=parse_pgnlog]{parse_pgnlog()}} to extract the best
+moves from UCI engine output.
+}
+}
