@@ -9,7 +9,8 @@ lichess_plot(
   game_number,
   engine_path,
   n_cpus = 1,
-  use_pgn_evals = TRUE
+  use_pgn_evals = TRUE,
+  nodes = 2250000
 )
 }
 \arguments{
@@ -26,6 +27,9 @@ many cpus to use for analysis.}
 
 \item{use_pgn_evals}{(Default = TRUE) A single-element boolean indicating
 whether to use evals from the pgn, if present.}
+
+\item{nodes}{(Default = 2250000) A single-element integer vector of the depth
+to analyze to, in nodes.}
 }
 \value{
 A ggplot object of the plotted data.
@@ -35,10 +39,17 @@ Generate a plot of game statistics in the style of
 \href{http://lichess.org}{lichess.org}.
 }
 \details{
-The function\code{lichess_plot()} will first look for existing analysis in the pgn
-file, and if not found, it will also look for saved analysis. If no
-analysis data is found, it will analyze the game to a depth of 2250000
-nodes.
+The function \code{lichess_plot()} will first look for existing analysis
+in the pgn file, and if not found, it will look for a saved analysis. If no
+analysis data is found, it will analyze the game. The default search
+depth is 2,250,000 nodes (the same as lichess).
+
+An advantage plot and move time plot will be produced in the style
+of \href{http://lichess.org}{lichess.org}. See \code{lichess_advantage_plot()} and
+\code{lichess_time_plot()} for details. In addition, a table will be displayed
+showing the number of inaccuracies, mistakes, and blunders, and the
+average centipawn loss (ACPL). If clock data is not available in the pgn
+file, the move-time plot will display a message that no data is available.
 }
 \examples{
 pgn_path <- file.path(
@@ -49,4 +60,12 @@ pgn_path <- file.path(
 # Modify engine_path as required for your engine location & operating system
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 lichess_plot(pgn_path, game_number = 1, engine_path)
+}
+\seealso{
+\itemize{
+\item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
+\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} to plot move time data.
+\item \code{\link[=get_acpl]{get_acpl()}} to calculate average centipawn loss.
+\item \code{\link[=get_imb]{get_imb()}} to calculate inaccuracies, mistakes, and blunders.
+}
 }
