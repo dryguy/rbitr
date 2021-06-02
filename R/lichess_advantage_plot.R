@@ -1,17 +1,22 @@
 #' Lichess advantage plot
 #'
-#' Generate an advantage plot similar to the ones in the "Computer analysis" tab
-#'   on lichess.org.
+#' Generate an advantage plot in the style of [lichess.org](lichess.org).
 #'
 #' @details Given a vector of positional evaluations (in centipawns), the
-#'   results are scaled using the same exponential function used by lichess.org,
-#'   and the results are plotted using the same color scheme.
+#'   results are first scaled using an
+#'   [exponential scaling function](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes)
+#'   (2 / (1 + exp(-0.004 * scores)) - 1), and then plotted using the same color
+#'   scheme as [lichess.org](lichess.org).
 #'
-#' @param scores A numeric or integer vector of positional evaluations (in
-#'   centipawns.)
+#' @param scores A numeric vector of positional evaluations (in centipawns.)
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::lichess_time_plot()] to plot move time data.
+#'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
+#'     of game stats.
 #'
 #' @examples
 #'   scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
