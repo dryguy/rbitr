@@ -3,6 +3,11 @@
 [    Round "?"]
 % A good pgn reader ignores lines that begin with the escape character (%)
 [White "Sherlock Holmes"   ][Black "John H. Watson"]
+% A good pgn reader ignores lines that begin with the escape character (%)
 [Result "1-0"]
 
 1. e4 (Fools mate is also possible with colors reversed: 1. g4 (or f3 or f4) e5 (or e6) 2. f3 (or f4 or g4) Qh4#) g5 2. Nc3 f5 3. Qh5# 1-0
+
+% what if last line is an escape follwed by multiple empty lines?
+
+

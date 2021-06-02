@@ -13,18 +13,22 @@ fools_mate <- tibble::tibble(
   Movetext = '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 )
 test_that('get_pgn gets an export format pgn', {
-  pgn <- get_pgn(file.path(pgn_path, 'export_format.pgn'))
+  pgn_path <- file.path(pgn_path, 'export_format.pgn')
+  pgn <- get_pgn(pgn_path)
   expect_identical(pgn[1, ], fools_mate)
 })
 test_that('get_pgn gets an import format pgn', {
-  pgn <- get_pgn(file.path(pgn_path, 'import_format.pgn'))
+  pgn_path <- file.path(pgn_path, 'import_format.pgn')
+  pgn <- get_pgn(pgn_path)
   expect_identical(pgn, fools_mate)
 })
 test_that('get_pgn gets an empty pgn', {
-  pgn <- get_pgn(file.path(pgn_path, 'empty.pgn'))
+  pgn_path <- file.path(pgn_path, 'empty.pgn')
+  pgn <- get_pgn(pgn_path)
   expect_identical(pgn, tibble::tibble())
 })
-test_that('get_pgn handles 2 empty lines', {
-  pgn <- get_pgn(file.path(pgn_path, 'double_blank_eof.pgn'))
-  expect_identical(pgn$Date, '1886.01.11')
+test_that('get_pgn handles missing movetext', {
+  pgn_path <- file.path(pgn_path, 'no_movetext.pgn')
+  pgn <- get_pgn(pgn_path)
+  expect_identical(pgn$Movetext, NA)
 })

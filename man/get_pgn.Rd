@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_pgn.R
 \name{get_pgn}
 \alias{get_pgn}
-\title{Get the contents of a pgn file.}
+\title{Get the contents of a pgn file}
 \usage{
 get_pgn(pgn_path)
 }
@@ -14,15 +14,16 @@ A tibble where each row is a game, and each pgn tag is a column.
 The pgn's movetext field is also a column.
 }
 \description{
-Get the contents of a pgn file.
+A no-frills function to read a pgn file into a tibble.
 }
 \details{
-A no-frills function to read a pgn file into a tibble. Every tag
-in the  pgn will be read.
-
 See the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1}{pgn specification}
 for information on the pgn format.
+
+Each distinct tag name in the pgn file will become a tibble column
+with the same name as the tag. The movetext field will be an additional
+column with the name Movetext.
 }
 \examples{
 pgn_path <- file.path(
@@ -31,4 +32,14 @@ pgn_path <- file.path(
   'fools_mate.pgn'
 )
 get_pgn(pgn_path)
+}
+\seealso{
+\itemize{
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} to analyze all the games in a pgn.
+\item \code{\link[=evaluate_game]{evaluate_game()}} to analyze a single game from a pgn.
+\item \code{\link[=clean_movetext]{clean_movetext()}} to strip comments and annotations.
+\item \code{\link[=get_clocks]{get_clocks()}} to extract clock data.
+\item \code{\link[=get_evals]{get_evals()}} to extract evaluations.
+\item \code{\link[=get_increments]{get_increments()}} to extract increments.
+}
 }

@@ -1,17 +1,28 @@
-#' Get the contents of a pgn file.
+#' Get the contents of a pgn file
 #'
-#' @details A no-frills function to read a pgn file into a tibble. Every tag
-#' in the  pgn will be read.
+#' A no-frills function to read a pgn file into a tibble.
 #'
 #' @details See the
 #' [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1)
 #' for information on the pgn format.
+#'
+#' @details Each distinct tag name in the pgn file will become a tibble column
+#'   with the same name as the tag. The movetext field will be an additional
+#'   column with the name Movetext.
 #'
 #' @param pgn_path A single-element character vector of the path to the pgn.
 #'
 #' @return A tibble where each row is a game, and each pgn tag is a column.
 #'   The pgn's movetext field is also a column.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::evaluate_pgn()] to analyze all the games in a pgn.
+#'   * [rbitr::evaluate_game()] to analyze a single game from a pgn.
+#'   * [rbitr::clean_movetext()] to strip comments and annotations.
+#'   * [rbitr::get_clocks()] to extract clock data.
+#'   * [rbitr::get_evals()] to extract evaluations.
+#'   * [rbitr::get_increments()] to extract increments.
 #'
 #' @examples
 #' pgn_path <- file.path(
@@ -45,20 +56,12 @@ get_pgn <- function(pgn_path) {
         return()
       }
     }
-    if (length(newline) == 0) {
-      end_of_file <<- TRUE
-      return()
-    }
     while (stringr::str_sub(newline, 1, 1) == '%') {
       newline <<- readLines(con, 1, warn = FALSE, encoding = 'UTF-8')
       if (length(newline) == 0) {
         end_of_file <<- TRUE
         return()
       }
-    }
-    if (length(newline) == 0) {
-      end_of_file <<- TRUE
-      return()
     }
     # Check for end of game
     termination_markers <- c('1-0', '0-1', '1/2-1/2', '*')
@@ -79,6 +82,9 @@ get_pgn <- function(pgn_path) {
     while (stringr::str_sub(newline, 1, 1) == '[' & !end_of_file) {
       tag_section <- c(tag_section, newline)
       get_newline(con)
+      if (length(newline) == 0) {
+        break
+      }
     }
     # Read in the next movetext section
     movetext_section <- character(0)
@@ -93,7 +99,13 @@ get_pgn <- function(pgn_path) {
     tag_values <- as.list(parsed_tags[, 3])
     tag_names <- as.list(parsed_tags[, 2])
     current_game <- as.data.frame(tag_values, col.names = tag_names)
-    current_game$Movetext <- trimws(movetext_section)
+    if (nrow(current_game) > 0) {
+      if (length(movetext_section) > 0) {
+        current_game$Movetext <- trimws(movetext_section)
+      } else {
+        current_game$Movetext <- NA
+      }
+    }
     pgn <- dplyr::bind_rows(pgn, current_game)
     end_of_game <- FALSE
     get_newline(con)
