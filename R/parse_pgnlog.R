@@ -1,12 +1,15 @@
-#' Extract data from the output of rbitr's `evaluate_pgn()` function.
+#' Extract data from rbitr's `evaluate_pgn()` output
 #'
-#' The output of rbitr's `evaluate_pgn()` function consists of a list of logs
-#'   from rbitr's `evaluate_game()` function, where each entry in the list is
-#'   for a single game The evaluations and variations are embedded within a lot
-#'   of other data. The `parse_pgnlog()` function can extract positional
-#'   evaluations in centipawns (score), principal variations (pv), or best moves
-#'   (bestmove). The `parse_pgnlog()` function is essentially a wrapper for the
-#'   `parse_gamelog()` function that iterates over all the games in the pgn.
+#' The `parse_pgnlog()` function is a wrapper for the `parse_gamelog()` function
+#'   that iterates over all the games in a pgn.
+#'
+#' @details The output of rbitr's `evaluate_pgn()` function is a list of logs
+#'   from the `evaluate_game()` function, where each entry in the list is for a
+#'   single game. The `parse_pgnlog()` function can extract  evaluations in
+#'   centipawns (score), principal variations (pv), or best moves (bestmove),
+#'   depending on the setting for the `target` parameter.
+#'
+#' @details See [rbitr::parse_gamelog()] for more details.
 #'
 #' @param pgnlog A list of gamelogs from rbitr's `evaluate_pgn()` function.
 #' @param target A single-element character vector of the output to return.
@@ -19,6 +22,11 @@
 #'
 #' @return A list of vectors of the extracted data.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
 #'
 #' @examples
 #' pgnlog <- list(list(c(

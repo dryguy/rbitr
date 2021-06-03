@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_pgnlog.R
 \name{parse_pgnlog}
 \alias{parse_pgnlog}
-\title{Extract data from the output of rbitr's \code{evaluate_pgn()} function.}
+\title{Extract data from rbitr's \code{evaluate_pgn()} output}
 \usage{
 parse_pgnlog(pgnlog, target, depth = NULL)
 }
@@ -22,13 +22,17 @@ returns data for the maximum depth.}
 A list of vectors of the extracted data.
 }
 \description{
-The output of rbitr's \code{evaluate_pgn()} function consists of a list of logs
-from rbitr's \code{evaluate_game()} function, where each entry in the list is
-for a single game The evaluations and variations are embedded within a lot
-of other data. The \code{parse_pgnlog()} function can extract positional
-evaluations in centipawns (score), principal variations (pv), or best moves
-(bestmove). The \code{parse_pgnlog()} function is essentially a wrapper for the
-\code{parse_gamelog()} function that iterates over all the games in the pgn.
+The \code{parse_pgnlog()} function is a wrapper for the \code{parse_gamelog()} function
+that iterates over all the games in a pgn.
+}
+\details{
+The output of rbitr's \code{evaluate_pgn()} function is a list of logs
+from the \code{evaluate_game()} function, where each entry in the list is for a
+single game. The \code{parse_pgnlog()} function can extract  evaluations in
+centipawns (score), principal variations (pv), or best moves (bestmove),
+depending on the setting for the \code{target} parameter.
+
+See \code{\link[=parse_gamelog]{parse_gamelog()}} for more details.
 }
 \examples{
 pgnlog <- list(list(c(
@@ -41,4 +45,11 @@ pgnlog <- list(list(c(
 parse_pgnlog(pgnlog, 'score')
 parse_pgnlog(pgnlog, 'pv')
 parse_pgnlog(pgnlog, 'bestmove')
+}
+\seealso{
+\itemize{
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a pgn file.
+}
 }
