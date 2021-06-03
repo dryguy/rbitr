@@ -1,12 +1,22 @@
 #' Extract data from rbitr's `evaluate_game()` output
 #'
-#' The output of rbitr's `evaluate_game()` function is a list, where each entry
-#'   is the engine output after analyzing a position. The `parse_gamelog()` function
-#'   can extract the positional evaluations in centipawns (score), principal
-#'   variations (pv), or best moves (bestmove).
+#' The `evaluate_game()` function produces a list of engine output for each
+#'   position of a chess game. This output tends to be dense, and much of it
+#'   will be of no interest to someone analyzing a game. The `parse_gamelog()`
+#'   function can extract the parts of interest into a more manageable format.
+#'
+#' @details Use the `target` parameter to specify what `parse_gamelog()` should return:
+#'   positional evaluations in centipawns (score), principal variations (pv), or
+#'   best moves (bestmove).
 #'
 #' @details The data for the deepest available search depth is returned by
-#' default. See
+#'   default. To extract data for shallower depths, set the `depth`
+#'   parameter to the desired depth. Note that if `evaluate_game()` was run
+#'   using fixed nodes or fixed time, the deepest search depth will vary across
+#'   different positions. If `depth` is set to a value higher than what is
+#'   available for some moves, `evaluate_game()` will return an error.
+#'
+#' @details See
 #' [the UCI protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html) for
 #' details of UCI engine output.
 #'
@@ -23,6 +33,11 @@
 #' @return A list of character vectors of the extracted data, where each list
 #'   entry corresponds to a position.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated pgn.
+#'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
 #'
 #' @examples
 #' gamelog <- list(c(

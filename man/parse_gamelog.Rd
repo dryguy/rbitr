@@ -24,14 +24,24 @@ A list of character vectors of the extracted data, where each list
 entry corresponds to a position.
 }
 \description{
-The output of rbitr's \code{evaluate_game()} function is a list, where each entry
-is the engine output after analyzing a position. The \code{parse_gamelog()} function
-can extract the positional evaluations in centipawns (score), principal
-variations (pv), or best moves (bestmove).
+The \code{evaluate_game()} function produces a list of engine output for each
+position of a chess game. This output tends to be dense, and much of it
+will be of no interest to someone analyzing a game. The \code{parse_gamelog()}
+function can extract the parts of interest into a more manageable format.
 }
 \details{
+Use the \code{target} parameter to specify what \code{parse_gamelog()} should return:
+positional evaluations in centipawns (score), principal variations (pv), or
+best moves (bestmove).
+
 The data for the deepest available search depth is returned by
-default. See
+default. To extract data for shallower depths, set the \code{depth}
+parameter to the desired depth. Note that if \code{evaluate_game()} was run
+using fixed nodes or fixed time, the deepest search depth will vary across
+different positions. If \code{depth} is set to a value higher than what is
+available for some moves, \code{evaluate_game()} will return an error.
+
+See
 \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{the UCI protocol} for
 details of UCI engine output.
 }
@@ -46,4 +56,11 @@ gamelog <- list(c(
 parse_gamelog(gamelog, 'score')
 parse_gamelog(gamelog, 'pv')
 parse_gamelog(gamelog, 'bestmove')
+}
+\seealso{
+\itemize{
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from an evaluated pgn.
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a pgn file.
+}
 }
