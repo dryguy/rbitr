@@ -9,8 +9,8 @@
 #'   depth is 2,250,000 nodes (the same as lichess).
 #'
 #' @details An advantage plot and move time plot will be produced in the style
-#'   of [lichess.org](http://lichess.org). See `lichess_advantage_plot()` and
-#'   `lichess_time_plot()` for details. In addition, a table will be displayed
+#'   of [lichess.org](http://lichess.org). See `advantage_plot()` and
+#'   `scaled_time_plot()` for details. In addition, a table will be displayed
 #'   showing the number of inaccuracies, mistakes, and blunders, and the
 #'   average centipawn loss (ACPL). If clock data is not available in the pgn
 #'   file, the move-time plot will display a message that no data is available.
@@ -32,7 +32,7 @@
 #'
 #' @seealso
 #'   * [rbitr::lichess_advantage_plot()] to plot advantage data.
-#'   * [rbitr::lichess_time_plot()] to plot move time data.
+#'   * [rbitr::scaled_time_plot()] to plot move time data.
 #'   * [rbitr::get_acpl()] to calculate average centipawn loss.
 #'   * [rbitr::get_imb()] to calculate inaccuracies, mistakes, and blunders.
 #'
@@ -106,7 +106,7 @@ lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
                                       na.rm = TRUE))
     tx <- ax
   }
-  p1 <- lichess_time_plot(white_move_times, black_move_times) +
+  p1 <- scaled_time_plot(white_move_times, black_move_times) +
     ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Time', hjust = 0)
   p2 <- lichess_advantage_plot(evals) +
     ggplot2::annotate('text', x = ax, y = 0.95, label = 'Advantage', hjust = 0)

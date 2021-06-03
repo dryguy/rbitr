@@ -28,7 +28,7 @@ scheme as \url{lichess.org}.
 }
 \seealso{
 \itemize{
-\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} to plot move time data.
+\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} to plot move time data.
 \item \code{\link[=lichess_plot]{lichess_plot()}} to plot move time and advantage data with a table
 of game stats.
 }

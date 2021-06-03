@@ -56,7 +56,7 @@ get_move_times(clock, 8, 'black')
 file.
 \item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a pgn file.
 \item \code{\link[=get_increments]{get_increments()}} to extract increment data from a pgn file.
-\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} and \code{\link[=lichess_plot]{lichess_plot()}} to plot move
+\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} and \code{\link[=lichess_plot]{lichess_plot()}} to plot move
 times.
 }
 }

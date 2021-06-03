@@ -39,7 +39,7 @@ file.
 \item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a pgn file.
 \item \code{\link[=get_move_times]{get_move_times()}} to calculate move times from clock and
 increment data.
-\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} and \code{\link[=lichess_plot]{lichess_plot()}} to plot move
+\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} and \code{\link[=lichess_plot]{lichess_plot()}} to plot move
 times.
 }
 }

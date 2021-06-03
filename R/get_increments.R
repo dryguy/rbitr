@@ -25,7 +25,7 @@
 #'   * [rbitr::get_clocks()] to extract the clock data from a pgn file.
 #'   * [rbitr::get_move_times()] to calculate move times from clock and
 #'     increment data.
-#'   * [rbitr::lichess_time_plot()] and [rbitr::lichess_plot()] to plot move
+#'   * [rbitr::scaled_time_plot()] and [rbitr::lichess_plot()] to plot move
 #'     times.
 #'
 #' @examples

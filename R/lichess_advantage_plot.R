@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::lichess_time_plot()] to plot move time data.
+#'   * [rbitr::scaled_time_plot()] to plot move time data.
 #'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
 #'     of game stats.
 #'

@@ -37,7 +37,7 @@
 #'     file.
 #'   * [rbitr::get_clocks()] to extract the clock data from a pgn file.
 #'   * [rbitr::get_increments()] to extract increment data from a pgn file.
-#'   * [rbitr::lichess_time_plot()] and [rbitr::lichess_plot()] to plot move
+#'   * [rbitr::scaled_time_plot()] and [rbitr::lichess_plot()] to plot move
 #'     times.
 #'
 #' @examples

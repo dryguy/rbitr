@@ -64,7 +64,7 @@ lichess_plot(pgn_path, game_number = 1, engine_path)
 \seealso{
 \itemize{
 \item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
-\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} to plot move time data.
+\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} to plot move time data.
 \item \code{\link[=get_acpl]{get_acpl()}} to calculate average centipawn loss.
 \item \code{\link[=get_imb]{get_imb()}} to calculate inaccuracies, mistakes, and blunders.
 }
