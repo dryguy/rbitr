@@ -20,10 +20,21 @@ Generate a plot of move times in the style of
 }
 \details{
 Move times (in seconds) are plotted using the same scaling and
-color scheme used by \href{http://lichess.org}{lichess.org}.
+color scheme used by \href{http://lichess.org}{lichess.org}. The
+\href{https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/movetime.js}{logarithmic scaling function}
+keeps short move times from disappearing into the baseline. White move
+times are shown as positive values, with a white fill, while black move
+times are shown as negative values with a dark gray fill.
 }
 \examples{
   white_move_times <- c(4, 10, 5, 10)
   black_move_times <- c(3, 4, 7)
   lichess_time_plot(white_move_times, black_move_times)
+}
+\seealso{
+\itemize{
+\item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
+\item \code{\link[=lichess_plot]{lichess_plot()}} to plot move time and advantage data with a table
+of game stats.
+}
 }

@@ -4,13 +4,22 @@
 #'   [lichess.org](http://lichess.org).
 #'
 #' @details Move times (in seconds) are plotted using the same scaling and
-#'   color scheme used by [lichess.org](http://lichess.org).
+#'   color scheme used by [lichess.org](http://lichess.org). The
+#'   [logarithmic scaling function](https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/movetime.js)
+#'   keeps short move times from disappearing into the baseline. White move
+#'   times are shown as positive values, with a white fill, while black move
+#'   times are shown as negative values with a dark gray fill.
 #'
 #' @param white_move_times A numeric vector of move times for white, in seconds.
 #' @param black_move_times A numeric vector of move times for black, in seconds.
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::lichess_advantage_plot()] to plot advantage data.
+#'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
+#'     of game stats.
 #'
 #' @examples
 #'   white_move_times <- c(4, 10, 5, 10)
@@ -22,11 +31,14 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
   assertthat::assert_that(is.numeric(black_move_times))
   assertthat::assert_that(length(white_move_times) -
                           length(black_move_times) < 2)
-
+  n_white_move_times <- length(white_move_times)
   # Create a data frame of move times
   white_move_times <- c(0, scale_move_times(white_move_times))
   black_move_times <- c(0, scale_move_times(black_move_times))
   max_y <- max(c(white_move_times, black_move_times))
+  if (n_white_move_times == 0) {
+    max_y == 1
+  }
   y_offset <- 0.01 * max_y
   y_lim <- 1.1 * max_y
   if (length(black_move_times) < length(white_move_times)) {
@@ -35,8 +47,8 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
   n_ply <- length(white_move_times) + length(black_move_times)
   ply <- 1:n_ply
   lichess_move_times <- data.frame(
-    white_ply = ply[ply %% 2 == 1] + 0.5,
-    black_ply = ply[ply %% 2 == 0] + 0.5,
+    white_ply = ply[ply %% 2 == 1],
+    black_ply = ply[ply %% 2 == 0],
     white_times = white_move_times,
     black_times = black_move_times
   )
@@ -50,7 +62,7 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
   gradient_background <- png::readPNG(gradient_path)
 
   # Make the move time plot
-  ggplot2::ggplot() +
+  p_time <- ggplot2::ggplot() +
     ggplot2::annotation_custom(grid::rasterGrob(gradient_background,
                                                 width  = grid::unit(1, 'npc'),
                                                 height = grid::unit(1, 'npc'))) +
@@ -62,12 +74,6 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
                        fill    = grDevices::rgb(252, 251, 250,
                                                 maxColorValue = 255),
                        alpha   = 0.71) +
-    ggplot2::geom_point(data    = lichess_move_times,
-                        mapping = ggplot2::aes(x = .data$white_ply,
-                                               y = .data$white_times + y_offset),
-                        color   = grDevices::rgb(83,  160, 233,
-                                                 maxColorValue = 255),
-                        size    = 1) +
     ggplot2::geom_area(data    = lichess_move_times,
                        mapping = ggplot2::aes(x = .data$black_ply,
                                               y = -.data$black_times - y_offset),
@@ -77,15 +83,39 @@ lichess_time_plot <- function(white_move_times, black_move_times) {
                                                 maxColorValue = 255),
                        na.rm   = TRUE,
                        alpha   = 0.71) +
-    ggplot2::geom_point(data    = lichess_move_times,
-                        mapping = ggplot2::aes(x = .data$black_ply,
-                                               y = -.data$black_times - y_offset),
-                        color   = grDevices::rgb(83,  160, 233,
-                                                 maxColorValue = 255),
-                        size    = 1,
-                        na.rm   = TRUE) +
-    ggplot2::xlim(c(1, n_ply)) +
+    ggplot2::xlim(c(1, n_ply - 1)) +
     ggplot2::ylim(c(-y_lim, y_lim)) +
     ggplot2::theme_void() +
     ggplot2::theme(legend.position = 'none')
+
+  if (n_white_move_times == 0) {
+    return(suppressMessages(
+      p_time +
+        ggplot2::xlim(c(-1, 1)) +
+        ggplot2::ylim(c(-1, 1)) +
+        ggplot2::annotate('text', x = 0, y = 0,
+                          label = 'Move Time Data Not Available',
+                          color = grDevices::rgb(83,  160, 233,
+                                                 maxColorValue = 255))
+    ))
+  } else {
+    return(
+      p_time +
+        ggplot2::geom_point(data    = lichess_move_times,
+                            mapping = ggplot2::aes(x = .data$white_ply,
+                                                   y = .data$white_times +
+                                                     y_offset),
+                            color   = grDevices::rgb(83,  160, 233,
+                                                     maxColorValue = 255),
+                            size    = 1) +
+        ggplot2::geom_point(data    = lichess_move_times,
+                            mapping = ggplot2::aes(x = .data$black_ply,
+                                                   y = -.data$black_times -
+                                                     y_offset),
+                            color   = grDevices::rgb(83,  160, 233,
+                                                     maxColorValue = 255),
+                            size    = 1,
+                            na.rm   = TRUE)
+    )
+  }
 }
