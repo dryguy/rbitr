@@ -27,3 +27,6 @@ test_that('get_evals gets evals when last position is mate', {
   movetext <- c('4. Nc5+ { [%eval #-1] [%clk 0:05:10] } 4... Qxf7# { [%clk 0:05:03] } 1-0')
   expect_equal(get_evals(movetext, mate_value = 5000, mate0 = TRUE), list(c(-5000, -5000)))
 })
+test_that('get_evals first_aval parameter works', {
+  expect_equal(get_evals(movetext, first_eval = 13), list(c(13, 5, 29, -94)))
+})

@@ -3,25 +3,24 @@
 \name{get_clocks}
 \alias{get_clocks}
 \alias{get_evals}
-\title{Get command tags from pgn movetext}
+\title{Extract data from movetext}
 \usage{
 get_clocks(movetext)
 
 get_evals(movetext, first_eval = NULL, mate0 = FALSE, mate_value = 50000)
 }
 \arguments{
-\item{movetext}{A character vector of pgn movetext, where each vector entry
-is for a separate game.}
+\item{movetext}{A character vector of pgn movetext.}
 
 \item{first_eval}{(Default = NULL) A single-element integer vector indicating
 what value should be assigned to the initial position, before white's first
-move. The default (NULL) omits the first evaluation.}
+move. The default (NULL) adds no initial value.}
 
 \item{mate0}{(Default = FALSE) A single-element boolean vector indicating
-whether to include a value for mated positions.}
+whether to include a value when the final position is mate.}
 
-\item{mate_value}{(Default = 50000) A single-element integer or numeric
-vector of the centipawn value to assign for mate.}
+\item{mate_value}{(Default = 50000) A single-element numeric vector of the
+centipawn value to assign for mate.}
 }
 \value{
 A list containing numeric vectors of the specified tag value. Each
@@ -29,8 +28,7 @@ list entry is for a separate game. For \code{get_clocks()}, the value will be
 converted to seconds.
 }
 \description{
-Get the specified command tag (if present) from the movetext taken from a
-pgn file.
+Extract data from the from the movetext taken from a pgn file.
 }
 \details{
 See the
@@ -45,18 +43,14 @@ be extracted if it is present.
 \note{
 For games stored in pgn format, the evaluation of the first position
 before any moves are made is not commonly included. As a result,
-\code{get_evals()} produces a vector that is one evaluation shorter than the
-one produced by \code{parse_gamelog()} for the same game. To include a value for
-the initial position, set the parameter first_eval to the desired value.
-To use the same default as \href{http://lichess.org}{lichess.org}, set
-first_eval to 15.
+\code{get_evals()} produces a vector that is  shorter than the one produced by
+\code{parse_gamelog()} for the same game. The \code{first_eval} parameter can be used
+to provide a value for this missing evaluation, if desired.
 
-For games ending in mate, a uci engine gives the final position an
-evaluation of 'mate 0', however, in a pgn, any '#x' notation is omitted for
-the final position when it is mate. When the final position is mate,
-\href{http://lichess.org}{lichess.org} advantage plots show an advantage of 1
-for the final position, but the value is not used in calculating acpl. To
-include an evaluation for mated positions, set the mate0 parameter to TRUE.
+For games ending in mate, a UCI engine gives the final position an
+evaluation of 'mate 0', however, in a pgn, '#0' is omitted when the final
+position is mate. To include an evaluation for mated final positions, set
+the mate0 parameter to TRUE.
 }
 \examples{
 movetext <- c(
@@ -66,7 +60,16 @@ movetext <- c(
 get_clocks(movetext)
 
 movetext <- c(
-  '1. e4 { [\%eval 0.05] } 1... Nf6 { [\%eval 0.29] } 2. Bc4 { [\%eval -0.94] }'
+  '1. e4 {[\%eval 0.05]} 1... Nf6 {[\%eval 0.29]} 2. Bc4 {[\%eval -0.94]}'
 )
 get_evals(movetext)
+}
+\seealso{
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} to load a pgn file.
+\item \code{\link[=get_increments]{get_increments()}} to get increment times.
+\item \code{\link[=get_move_times]{get_move_times()}} to calculate move times.
+\item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
+\item \code{\link[=lichess_time_plot]{lichess_time_plot()}} to plot move time data.
+}
 }

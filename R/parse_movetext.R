@@ -1,7 +1,6 @@
-#' Get command tags from pgn movetext
+#' Extract data from movetext
 #'
-#' Get the specified command tag (if present) from the movetext taken from a
-#'   pgn file.
+#' Extract data from the from the movetext taken from a pgn file.
 #'
 #' @details See the
 #'   [Portable Game Notation Specification and Implementation Guide (Supplement)](http://www.enpassant.dk/chess/palview/enhancedpgn.htm)
@@ -14,34 +13,36 @@
 #'
 #' @note For games stored in pgn format, the evaluation of the first position
 #'   before any moves are made is not commonly included. As a result,
-#'   `get_evals()` produces a vector that is one evaluation shorter than the
-#'   one produced by `parse_gamelog()` for the same game. To include a value for
-#'   the initial position, set the parameter first_eval to the desired value.
-#'   To use the same default as [lichess.org](http://lichess.org), set
-#'   first_eval to 15.
+#'   `get_evals()` produces a vector that is  shorter than the one produced by
+#'   `parse_gamelog()` for the same game. The `first_eval` parameter can be used
+#'   to provide a value for this missing evaluation, if desired.
 #'
-#' @note For games ending in mate, a uci engine gives the final position an
-#'   evaluation of 'mate 0', however, in a pgn, any '#x' notation is omitted for
-#'   the final position when it is mate. When the final position is mate,
-#'   [lichess.org](http://lichess.org) advantage plots show an advantage of 1
-#'   for the final position, but the value is not used in calculating acpl. To
-#'   include an evaluation for mated positions, set the mate0 parameter to TRUE.
+#' @note For games ending in mate, a UCI engine gives the final position an
+#'   evaluation of 'mate 0', however, in a pgn, '#0' is omitted when the final
+#'   position is mate. To include an evaluation for mated final positions, set
+#'   the mate0 parameter to TRUE.
 #'
 #'
-#' @param movetext A character vector of pgn movetext, where each vector entry
-#'   is for a separate game.
+#' @param movetext A character vector of pgn movetext.
 #' @param first_eval (Default = NULL) A single-element integer vector indicating
 #'   what value should be assigned to the initial position, before white's first
-#'   move. The default (NULL) omits the first evaluation.
+#'   move. The default (NULL) adds no initial value.
 #' @param mate0 (Default = FALSE) A single-element boolean vector indicating
-#'   whether to include a value for mated positions.
-#' @param mate_value (Default = 50000) A single-element integer or numeric
-#'   vector of the centipawn value to assign for mate.
+#'   whether to include a value when the final position is mate.
+#' @param mate_value (Default = 50000) A single-element numeric vector of the
+#'   centipawn value to assign for mate.
 #'
 #' @return A list containing numeric vectors of the specified tag value. Each
 #'   list entry is for a separate game. For `get_clocks()`, the value will be
 #'   converted to seconds.
 #' @export
+#'
+#' @seealso
+#'   * [rbitr::get_pgn()] to load a pgn file.
+#'   * [rbitr::get_increments()] to get increment times.
+#'   * [rbitr::get_move_times()] to calculate move times.
+#'   * [rbitr::lichess_advantage_plot()] to plot advantage data.
+#'   * [rbitr::lichess_time_plot()] to plot move time data.
 #'
 #' @examples
 #' movetext <- c(
@@ -51,7 +52,7 @@
 #' get_clocks(movetext)
 #'
 #' movetext <- c(
-#'   '1. e4 { [%eval 0.05] } 1... Nf6 { [%eval 0.29] } 2. Bc4 { [%eval -0.94] }'
+#'   '1. e4 {[%eval 0.05]} 1... Nf6 {[%eval 0.29]} 2. Bc4 {[%eval -0.94]}'
 #' )
 #' get_evals(movetext)
 get_clocks <- function(movetext) {
