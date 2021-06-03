@@ -35,7 +35,15 @@ test_that('add_x_intercepts adds x-intercepts', {
 })
 
 
-test_that("plot_2_color_area returns a ggplot", {
+test_that('plot_2_color_area returns a ggplot', {
   p1 <- plot_2_color_area(dataframe, 'x', 'y')
   expect_equal(class(p1), c('gg', 'ggplot'))
+})
+
+test_that('inv_scale_move_times calculates move times from scaled move times', {
+  expect_equal(inv_winning_chances(winning_chances(10)), 10)
+})
+
+test_that('inv_winning_chances calculates scores from winning chances', {
+  expect_equal(inv_scale_move_times(scale_move_times(10)), 10)
 })

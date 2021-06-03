@@ -1,8 +1,8 @@
-#' Apply `input_function` to the root level elements of a nested list.
+#' Apply `input_function` to the root elements of a nested list
 #'
 #' @param x A nested list.
 #' @param input_function A function that takes the root level elements of x as
-#     its arguments.
+#'   arguments.
 #' @param ... Further arguments to `input_function`.
 #'
 #' @return A list with the same structure as x, where the root level elements
@@ -14,37 +14,68 @@ nested_lapply <- function(x, input_function, ...) {
   lapply(x, lapply_input_function, ...)
 }
 
-# Axis scaling
+#' Scale move times
+#'
+#' Applies the scaling function log(0.005 * move_times + 3)^2 - log(3)^2 to
+#'   the `move_times` parameter.
+#'
+#' @details The function `scale_move_times()` first applies a cap of 12e4, and
+#'   then applies the logarithmic scaling transformation
+#'   log(0.005 * `move_times` + 3)^2 - log(3)^2 to the `move_times` parameter.
+#'   The inverse function `inv_scale_move_times()` reverses the transformation.
+#'
+#' @details The scaling function is borrowed from
+#' [lichess](https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/movetime.js)
+#'
+#' @note The inverse function cannot recover transformed values that were
+#'   greater than 12e4 due to the cap applied by the initial scaling.
+#'
+#' @param move_times A numeric vector of move times.
+#' @param scaled_times A numeric vector of scaled move times.
+#'
+#' @return For `scaled_move_times()`, a numeric vector of scaled move times. For
+#'   `inv_scaled_move_times()` a numeric vector of un-scaled move times.
 scale_move_times <- function(move_times) {
-  # Use the same logarithmic scale as lichess
-  # https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/movetime.js
   # logC = Math.pow(Math.log(3), 2)
   # y = Math.pow(Math.log(.005 * Math.min(time, 12e4) + 3), 2) - logC
   move_times[move_times > 12e4] <- 12e4
   log(0.005 * move_times + 3)^2 - log(3)^2
-  # move_times / max(move_times, na.rm = TRUE)
 }
+#' @rdname scale_move_times
 inv_scale_move_times <- function(scaled_times) {
   200 * (exp(1)^(sqrt(scaled_times + (log(3))^2)) - 3)
 }
-move_time_trans <- function() scales::trans_new(
-  "move_time", scale_move_times, scale_move_times)
+
+#' Calculate winning chances
+#'
+#' Applies the scaling function 2 / (1 + exp(-0.004 * `scores`)) - 1 to the
+#'   `scores` parameter.
+#'
+#' @details The function `winning_chances()` applies the exponential scaling
+#'   function 2 / (1 + exp(-0.004 * `scores`)) - 1 to the `scores` parameter.
+#'   The inverse function `inv_winning_chances()` reverses the transformation.
+#'
+#' @details The scaling function is borrowed from
+#'   [lichess](https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/acpl.js)
+#'
+#' @param scores A numeric vector of chess engine evaluations.
+#' @param scaled_scores A numeric vector of scaled chess engine evaluations.
+#'
+#' @return A numeric vector of winning chances.
 winning_chances <- function(scores) {
-  # Use the same exponential scale as lichess
-  # https://github.com/ornicar/lila/blob/442da0c86a9d54c3cff5645e14d67dfe269a9d0b/public/javascripts/chart/acpl.js
   # y: 2 / (1 + Math.exp(-0.004 * cp)) - 1
   2 / (1 + exp(-0.004 * scores)) - 1
 }
+#' @rdname winning_chances
 inv_winning_chances <- function(scaled_scores) {
   250 * log((-scaled_scores - 1)/(scaled_scores - 1))
 }
-winning_chances_trans <- function() scales::trans_new(
-  "winning_chances", winning_chances, inv_winning_chances)
-
 
 #' Add x-intercepts
 #'
-#' Given a data frame of x-y coordinates, find where the x-intercepts would be.
+#' Given a data frame of x-y coordinates, find the x-intercepts of the line
+#'   segments that connect neighboring pairs of points, and add the x-intercepts
+#'   to the data frame.
 #'
 #' @details The input data frame is expected to have two columns, with each row
 #'   being the Cartesian coordinates of a point in the x-y plane. If the points
@@ -52,8 +83,8 @@ winning_chances_trans <- function() scales::trans_new(
 #'   segments, `add_x_intercepts` will find the points where the segments
 #'   intersect the x-axis and add those points to the data frame.
 #'
-#' @param dataframe A 2-column data frame with numeric or integer columns, where
-#'   each row is a point in the x-y plane.
+#' @param dataframe A 2-column data frame with numeric columns, where each row
+#'   is a point in the x-y plane.
 #' @param x_name A single-element character vector with the name of the column
 #'   containing the x-coordinates.
 #' @param y_name A single-element character vector with the name of the column
@@ -99,13 +130,16 @@ add_x_intercepts <- function(dataframe, x_name, y_name) {
 }
 
 
-#' Two color area plot
+#' Two-color area plot
+#'
+#' Make an area plot where shading above the x-axis is white, and shading below
+#'   the x-axis is dark gray.
 #'
 #' @details The input data frame is expected to have two columns, with each row
 #'   being the Cartesian coordinates of a point in the x-y plane. The function
 #'   `plot_2_color_area` will create an area plot where the area above the
-#'   x-axis is filled with white (actually light grey), and the area below the
-#'   x-axis is filled with black (actually dark grey).
+#'   x-axis is filled with white (actually light gray), and the area below the
+#'   x-axis is filled with black (actually dark gray).
 #'
 #' @param dataframe A 2-column data frame with numeric or integer columns, where
 #'   each row is a point in the x-y plane.
@@ -114,7 +148,7 @@ add_x_intercepts <- function(dataframe, x_name, y_name) {
 #' @param y_name A single-element character vector with the name of the column
 #'   containing the y-coordinates.
 #'
-#' @return A two-color area plot.
+#' @return A ggplot object that is a two-color area plot.
 plot_2_color_area <- function(dataframe, x_name, y_name) {
   # Validate input
   assertthat::assert_that(is.data.frame(dataframe))
@@ -157,6 +191,24 @@ plot_2_color_area <- function(dataframe, x_name, y_name) {
   p1
 }
 
+#' Add spaces
+#'
+#' Justify table columns by adding spaces.
+#'
+#' @details The function `add_spaces()` is used to make justified tables with a
+#'   monospaced font. The parameter `my_text` should contain a vector of text
+#'   for a single column, with each row as a separate element. For right-
+#'   justified text, set the `to` parameter to 'head'. This will add enough
+#'   space to the front of each row to make all entries have an equal number of
+#'   characters. Similarly, for left-justified text, set the `to` parameter to
+#'   'tail'.
+#'
+#' @param my_text A character vector of text to be justified.
+#' @param to A single-element character vector with allowed values of either
+#'   'head' or 'tail' to indicate on which side spaces should be added.
+#'
+#' @return A character vector of text with spaces added to give each entry an
+#'   equal number of characters.
 add_spaces <- function(my_text, to) {
   # Validate input
   assertthat::assert_that(is.vector(my_text))
@@ -179,7 +231,25 @@ add_spaces <- function(my_text, to) {
   }
 }
 
+#' Make a table
+#'
+#' Makes a two-column table that will be justified when rendered with a
+#'   monospaced font.
+#'
+#' @details A character string will be generated that produces a two-column
+#'   table when rendered in a monospaced font. The first column will be right-
+#'   justified, and the second column will be left-justified. Rows will be
+#'   separated by newline characters ('\\n').
+#'
+#' @param col_a A character vector of the rows of column A.
+#' @param col_b A character vector of the rows of column B.
+#'
+#' @return A single-element character vector of text that will be a two-column
+#'   table when rendered with a monospaced font.
 make_table <- function(col_a, col_b) {
+  assertthat::assert_that(is.character(col_a))
+  assertthat::assert_that(is.character(col_b))
+  assertthat::assert_that(length(col_a) == length(col_b))
   col_a <- add_spaces(col_a, 'head')
   col_b <- add_spaces(col_b, 'tail')
   new_table <- matrix(c(col_a, col_b), ncol = 2)

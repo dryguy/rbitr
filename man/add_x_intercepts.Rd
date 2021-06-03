@@ -7,8 +7,8 @@
 add_x_intercepts(dataframe, x_name, y_name)
 }
 \arguments{
-\item{dataframe}{A 2-column data frame with numeric or integer columns, where
-each row is a point in the x-y plane.}
+\item{dataframe}{A 2-column data frame with numeric columns, where each row
+is a point in the x-y plane.}
 
 \item{x_name}{A single-element character vector with the name of the column
 containing the x-coordinates.}
@@ -21,7 +21,9 @@ A new data frame consisting of the original data frame with new rows
 added for each intersection with the x-axis.
 }
 \description{
-Given a data frame of x-y coordinates, find where the x-intercepts would be.
+Given a data frame of x-y coordinates, find the x-intercepts of the line
+segments that connect neighboring pairs of points, and add the x-intercepts
+to the data frame.
 }
 \details{
 The input data frame is expected to have two columns, with each row

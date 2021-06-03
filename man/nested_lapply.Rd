@@ -2,14 +2,15 @@
 % Please edit documentation in R/rbitr_helpers.R
 \name{nested_lapply}
 \alias{nested_lapply}
-\title{Apply \code{input_function} to the root level elements of a nested list.}
+\title{Apply \code{input_function} to the root elements of a nested list}
 \usage{
 nested_lapply(x, input_function, ...)
 }
 \arguments{
 \item{x}{A nested list.}
 
-\item{input_function}{A function that takes the root level elements of x as}
+\item{input_function}{A function that takes the root level elements of x as
+arguments.}
 
 \item{...}{Further arguments to \code{input_function}.}
 }
@@ -18,5 +19,5 @@ A list with the same structure as x, where the root level elements
 have been replaced with the outputs of \code{input_function}.
 }
 \description{
-Apply \code{input_function} to the root level elements of a nested list.
+Apply \code{input_function} to the root elements of a nested list
 }

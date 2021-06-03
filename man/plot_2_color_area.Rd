@@ -2,7 +2,7 @@
 % Please edit documentation in R/rbitr_helpers.R
 \name{plot_2_color_area}
 \alias{plot_2_color_area}
-\title{Two color area plot}
+\title{Two-color area plot}
 \usage{
 plot_2_color_area(dataframe, x_name, y_name)
 }
@@ -17,15 +17,16 @@ containing the x-coordinates.}
 containing the y-coordinates.}
 }
 \value{
-A two-color area plot.
+A ggplot object that is a two-color area plot.
 }
 \description{
-Two color area plot
+Make an area plot where shading above the x-axis is white, and shading below
+the x-axis is dark gray.
 }
 \details{
 The input data frame is expected to have two columns, with each row
 being the Cartesian coordinates of a point in the x-y plane. The function
 \code{plot_2_color_area} will create an area plot where the area above the
-x-axis is filled with white (actually light grey), and the area below the
-x-axis is filled with black (actually dark grey).
+x-axis is filled with white (actually light gray), and the area below the
+x-axis is filled with black (actually dark gray).
 }
