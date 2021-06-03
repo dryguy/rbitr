@@ -36,7 +36,9 @@ test_that('add_x_intercepts adds x-intercepts', {
 
 
 test_that('plot_2_color_area returns a ggplot', {
-  p1 <- plot_2_color_area(dataframe, 'x', 'y')
+  p1 <- plot_2_color_area(dataframe, 'x', 'y', background = 'none')
+  expect_equal(class(p1), c('gg', 'ggplot'))
+  p1 <- plot_2_color_area(dataframe, 'x', 'y', background = 'gradient')
   expect_equal(class(p1), c('gg', 'ggplot'))
 })
 

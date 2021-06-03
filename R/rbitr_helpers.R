@@ -147,20 +147,22 @@ add_x_intercepts <- function(dataframe, x_name, y_name) {
 #'   containing the x-coordinates.
 #' @param y_name A single-element character vector with the name of the column
 #'   containing the y-coordinates.
+#' @param background (Default = 'none') A single-element character vector
+#'   indicating the desired background. Options are 'none' or 'gradient'.
 #'
 #' @return A ggplot object that is a two-color area plot.
-plot_2_color_area <- function(dataframe, x_name, y_name) {
+plot_2_color_area <- function(dataframe, x_name, y_name, background = 'none') {
   # Validate input
   assertthat::assert_that(is.data.frame(dataframe))
   assertthat::assert_that(ncol(dataframe) == 2)
   assertthat::assert_that(is.integer(dataframe[, x_name]) |
-                            is.numeric(dataframe[, x_name]))
+                          is.numeric(dataframe[, x_name]))
   assertthat::assert_that(is.integer(dataframe[, y_name]) |
-                            is.numeric(dataframe[, y_name]))
-
+                          is.numeric(dataframe[, y_name]))
+  assertthat::assert_that(background == 'none' |
+                          background == 'gradient')
   # Find the x-intercepts
   dataframe <- add_x_intercepts(dataframe, x_name, y_name)
-
   # Load background gradient
   gradient_path <- file.path(
     system.file(package = 'rbitr'),
@@ -174,10 +176,15 @@ plot_2_color_area <- function(dataframe, x_name, y_name) {
   y_index <- which(colnames(dataframe) %in% y_name)
   names(dataframe)[x_index] <- 'x'
   names(dataframe)[y_index] <- 'y'
+  if (background == 'gradient') {
+    p_background <- ggplot2::annotation_custom(grid::rasterGrob(gradient_background,
+                                               width  = grid::unit(1, 'npc'),
+                                               height = grid::unit(1, 'npc')))
+  } else if (background == 'none') {
+    p_background <- ggplot2::geom_blank()
+  }
   p1 <- ggplot2::ggplot() +
-    ggplot2::annotation_custom(grid::rasterGrob(gradient_background,
-                                                width  = grid::unit(1, 'npc'),
-                                                height = grid::unit(1, 'npc'))) +
+    p_background +
     ggplot2::geom_area(data    = dataframe[dataframe$y <= 0, ],
                        mapping = ggplot2::aes(x = .data$x, y = .data$y),
                        fill    = grDevices::rgb(164, 162, 160,

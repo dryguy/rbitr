@@ -4,7 +4,7 @@
 \alias{plot_2_color_area}
 \title{Two-color area plot}
 \usage{
-plot_2_color_area(dataframe, x_name, y_name)
+plot_2_color_area(dataframe, x_name, y_name, background = "none")
 }
 \arguments{
 \item{dataframe}{A 2-column data frame with numeric or integer columns, where
@@ -15,6 +15,9 @@ containing the x-coordinates.}
 
 \item{y_name}{A single-element character vector with the name of the column
 containing the y-coordinates.}
+
+\item{background}{(Default = 'none') A single-element character vector
+indicating the desired background. Options are 'none' or 'gradient'.}
 }
 \value{
 A ggplot object that is a two-color area plot.
