@@ -21,8 +21,8 @@
 #'
 #' @seealso
 #'   * [rbitr::advantage_plot()] to plot advantage data.
-#'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
-#'     of game stats.
+#'   * [rbitr::game_summary_plot()] to plot move time and advantage data with a
+#'     table of game stats.
 #'
 #' @examples
 #'   white_move_times <- c(4, 10, 5, 10)
@@ -97,7 +97,7 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                        na.rm   = TRUE,
                        alpha   = 0.71) +
     ggplot2::ylim(c(-y_lim, y_lim)) +
-    ggplot2::xlab('Half Moves') +
+    ggplot2::xlab('Ply') +
     ggplot2::ylab('Move Times (Scaled)') +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),

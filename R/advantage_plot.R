@@ -27,8 +27,8 @@
 #'
 #' @seealso
 #'   * [rbitr::scaled_time_plot()] to plot move time data.
-#'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
-#'     of game stats.
+#'   * [rbitr::game_summary_plot()] to plot move time and advantage data with a
+#'     table of game stats.
 #'
 #' @examples
 #'   scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
@@ -67,7 +67,7 @@ advantage_plot <- function(scores, style = 'graph') {
                         color   = grDevices::rgb(216, 80, 0,
                                                  maxColorValue = 255),
                         size    = 1) +
-    ggplot2::xlab('Half Moves') +
+    ggplot2::xlab('Ply') +
     ggplot2::ylab('Advantage') +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),

@@ -1,19 +1,18 @@
-#' Lichess plot
+#' Game summery plot
 #'
-#' Generate a plot of game statistics in the style of
-#'   [lichess.org](http://lichess.org).
+#' Generate a plot of various game statistics.
 #'
-#' @details The function `lichess_plot()` will first look for existing analysis
-#'   in the pgn file, and if not found, it will look for a saved analysis. If no
-#'   analysis data is found, it will analyze the game. The default search
-#'   depth is 2,250,000 nodes (the same as lichess).
+#' @details The function `game_summary_plot()` will first look for existing
+#'   analysis in the pgn file, and if not found, it will look for a saved
+#'   analysis. If no analysis data is found, it will analyze the game. The
+#'   default search depth is 2,250,000 nodes.
 #'
-#' @details An advantage plot and move time plot will be produced in the style
-#'   of [lichess.org](http://lichess.org). See `advantage_plot()` and
-#'   `scaled_time_plot()` for details. In addition, a table will be displayed
-#'   showing the number of inaccuracies, mistakes, and blunders, and the
-#'   average centipawn loss (ACPL). If clock data is not available in the pgn
-#'   file, the move-time plot will display a message that no data is available.
+#' @details An advantage plot and move time plot will be generated. (See
+#'   `advantage_plot()` and `scaled_time_plot()` for details.) In addition, a
+#'   table will be displayed showing the number of inaccuracies, mistakes, and
+#'   blunders, and the average centipawn loss (ACPL). (See `get_imb()` and
+#'   `get_acpl()`.) If clock data is not available in the pgn file, the
+#'   move-time plot will display a message that no data is available.
 #'
 #' @param pgn_path A single-element character vector of the path to a pgn file.
 #' @param game_number A single-element integer vector indicating which game in
@@ -26,6 +25,10 @@
 #'   whether to use evals from the pgn, if present.
 #' @param nodes (Default = 2250000) A single-element integer vector of the depth
 #'   to analyze to, in nodes.
+#' @param style (Default = 'graph') A single-element character vector
+#'   indicating the plot style. Allowed values are 'graph' for a traditional
+#'   graph with axes, or 'infographic' to add a background gradient and remove
+#'   the axes (similar to [lichess.org](lichess.org)).
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
@@ -44,15 +47,18 @@
 #' )
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
-#' lichess_plot(pgn_path, game_number = 1, engine_path)
-lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
-                         use_pgn_evals = TRUE, nodes = 2250000) {
+#' game_summary_plot(pgn_path, game_number = 1, engine_path)
+game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
+                         use_pgn_evals = TRUE, nodes = 2250000,
+                         style = 'graph') {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
   assertthat::assert_that(assertthat::is.count(game_number))
   assertthat::assert_that(assertthat::is.string(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
   assertthat::assert_that(assertthat::is.flag(use_pgn_evals))
+  assertthat::assert_that(style == 'graph' |
+                          style == 'infographic')
   # Load the game
   pgn <- get_pgn(pgn_path)
   assertthat::assert_that(game_number <= nrow(pgn))
@@ -106,9 +112,9 @@ lichess_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
                                       na.rm = TRUE))
     tx <- ax
   }
-  p1 <- scaled_time_plot(white_move_times, black_move_times) +
+  p1 <- scaled_time_plot(white_move_times, black_move_times, style = style) +
     ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Time', hjust = 0)
-  p2 <- advantage_plot(evals) +
+  p2 <- advantage_plot(evals, style = style) +
     ggplot2::annotate('text', x = ax, y = 0.95, label = 'Advantage', hjust = 0)
   # Calculate stats
   moves <- get_moves(pgn$Movetext[[game_number]])[[1]]
