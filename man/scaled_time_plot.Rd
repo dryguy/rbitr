@@ -37,7 +37,7 @@ times are shown as negative values with a dark gray fill.
 }
 \seealso{
 \itemize{
-\item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
+\item \code{\link[=advantage_plot]{advantage_plot()}} to plot advantage data.
 \item \code{\link[=lichess_plot]{lichess_plot()}} to plot move time and advantage data with a table
 of game stats.
 }

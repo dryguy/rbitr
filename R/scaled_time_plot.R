@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::lichess_advantage_plot()] to plot advantage data.
+#'   * [rbitr::advantage_plot()] to plot advantage data.
 #'   * [rbitr::lichess_plot()] to plot move time and advantage data with a table
 #'     of game stats.
 #'

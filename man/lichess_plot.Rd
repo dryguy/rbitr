@@ -45,8 +45,8 @@ analysis data is found, it will analyze the game. The default search
 depth is 2,250,000 nodes (the same as lichess).
 
 An advantage plot and move time plot will be produced in the style
-of \href{http://lichess.org}{lichess.org}. See \code{lichess_advantage_plot()} and
-\code{lichess_time_plot()} for details. In addition, a table will be displayed
+of \href{http://lichess.org}{lichess.org}. See \code{advantage_plot()} and
+\code{scaled_time_plot()} for details. In addition, a table will be displayed
 showing the number of inaccuracies, mistakes, and blunders, and the
 average centipawn loss (ACPL). If clock data is not available in the pgn
 file, the move-time plot will display a message that no data is available.
@@ -63,7 +63,7 @@ lichess_plot(pgn_path, game_number = 1, engine_path)
 }
 \seealso{
 \itemize{
-\item \code{\link[=lichess_advantage_plot]{lichess_advantage_plot()}} to plot advantage data.
+\item \code{\link[=advantage_plot]{advantage_plot()}} to plot advantage data.
 \item \code{\link[=scaled_time_plot]{scaled_time_plot()}} to plot move time data.
 \item \code{\link[=get_acpl]{get_acpl()}} to calculate average centipawn loss.
 \item \code{\link[=get_imb]{get_imb()}} to calculate inaccuracies, mistakes, and blunders.
