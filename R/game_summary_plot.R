@@ -113,7 +113,7 @@ game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
     tx <- ax
   }
   p1 <- scaled_time_plot(white_move_times, black_move_times, style = style) +
-    ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Time', hjust = 0)
+    ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Times', hjust = 0)
   p2 <- advantage_plot(evals, style = style) +
     ggplot2::annotate('text', x = ax, y = 0.95, label = 'Advantage', hjust = 0)
   # Calculate stats
