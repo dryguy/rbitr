@@ -25,3 +25,6 @@ table when rendered in a monospaced font. The first column will be right-
 justified, and the second column will be left-justified. Rows will be
 separated by newline characters ('\\n').
 }
+\examples{
+cat(make_table(c('1', '2', '11'), c('one', 'two', 'eleven')))
+}

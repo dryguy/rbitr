@@ -35,6 +35,9 @@ nested_lapply <- function(x, input_function, ...) {
 #'
 #' @return For `scaled_move_times()`, a numeric vector of scaled move times. For
 #'   `inv_scaled_move_times()` a numeric vector of un-scaled move times.
+#'
+#' @export
+#'
 scale_move_times <- function(move_times) {
   # logC = Math.pow(Math.log(3), 2)
   # y = Math.pow(Math.log(.005 * Math.min(time, 12e4) + 3), 2) - logC
@@ -216,6 +219,10 @@ plot_2_color_area <- function(dataframe, x_name, y_name, background = 'none') {
 #'
 #' @return A character vector of text with spaces added to give each entry an
 #'   equal number of characters.
+#' @export
+#'
+#' @examples
+#' add_spaces(c('a', 'b', 'cccc'), to = 'tail')
 add_spaces <- function(my_text, to) {
   # Validate input
   assertthat::assert_that(is.vector(my_text))
@@ -253,6 +260,9 @@ add_spaces <- function(my_text, to) {
 #'
 #' @return A single-element character vector of text that will be a two-column
 #'   table when rendered with a monospaced font.
+#' @export
+#' @examples
+#' cat(make_table(c('1', '2', '11'), c('one', 'two', 'eleven')))
 make_table <- function(col_a, col_b) {
   assertthat::assert_that(is.character(col_a))
   assertthat::assert_that(is.character(col_b))

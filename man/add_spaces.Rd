@@ -28,3 +28,6 @@ space to the front of each row to make all entries have an equal number of
 characters. Similarly, for left-justified text, set the \code{to} parameter to
 'tail'.
 }
+\examples{
+add_spaces(c('a', 'b', 'cccc'), to = 'tail')
+}
