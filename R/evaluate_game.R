@@ -47,6 +47,8 @@
 #'    cpus to use.
 #' @param n_pv (Default = 1) A single-element integer vector of the desired
 #'   number of principal variations.
+#' @param mute (Default = TRUE) A single-element boolean vector indicating
+#'   whether to display progress.
 #'
 #' @return A list containing character vectors of the engine's output. Each
 #'   element in the list corresponds to a position in the game. The first entry
@@ -66,7 +68,7 @@
 #' evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 
 evaluate_game <- function(movetext, engine_path, limiter, limit,
-                          n_cpus = 1L, n_pv = 1L) {
+                          n_cpus = 1L, n_pv = 1L, mute = TRUE) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(movetext))
   assertthat::assert_that(assertthat::is.string(engine_path))
@@ -76,11 +78,13 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
                           limiter == 'nodes' |
                           limiter == 'movetime')
   assertthat::assert_that(assertthat::is.count(limit))
+  assertthat::assert_that(assertthat::is.flag(mute))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
   moves <- bigchess::san2lan(moves)
   moves <- unlist(strsplit(moves, split = ' '), use.names = FALSE)
   moves <- c('', moves)
+  n_moves <- length(moves)
   # Set up the engine
   engine <- bigchess::uci_engine(engine_path)
   cpu_command <- paste0('setoption name Threads value ', n_cpus)
@@ -92,7 +96,11 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
   engine <- bigchess::uci_position(engine)
   go_command <- paste('go', limiter, limit)
   # Analyze the game
-  analyze_move <- function(move_index, moves, engine, go_command) {
+  analyze_move <- function(move_index, moves, engine, go_command, n_moves,
+                           mute) {
+    if (!mute) {
+      print(paste0('Analyzing move ', move_index, ' of ', n_moves))
+    }
     moves <- paste0(moves[1:move_index], collapse = ' ')
     move_command <- paste0('position startpos moves ', moves)
     engine <- bigchess::uci_cmd(engine, command = move_command)
@@ -105,9 +113,9 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
     }
     bigchess::uci_read(engine)$temp
   }
-  move_index <- 1:length(moves)
+  move_index <- 1:n_moves
   result <- lapply(move_index, analyze_move, moves = moves, engine = engine,
-         go_command = go_command)
+         go_command = go_command, n_moves = n_moves, mute = mute)
   bigchess::uci_quit(engine)
   return(result)
 }

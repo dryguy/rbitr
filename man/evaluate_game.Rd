@@ -4,7 +4,15 @@
 \alias{evaluate_game}
 \title{Analyze a chess game}
 \usage{
-evaluate_game(movetext, engine_path, limiter, limit, n_cpus = 1L, n_pv = 1L)
+evaluate_game(
+  movetext,
+  engine_path,
+  limiter,
+  limit,
+  n_cpus = 1L,
+  n_pv = 1L,
+  mute = TRUE
+)
 }
 \arguments{
 \item{movetext}{A single-element character vector containing a sequence of
@@ -27,6 +35,9 @@ cpus to use.}
 
 \item{n_pv}{(Default = 1) A single-element integer vector of the desired
 number of principal variations.}
+
+\item{mute}{(Default = TRUE) A single-element boolean vector indicating
+whether to display progress.}
 }
 \value{
 A list containing character vectors of the engine's output. Each
