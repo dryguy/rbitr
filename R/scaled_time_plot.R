@@ -86,6 +86,7 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                                                 maxColorValue = 255),
                        fill    = grDevices::rgb(252, 251, 250,
                                                 maxColorValue = 255),
+                       na.rm = TRUE,
                        alpha   = 0.71) +
     ggplot2::geom_area(data    = lichess_move_times,
                        mapping = ggplot2::aes(x = .data$black_ply,
