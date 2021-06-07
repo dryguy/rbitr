@@ -112,10 +112,23 @@ game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
                                       na.rm = TRUE))
     tx <- ax
   }
+  if (style == 'infographic') {
+    p_time_annotation <- ggplot2::annotate('text', x = tx, y = ty,
+                                           label = 'Scaled Move Times',
+                                           hjust = 0)
+    p_advantage_annotation <- ggplot2::annotate('text', x = ax, y = 0.95,
+                                                label = 'Advantage', hjust = 0)
+  } else if (style == 'graph') {
+    p_time_annotation <- ggplot2::geom_blank()
+    p_advantage_annotation <- ggplot2::geom_blank()
+  }
   p1 <- scaled_time_plot(white_move_times, black_move_times, style = style) +
-    ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Times', hjust = 0)
+    p_time_annotation
+    #ggplot2::annotate('text', x = tx, y = ty, label = 'Scaled Move Times',
+    #                  hjust = 0)
   p2 <- advantage_plot(evals, style = style) +
-    ggplot2::annotate('text', x = ax, y = 0.95, label = 'Advantage', hjust = 0)
+    p_advantage_annotation
+    #ggplot2::annotate('text', x = ax, y = 0.95, label = 'Advantage', hjust = 0)
   # Calculate stats
   moves <- get_moves(pgn$Movetext[[game_number]])[[1]]
   white_imb <- get_imb(evals, moves, bestmoves, 'white')
