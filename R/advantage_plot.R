@@ -16,7 +16,7 @@
 #'   comeback, even if the move objectively loses material with perfect play by
 #'   the opponent. The scaled values are plotted vs. the number of half-moves.
 #'
-#' @param scores A numeric vector of positional evaluations (in centipawns.)
+#' @param scores A numeric vector of positional evaluations (in centipawns).
 #' @param style (Default = 'graph') A single-element character vector
 #'   indicating the plot style. Allowed values are 'graph' for a traditional
 #'   graph with axes, or 'infographic' to add a background gradient and remove
@@ -68,7 +68,7 @@ advantage_plot <- function(scores, style = 'graph') {
                                                  maxColorValue = 255),
                         size    = 1) +
     ggplot2::xlab('Ply') +
-    ggplot2::ylab('Advantage') +
+    ggplot2::ylab('Advantage (Scaled)') +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),
       limits = c(1, n_ply)) +

@@ -7,7 +7,7 @@
 advantage_plot(scores, style = "graph")
 }
 \arguments{
-\item{scores}{A numeric vector of positional evaluations (in centipawns.)}
+\item{scores}{A numeric vector of positional evaluations (in centipawns).}
 
 \item{style}{(Default = 'graph') A single-element character vector
 indicating the plot style. Allowed values are 'graph' for a traditional
