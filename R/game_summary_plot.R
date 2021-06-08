@@ -90,7 +90,10 @@ game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
            '.Rdata')
   )
   if (file.exists(save_path)) {
+    gamelog <- list(0)
     load(save_path)
+    evaluation <- gamelog
+    rm(gamelog)
   } else {
     evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
                                 n_pv = 1, limiter = 'nodes', limit = nodes)

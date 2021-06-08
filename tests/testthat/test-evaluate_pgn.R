@@ -6,11 +6,11 @@ engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 
 test_that('evaluate_pgn evaluates a pgn', {
   pgn_path <- file.path(pgn_path, 'dr_who.pgn')
-  evaluations <- evaluate_pgn(pgn_path, engine_path, n_pv = 2, limiter = 'depth',
+  pgnlog <- evaluate_pgn(pgn_path, engine_path, n_pv = 2, limiter = 'depth',
                               limit = 2, mute = TRUE)
-  expect_identical(class(evaluations), 'list')
-  expect_identical(evaluations[[3]][[62]][2], 'readyok')
-  expect_identical(evaluations[[2]][[78]][5], 'bestmove (none)')
+  expect_identical(class(pgnlog), 'list')
+  expect_identical(pgnlog[[3]][[62]][2], 'readyok')
+  expect_identical(pgnlog[[2]][[78]][5], 'bestmove (none)')
 })
 # save_logs = F & dir.exists(progress_path) = T
 test_that('evaluate_pgn warns when save_logs may be forgotten', {

@@ -81,7 +81,7 @@ evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from an evaluated pgn.
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from an evaluated game.
 \item \code{\link[=get_pgn]{get_pgn()}} for loading pgn files.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 }

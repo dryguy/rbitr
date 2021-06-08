@@ -44,7 +44,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated pgn.
+#'   * [rbitr::parse_gamelog()] for extracting data from an evaluated game.
 #'   * [rbitr::get_pgn()] for loading pgn files.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'
@@ -99,7 +99,7 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
     if (dir.exists(progress_path)) {
       if (file.exists(save_path)) {
         load(save_path)
-        return(evaluation)
+        return(gamelog)
       }
     }
     # Evaluate the game
@@ -108,7 +108,7 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
       print(paste0('game ', row_number, ' of ', total_rows))
     }
     movetext <- clean_movetext(pgn$Movetext[row_number])
-    evaluation <- evaluate_game(movetext, engine_path, limiter, limit,
+    gamelog <- evaluate_game(movetext, engine_path, limiter, limit,
                                 n_cpus, n_pv)
     # Show progress
     if (!mute) {
@@ -134,10 +134,10 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
     }
     # Save results
     if (save_logs) {
-      save(evaluation, file = save_path)
+      save(gamelog, file = save_path)
     }
     # Return results
-    evaluation
+    gamelog
   }
   # Run the evaluation loop
   row_numbers <- 1:nrow(pgn)
