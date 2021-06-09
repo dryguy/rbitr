@@ -67,7 +67,7 @@ scaled_advantage_plot <- function(scores, style = 'graph') {
                         color   = grDevices::rgb(216, 80, 0,
                                                  maxColorValue = 255),
                         size    = 1) +
-    ggplot2::xlab('Ply') +
+    ggplot2::xlab('Position') +
     ggplot2::ylab('Advantage (Scaled)') +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),
