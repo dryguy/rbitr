@@ -125,7 +125,7 @@ get_imb(scores, moves, bestmoves, color = 'white')
 \item \code{\link[=get_moves]{get_moves()}} to get moves from movetext.
 \item \code{\link[=evaluate_game]{evaluate_game()}} or \code{\link[=evaluate_pgn]{evaluate_pgn()}} to calculate scores.
 \item \code{\link[=convert_scores]{convert_scores()}} to set values for 'mate x'.
-\item \code{\link[=parse_gamelog]{parse_gamelog()}} and \code{\link[=parse_pgnlog]{parse_pgnlog()}} to extract the best
-moves from UCI engine output.
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} to extract the best moves from UCI engine
+output.
 }
 }

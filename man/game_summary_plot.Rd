@@ -7,7 +7,7 @@
 game_summary_plot(
   pgn_path,
   game_number,
-  engine_path,
+  engine_path = NULL,
   n_cpus = 1,
   use_pgn_evals = TRUE,
   nodes = 2250000,

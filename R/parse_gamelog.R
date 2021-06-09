@@ -35,7 +35,6 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated pgn.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'   * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
 #'

@@ -3,7 +3,7 @@
 #' A no-frills function to read a pgn file into a tibble.
 #'
 #' @details See the
-#' [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1)
+#' [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete)
 #' for information on the pgn format.
 #'
 #' @details Each distinct tag name in the pgn file will become a tibble column

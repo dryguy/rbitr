@@ -32,8 +32,7 @@
 #' @return An numeric vector of scores (in centipawns).
 #' @export
 #'
-#' @seealso [rbitr::parse_gamelog()] or [rbitr::parse_pgnlog()] to extract
-#'   scores from engine output.
+#' @seealso [rbitr::parse_gamelog()] to extract scores from engine output.
 #'
 #' @examples
 #' scores <- c("90", "-26", "26 upperbound", "mate 1", "mate -1", "mate 0", NA)

@@ -48,6 +48,5 @@ scores <- c("90", "-26", "26 upperbound", "mate 1", "mate -1", "mate 0", NA)
 convert_scores(scores)
 }
 \seealso{
-\code{\link[=parse_gamelog]{parse_gamelog()}} or \code{\link[=parse_pgnlog]{parse_pgnlog()}} to extract
-scores from engine output.
+\code{\link[=parse_gamelog]{parse_gamelog()}} to extract scores from engine output.
 }
