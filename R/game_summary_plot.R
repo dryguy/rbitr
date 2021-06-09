@@ -48,13 +48,14 @@
 #' # Modify engine_path as required for your engine location & operating system
 #' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 #' game_summary_plot(pgn_path, game_number = 1, engine_path)
-game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
-                         use_pgn_evals = TRUE, nodes = 2250000,
-                         style = 'graph') {
+game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
+                              n_cpus = 1, use_pgn_evals = TRUE, nodes = 2250000,
+                              style = 'graph') {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
   assertthat::assert_that(assertthat::is.count(game_number))
-  assertthat::assert_that(assertthat::is.string(engine_path))
+  assertthat::assert_that(assertthat::is.string(engine_path) |
+                          is.null(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
   assertthat::assert_that(assertthat::is.flag(use_pgn_evals))
   assertthat::assert_that(style == 'graph' |
@@ -95,6 +96,10 @@ game_summary_plot <- function(pgn_path, game_number, engine_path, n_cpus = 1,
     evaluation <- gamelog
     rm(gamelog)
   } else {
+    if (is.null(engine_path)) {
+      stop(paste0('No saved analysis exists and engine_path = NULL:/n',
+                  '* An engine is required to analyze the game.'))
+    }
     evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
                                 n_pv = 1, limiter = 'nodes', limit = nodes)
   }
