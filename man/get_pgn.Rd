@@ -18,7 +18,7 @@ A no-frills function to read a pgn file into a tibble.
 }
 \details{
 See the
-\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1}{pgn specification}
+\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete}{PGN specification}
 for information on the pgn format.
 
 Each distinct tag name in the pgn file will become a tibble column

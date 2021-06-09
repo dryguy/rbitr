@@ -66,5 +66,5 @@ get_move_times <- function(clock, increment, color, negative_time = 'NA') {
   if (any(move_times < 0, na.rm = TRUE) & negative_time == 'NA') {
     move_times[move_times < 0] <- NA_real_
   }
-  as.numeric(move_times)
+  c(0, as.numeric(move_times))
 }

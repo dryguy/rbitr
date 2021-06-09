@@ -60,12 +60,12 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
   assertthat::assert_that(assertthat::is.flag(use_pgn_evals))
   assertthat::assert_that(style == 'graph' |
                           style == 'infographic')
+  assertthat::assert_that(assertthat::is.count(nodes))
   # Load the game
   pgn <- get_pgn(pgn_path)
   assertthat::assert_that(game_number <= nrow(pgn))
   # Get the moves
   moves <- get_moves(pgn$Movetext[[game_number]])
-  #n_ply <- 1:length(moves)
   # Load the clocks
   clocks <- get_clocks(pgn$Movetext[[game_number]])[[1]]
   if ('TimeControl' %in% names(pgn)) {

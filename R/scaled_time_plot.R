@@ -38,8 +38,14 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                           style == 'infographic')
   n_white_move_times <- length(white_move_times)
   # Create a data frame of move times
-  white_move_times <- c(0, scale_move_times(white_move_times))
-  black_move_times <- c(0, scale_move_times(black_move_times))
+  #white_move_times <- c(0, scale_move_times(white_move_times))
+  #black_move_times <- c(0, scale_move_times(black_move_times))
+  if (length(white_move_times) == 0) {
+    white_move_times <- 0
+  }
+  if (length(black_move_times) == 0) {
+    black_move_times <- 0
+  }
   max_y <- max(c(white_move_times, black_move_times))
   if (n_white_move_times == 0) {
     max_y == 1
