@@ -32,8 +32,8 @@
 #'
 #' @examples
 #'   scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
-#'   advantage_plot(scores)
-advantage_plot <- function(scores, style = 'graph') {
+#'   scaled_advantage_plot(scores)
+scaled_advantage_plot <- function(scores, style = 'graph') {
   # Validate input
   assertthat::assert_that(is.numeric(scores))
   assertthat::assert_that(style == 'graph' |
