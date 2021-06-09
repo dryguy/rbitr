@@ -104,7 +104,7 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                        na.rm   = TRUE,
                        alpha   = 0.71) +
     ggplot2::ylim(c(-y_lim, y_lim)) +
-    ggplot2::xlab('Ply') +
+    ggplot2::xlab('Half Move') +
     ggplot2::ylab('Move Times (Scaled)') +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),
