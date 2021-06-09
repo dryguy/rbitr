@@ -3,8 +3,8 @@
 #' Generate a plot of scaled evaluations (advantages).
 #'
 #' @details Given a vector of positional evaluations (in centipawns), the
-#'   results are scaled using an
-#'   [exponential scaling function](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes)
+#'   results are scaled using a form of
+#'   [logistic scaling function](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes)
 #'   (2 / (1 + exp(-0.004 * scores)) - 1) borrowed from
 #'   [lichess.org](lichess.org). This function downplays the impact of
 #'   less-than-perfect play when one side is far ahead. The idea being that the
