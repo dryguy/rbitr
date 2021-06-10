@@ -172,7 +172,7 @@ Next, we'll look at how to analyze games using an external chess engine. To anal
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 ```
 
-Depending on your processor speed, this step may take some time. We will set the `mute` parameter to `FALSE` in order to monitor game progress. This will cause the function to print the ply number before starting to analyze each position. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.
+Depending on your processor speed, this step may take some time. If you have more than one CPU, you can speed up the analysis by changing the `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1 is used. We will set the `mute` parameter to `FALSE` in order to monitor game progress. This will cause the function to print the ply number before starting to analyze each position. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.
 
 ```{r}
 gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
@@ -183,6 +183,13 @@ gamelog[[1]]
 The result of the analysis is a list of raw chess engine output for each position in the game. The output can get to be quite verbose; we've only displayed the output for the first position, and it's already quite long. We see the name of the engine that was used, some messages that the engine was ready, a line telling us that the engine-specific NNUE option was turned on, and a number of lines showing evaluations at various depths. The last line tells us the best move that was found, and the move that the engine would "ponder" on the opponent's time, if it was in a game. We'll show how to extract the data we want from the engine output in the next section.
 
 (Note that the `evaluate_game()` and `parse_gamelog()` functions essentially duplicate features that are available in the bigchess package. I overlooked the existence of those features, and wound up writing my own code, thus proving that "weeks of coding will save you hours of planning." The silver lining is that, for whatever reason, `evaluate_game()` runs about 3-4 times faster than `bigchess::analyze_game()` so I've kept it in. There's a number of other places where rbitr's features overlap with bigchess, but those are more deliberate decisions having to do with creating the types of work flow that I wanted for rbitr.)
+
+Batch analysis of games is also possible using the function `evaluate_pgn()`, which is essentially a fancy wrapper for `evaluate_game()`. The results of `evaluate_pgn()` are not saved to disk by default. However, deep analysis of large number of games can take a *very* long time. It is highly recommended to set the `save_logs` parameter to `TRUE`. That way, if the analysis has to be interrupted, you will not lose what could be many hours of analysis, and can resume the analysis later, if desired. The analyses will be saved to a directory with the same base name as the PGN file.
+
+```{r}
+pgnlog <- evaluate_pgn(two_games_path, engine_path,
+                       limiter = 'nodes', limit = 2250000)
+```
 
 ### Extracting Data from Chess Engine Logs
 
@@ -204,6 +211,17 @@ The parsed scores are a character vector, rather than numeric. There are also a 
 ```{r}
 evals <- convert_scores(scores)
 evals
+```
+
+The output from `evaluate_pgn()` will be a list of game logs from the `evaluate_game()` function. The logs can be parsed individually with `parse_gamelog()`, or in a batch using `parse_pgnlog()`.
+
+```{r}
+pgn_scores <- parse_pgnlog(pgnlog, 'score')
+lapply(pgn_scores, unlist)
+pgn_bestmoves <- parse_pgnlog(pgnlog, 'bestmove')
+lapply(pgn_bestmoves, unlist)
+pgn_pvs <- parse_pgnlog(pgnlog, 'pv')
+lapply(pgn_pvs, unlist)
 ```
 
 ### Determining Inaccuracies, Mistakes, and Blunders
