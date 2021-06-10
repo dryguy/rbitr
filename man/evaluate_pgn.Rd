@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluate_pgn.R
 \name{evaluate_pgn}
 \alias{evaluate_pgn}
-\title{Analyze each chess game in a pgn file}
+\title{Analyze each chess game in a PGN file}
 \usage{
 evaluate_pgn(
   pgn_path,
@@ -16,7 +16,8 @@ evaluate_pgn(
 )
 }
 \arguments{
-\item{pgn_path}{A single-element character vector of the path to the pgn.}
+\item{pgn_path}{A single-element character vector of the path to the PGN
+file.}
 
 \item{engine_path}{A single-element character vector of the path to a UCI
 chess engine.}
@@ -50,12 +51,12 @@ engine.
 }
 \details{
 The function \code{evaluate_pgn()} wrapper for rbitr's \code{evaluate_game()}
-function that applies \code{evaluate_game()} to each game in the specified pgn
-file. Note that this can take a very long time for pgn files with a lot of
+function that applies \code{evaluate_game()} to each game in the specified PGN
+file. Note that this can take a very long time for PGN files with a lot of
 games, and even longer when searching high numbers of principal variations
 or running deep evaluations. For long runs, it is recommended to set
 save_logs = TRUE. This will save the evaluation of each game to a folder
-with the same name as the pgn file. If the analysis has to be stopped and
+with the same name as the PGN file. If the analysis has to be stopped and
 restarted, it will pick up where it left off if the save_logs option was
 activated.
 
@@ -82,7 +83,8 @@ evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
 \seealso{
 \itemize{
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from an evaluated game.
-\item \code{\link[=get_pgn]{get_pgn()}} for loading pgn files.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from an evaluated PGN file.
+\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 }
 }

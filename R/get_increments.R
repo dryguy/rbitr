@@ -1,28 +1,28 @@
-#' Get increments from pgn TimeControl tags
+#' Get increments from a PGN file's TimeControl tags
 #'
-#' Extract the increments from a pgn file's time control tags. For allowed time
+#' Extract the increments from a PGN file's time control tags. For allowed time
 #'   control formats, see the
-#'   [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c9.6)
+#'   [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c9.6)
 #'   .
 #'
 #' @details The `get_increments()` function is intended for use with data that
-#'   was read from a pgn file with the `get_pgn()` function. If a TimeControl
-#'   tag was present in the pgn, a tibble obtained using `get_pgn()` will have a
-#'   $TimeControl column from which the increment data can be extracted. Note
-#'   that there are six different time control formats recognized by the pgn
-#'   specification, only one of which uses increments. All other formats will
-#'   return an increment of 0 (see example).
+#'   was read from a PGN file with the `get_pgn()` function. If a TimeControl
+#'   tag was present in the PGN file, a tibble obtained using `get_pgn()` will
+#'   have a $TimeControl column from which the increment data can be extracted.
+#'   Note that there are six different time control formats recognized by the
+#'   PGN specification, only one of which uses increments. All other formats
+#'   will return an increment of 0 (see example).
 #'
-#' @param time_control A character vector of pgn TimeControl tags.
+#' @param time_control A character vector of TimeControl tags.
 #'
 #' @return An integer vector of the increments, in seconds. Time controls with
 #'   no increment return 0.
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::get_pgn()] to load the time control and other data from a pgn
+#'   * [rbitr::get_pgn()] to load the time control and other data from a PGN
 #'     file.
-#'   * [rbitr::get_clocks()] to extract the clock data from a pgn file.
+#'   * [rbitr::get_clocks()] to extract the clock data from a PGN file.
 #'   * [rbitr::get_move_times()] to calculate move times from clock and
 #'     increment data.
 #'   * [rbitr::scaled_time_plot()] and [rbitr::game_summary_plot()] to plot move

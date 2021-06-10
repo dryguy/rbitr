@@ -3,7 +3,7 @@
 #' Generate a plot of various game statistics.
 #'
 #' @details The function `game_summary_plot()` will first look for existing
-#'   analysis in the pgn file, and if not found, it will look for a saved
+#'   analysis in the PGN file, and if not found, it will look for a saved
 #'   analysis. If no analysis data is found, it will analyze the game. The
 #'   default search depth is 2,250,000 nodes.
 #'
@@ -11,18 +11,18 @@
 #'   `advantage_plot()` and `scaled_time_plot()` for details.) In addition, a
 #'   table will be displayed showing the number of inaccuracies, mistakes, and
 #'   blunders, and the average centipawn loss (ACPL). (See `get_imb()` and
-#'   `get_acpl()`.) If clock data is not available in the pgn file, the
+#'   `get_acpl()`.) If clock data is not available in the PGN file, the
 #'   move-time plot will display a message that no data is available.
 #'
-#' @param pgn_path A single-element character vector of the path to a pgn file.
+#' @param pgn_path A single-element character vector of the path to a PGN file.
 #' @param game_number A single-element integer vector indicating which game in
-#'   the pgn to plot.
+#'   the PGN file to plot.
 #' @param engine_path A single-element character vector of the path to a UCI
 #'   compatible chess engine.
 #' @param n_cpus (Default = 1) A single-element integer vector indicating how
 #'   many cpus to use for analysis.
 #' @param use_pgn_evals (Default = TRUE) A single-element boolean indicating
-#'   whether to use evals from the pgn, if present.
+#'   whether to use evals from the PGN file, if present.
 #' @param nodes (Default = 2250000) A single-element integer vector of the depth
 #'   to analyze to, in nodes.
 #' @param style (Default = 'graph') A single-element character vector
@@ -76,7 +76,7 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
   white_move_times <- get_move_times(clocks, increment, 'white')
   black_move_times <- get_move_times(clocks, increment, 'black')
   # Get evals
-    # Look in pgn first
+    # Look in loaded pgn first
   evals <- get_evals(pgn$Movetext[[game_number]])[[1]]
   if (!identical(evals, numeric(0))) {
     evals <- c(15, evals)

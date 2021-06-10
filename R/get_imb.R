@@ -86,7 +86,7 @@
 #'
 #' @seealso
 #'   * [rbitr::get_acpl()] for calculating average centipawn loss.
-#'   * [rbitr::get_evals()] to load scores from a pgn file.
+#'   * [rbitr::get_evals()] to load scores from a PGN file.
 #'   * [rbitr::get_moves()] to get moves from movetext.
 #'   * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
 #'   * [rbitr::convert_scores()] to set values for 'mate x'.

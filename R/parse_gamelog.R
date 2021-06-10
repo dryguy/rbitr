@@ -36,7 +36,7 @@
 #'
 #' @seealso
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
-#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'
 #' @examples
 #' gamelog <- list(c(

@@ -60,6 +60,6 @@ parse_gamelog(gamelog, 'bestmove')
 \seealso{
 \itemize{
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
-\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a pgn file.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }
 }

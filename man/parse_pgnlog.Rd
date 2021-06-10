@@ -23,7 +23,7 @@ A list of vectors of the extracted data.
 }
 \description{
 The \code{parse_pgnlog()} function is a wrapper for the \code{parse_gamelog()} function
-that iterates over all the games in a pgn.
+that iterates over all the games in a PGN file.
 }
 \details{
 The output of rbitr's \code{evaluate_pgn()} function is a list of logs
@@ -50,6 +50,6 @@ parse_pgnlog(pgnlog, 'bestmove')
 \itemize{
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
-\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a pgn file.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }
 }

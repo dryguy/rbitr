@@ -18,11 +18,11 @@ Given a character vector of movetext, return a list of character vectors
 each containing moves in long algebraic notation (LAN).
 }
 \details{
-The movetext field of a pgn record contains chess moves in standard
+The movetext field of a PGN file contains chess moves in standard
 algebraic notation, along with optional annotations and comments. The
 \code{get_moves()} function extracts the individual moves and converts them to
 long algebraic notation (LAN). The movetext vectors are typically obtained
-from a pgn file using the \code{get_pgn()} function.
+from a PGN file using the \code{get_pgn()} function.
 }
 \examples{
 movetext <- c('1. e4 {Best by test.} e5', '1. h3?! h6')
@@ -30,7 +30,7 @@ get_moves(movetext)
 }
 \seealso{
 \itemize{
-\item \code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a pgn file.
+\item \code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a PGN file.
 \item \code{\link[=clean_movetext]{clean_movetext()}} to remove comments and annotations from
 movetext.
 }

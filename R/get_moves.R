@@ -3,11 +3,11 @@
 #' Given a character vector of movetext, return a list of character vectors
 #'   each containing moves in long algebraic notation (LAN).
 #'
-#' @details The movetext field of a pgn record contains chess moves in standard
+#' @details The movetext field of a PGN file contains chess moves in standard
 #'   algebraic notation, along with optional annotations and comments. The
 #'   `get_moves()` function extracts the individual moves and converts them to
 #'   long algebraic notation (LAN). The movetext vectors are typically obtained
-#'   from a pgn file using the `get_pgn()` function.
+#'   from a PGN file using the `get_pgn()` function.
 #'
 #' @param movetext A character vector of movetext.
 #'
@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::get_pgn()] to get the movetext and other data from a pgn file.
+#'   * [rbitr::get_pgn()] to get the movetext and other data from a PGN file.
 #'   * [rbitr::clean_movetext()] to remove comments and annotations from
 #'     movetext.
 #'

@@ -13,7 +13,7 @@ parse_movetext(
 )
 }
 \arguments{
-\item{movetext}{A character vector of pgn movetext, where each vector entry
+\item{movetext}{A character vector of movetext, where each vector entry
 is for a separate game.}
 
 \item{cmd_name}{A single-element character vector of the command to parse}

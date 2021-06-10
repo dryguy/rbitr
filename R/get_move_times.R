@@ -6,7 +6,7 @@
 #'   `get_clocks()` and `get_increments()` functions. The move times start from
 #'   the second move (the first move is taken to be zero seconds).
 #'
-#' @note The author has encountered pgn files where a move resulted in the
+#' @note The author has encountered PGN files where a move resulted in the
 #'   remaining time increasing by more than the increment value, giving a
 #'   negative move times. This might occur due to a software bug causing the
 #'   time to be incorrectly recorded, or perhaps by the action of an arbiter
@@ -33,10 +33,10 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::get_pgn()] to load the time control and other data from a pgn
+#'   * [rbitr::get_pgn()] to load the time control and other data from a PGN
 #'     file.
-#'   * [rbitr::get_clocks()] to extract the clock data from a pgn file.
-#'   * [rbitr::get_increments()] to extract increment data from a pgn file.
+#'   * [rbitr::get_clocks()] to extract the clock data from a PGN file.
+#'   * [rbitr::get_increments()] to extract increment data from a PGN file.
 #'   * [rbitr::scaled_time_plot()] and [rbitr::game_summary_plot()] to plot move
 #'     times.
 #'

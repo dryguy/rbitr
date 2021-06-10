@@ -10,10 +10,10 @@
 #'   executable file is given by the engine_path parameter. The number of CPU's
 #'   to devote to the analysis is determined by the n_cpus parameter.
 #'
-#' @details The game to be analyzed should be in a pgn-compatible format, that
+#' @details The game to be analyzed should be in a PGN-compatible format, that
 #'   is, moves should be in standard algebraic notation (SAN), and any comments,
 #'   annotations, or variations should comply with the
-#'   [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm).
+#'   [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm).
 #'   If variations are present, they will not be analyzed. The game is passed
 #'   into `evaluate_game()` as a single-element character vector via the
 #'   movetext parameter. The movetext is typically obtained from `get_pgn()`,
@@ -59,7 +59,7 @@
 #' @seealso
 #'  * [rbitr::get_pgn()] for loading games to evaluate.
 #'  * [rbitr::parse_gamelog()] for extracting data from an evaluated game.
-#'  * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
+#'  * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'
 #' @examples
 #' movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'

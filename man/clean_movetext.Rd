@@ -7,7 +7,7 @@
 clean_movetext(movetext)
 }
 \arguments{
-\item{movetext}{A character vector of pgn movetext data}
+\item{movetext}{A character vector of PGN movetext data}
 }
 \value{
 A character vector of clean movetext.
@@ -17,7 +17,7 @@ Removes comments, annotations, and other formatting that would interfere with
 engine analysis.
 }
 \details{
-The \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2}{pgn specification}
+The \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2}{PGN specification}
 allows comments, annotations, game termination markers, and other
 formatting oddities that may not play well with all software. The
 \code{clean_movetext()} function removes everything but the moves and move
@@ -27,6 +27,6 @@ numbers.
 clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
 }
 \seealso{
-\code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a pgn
+\code{\link[=get_pgn]{get_pgn()}} to get the movetext and other data from a PGN
 file.
 }

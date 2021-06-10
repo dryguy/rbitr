@@ -15,10 +15,10 @@ game_summary_plot(
 )
 }
 \arguments{
-\item{pgn_path}{A single-element character vector of the path to a pgn file.}
+\item{pgn_path}{A single-element character vector of the path to a PGN file.}
 
 \item{game_number}{A single-element integer vector indicating which game in
-the pgn to plot.}
+the PGN file to plot.}
 
 \item{engine_path}{A single-element character vector of the path to a UCI
 compatible chess engine.}
@@ -27,7 +27,7 @@ compatible chess engine.}
 many cpus to use for analysis.}
 
 \item{use_pgn_evals}{(Default = TRUE) A single-element boolean indicating
-whether to use evals from the pgn, if present.}
+whether to use evals from the PGN file, if present.}
 
 \item{nodes}{(Default = 2250000) A single-element integer vector of the depth
 to analyze to, in nodes.}
@@ -45,7 +45,7 @@ Generate a plot of various game statistics.
 }
 \details{
 The function \code{game_summary_plot()} will first look for existing
-analysis in the pgn file, and if not found, it will look for a saved
+analysis in the PGN file, and if not found, it will look for a saved
 analysis. If no analysis data is found, it will analyze the game. The
 default search depth is 2,250,000 nodes.
 
@@ -53,7 +53,7 @@ An advantage plot and move time plot will be generated. (See
 \code{advantage_plot()} and \code{scaled_time_plot()} for details.) In addition, a
 table will be displayed showing the number of inaccuracies, mistakes, and
 blunders, and the average centipawn loss (ACPL). (See \code{get_imb()} and
-\code{get_acpl()}.) If clock data is not available in the pgn file, the
+\code{get_acpl()}.) If clock data is not available in the PGN file, the
 move-time plot will display a message that no data is available.
 }
 \examples{

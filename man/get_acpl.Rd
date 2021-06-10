@@ -46,10 +46,10 @@ different definitions.
 The function \code{get_acpl()} calculates the average centipawn loss
 (ACPL) for the side indicated by the \code{color} parameter. The \code{scores}
 parameter is assumed to begin with a score for the initial position, prior
-to the first move. Note that pgn files do not store an evaluation of the
+to the first move. Note that PGN files do not store an evaluation of the
 initial position, whereas chess engines usually will provide an evaluation
-of the initial position. When using data from a pgn, it is up to the user
-to supply a score for the initial position before calling \code{get_acpl()}.
+of the initial position. When using data from a PGN file, it is up to the
+user to supply a score for the initial position before calling \code{get_acpl()}.
 
 Evaluations may be capped to avoid having blunders or missed mates
 result in excessively large ACPL. If the \code{cap} parameter is set, then
@@ -94,7 +94,7 @@ ICGA Journal, 29(2):65-73, 2006.
 \seealso{
 \itemize{
 \item \code{\link[=get_imb]{get_imb()}} to determine inaccuracies, mistakes, and blunders.
-\item \code{\link[=get_evals]{get_evals()}} to load scores from a pgn file.
+\item \code{\link[=get_evals]{get_evals()}} to load scores from a PGN file.
 \item \code{\link[=evaluate_game]{evaluate_game()}} or \code{\link[=evaluate_pgn]{evaluate_pgn()}} to calculate scores.
 \item \code{\link[=convert_scores]{convert_scores()}} to set values for 'mate x'.
 }

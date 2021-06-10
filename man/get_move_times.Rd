@@ -34,7 +34,7 @@ Clock times and increments are typically obtained using rbitr's
 the second move (the first move is taken to be zero seconds).
 }
 \note{
-The author has encountered pgn files where a move resulted in the
+The author has encountered PGN files where a move resulted in the
 remaining time increasing by more than the increment value, giving a
 negative move times. This might occur due to a software bug causing the
 time to be incorrectly recorded, or perhaps by the action of an arbiter
@@ -52,10 +52,10 @@ get_move_times(clock, 8, 'black')
 }
 \seealso{
 \itemize{
-\item \code{\link[=get_pgn]{get_pgn()}} to load the time control and other data from a pgn
+\item \code{\link[=get_pgn]{get_pgn()}} to load the time control and other data from a PGN
 file.
-\item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a pgn file.
-\item \code{\link[=get_increments]{get_increments()}} to extract increment data from a pgn file.
+\item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a PGN file.
+\item \code{\link[=get_increments]{get_increments()}} to extract increment data from a PGN file.
 \item \code{\link[=scaled_time_plot]{scaled_time_plot()}} and \code{\link[=game_summary_plot]{game_summary_plot()}} to plot move
 times.
 }

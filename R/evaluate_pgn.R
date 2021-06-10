@@ -1,16 +1,16 @@
-#' Analyze each chess game in a pgn file
+#' Analyze each chess game in a PGN file
 #'
 #' Chess games are analyzed using a
 #'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
 #'   engine.
 #'
 #' @details The function `evaluate_pgn()` wrapper for rbitr's `evaluate_game()`
-#'   function that applies `evaluate_game()` to each game in the specified pgn
-#'   file. Note that this can take a very long time for pgn files with a lot of
+#'   function that applies `evaluate_game()` to each game in the specified PGN
+#'   file. Note that this can take a very long time for PGN files with a lot of
 #'   games, and even longer when searching high numbers of principal variations
 #'   or running deep evaluations. For long runs, it is recommended to set
 #'   save_logs = TRUE. This will save the evaluation of each game to a folder
-#'   with the same name as the pgn file. If the analysis has to be stopped and
+#'   with the same name as the PGN file. If the analysis has to be stopped and
 #'   restarted, it will pick up where it left off if the save_logs option was
 #'   activated.
 #'
@@ -23,9 +23,10 @@
 #' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
 #'    mimic this, set limiter = 'nodes', and limit = 2250000.
 #'
-#' @param pgn_path A single-element character vector of the path to the pgn.
+#' @param pgn_path A single-element character vector of the path to the PGN
+#'   file.
 #' @param engine_path A single-element character vector of the path to a UCI
-#'    chess engine.
+#'   chess engine.
 #' @param limiter A single-element character vector indicating the desired
 #'   mode of search termination. Allowed values are 'depth' (to search a fixed
 #'   number of plies), 'nodes' (to search a fixed number of nodes), and
@@ -45,7 +46,8 @@
 #'
 #' @seealso
 #'   * [rbitr::parse_gamelog()] for extracting data from an evaluated game.
-#'   * [rbitr::get_pgn()] for loading pgn files.
+#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated PGN file.
+#'   * [rbitr::get_pgn()] for loading PGN files.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'
 #' @examples
@@ -84,7 +86,7 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
   if (save_logs & !dir.exists(progress_path)) {
     dir.create(progress_path)
   }
-  # Read the pgn
+  # Read the PGN file
   pgn <- get_pgn(pgn_path)
   # Evaluate the games
   evaluation_loop <- function(row_number, pgn, engine_path, n_pv, limiter,

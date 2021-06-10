@@ -1,24 +1,24 @@
-#' Get the contents of a pgn file
+#' Get the contents of a PGN file
 #'
-#' A no-frills function to read a pgn file into a tibble.
+#' A no-frills function to read a PGN file into a tibble.
 #'
 #' @details See the
 #' [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete)
-#' for information on the pgn format.
+#' for information on the PGN format.
 #'
-#' @details Each distinct tag name in the pgn file will become a tibble column
+#' @details Each distinct tag name in the PGN file will become a tibble column
 #'   with the same name as the tag. The movetext field will be an additional
 #'   column with the name Movetext.
 #'
-#' @param pgn_path A single-element character vector of the path to the pgn.
+#' @param pgn_path A single-element character vector of the path to a PGN file.
 #'
-#' @return A tibble where each row is a game, and each pgn tag is a column.
-#'   The pgn's movetext field is also a column.
+#' @return A tibble where each row is a game, and each PGN tag is a column, and
+#'   the PGN file's movetext field is also a column.
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::evaluate_pgn()] to analyze all the games in a pgn.
-#'   * [rbitr::evaluate_game()] to analyze a single game from a pgn.
+#'   * [rbitr::evaluate_pgn()] to analyze all the games in a PGN file
+#'   * [rbitr::evaluate_game()] to analyze a single game from a PGN file
 #'   * [rbitr::clean_movetext()] to strip comments and annotations.
 #'   * [rbitr::get_clocks()] to extract clock data.
 #'   * [rbitr::get_evals()] to extract evaluations.
@@ -73,7 +73,7 @@ get_pgn <- function(pgn_path) {
       }
     }
   }
-  # Define the regex pattern for pgn tags: [TagName "TagValue"]
+  # Define the regex pattern for PGN tags: [TagName "TagValue"]
   tag_regex <- r'(\[\s*([A-Z][\w]*)\s*"([^"]*)"\s*\])'
   get_newline(con)
   while (!end_of_file) {

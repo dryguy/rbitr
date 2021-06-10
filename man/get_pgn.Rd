@@ -2,26 +2,26 @@
 % Please edit documentation in R/get_pgn.R
 \name{get_pgn}
 \alias{get_pgn}
-\title{Get the contents of a pgn file}
+\title{Get the contents of a PGN file}
 \usage{
 get_pgn(pgn_path)
 }
 \arguments{
-\item{pgn_path}{A single-element character vector of the path to the pgn.}
+\item{pgn_path}{A single-element character vector of the path to a PGN file.}
 }
 \value{
-A tibble where each row is a game, and each pgn tag is a column.
-The pgn's movetext field is also a column.
+A tibble where each row is a game, and each PGN tag is a column, and
+the PGN file's movetext field is also a column.
 }
 \description{
-A no-frills function to read a pgn file into a tibble.
+A no-frills function to read a PGN file into a tibble.
 }
 \details{
 See the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete}{PGN specification}
-for information on the pgn format.
+for information on the PGN format.
 
-Each distinct tag name in the pgn file will become a tibble column
+Each distinct tag name in the PGN file will become a tibble column
 with the same name as the tag. The movetext field will be an additional
 column with the name Movetext.
 }
@@ -35,8 +35,8 @@ get_pgn(pgn_path)
 }
 \seealso{
 \itemize{
-\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} to analyze all the games in a pgn.
-\item \code{\link[=evaluate_game]{evaluate_game()}} to analyze a single game from a pgn.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} to analyze all the games in a PGN file
+\item \code{\link[=evaluate_game]{evaluate_game()}} to analyze a single game from a PGN file
 \item \code{\link[=clean_movetext]{clean_movetext()}} to strip comments and annotations.
 \item \code{\link[=get_clocks]{get_clocks()}} to extract clock data.
 \item \code{\link[=get_evals]{get_evals()}} to extract evaluations.

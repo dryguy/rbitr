@@ -6,10 +6,10 @@
 #' @details The function `get_acpl()` calculates the average centipawn loss
 #'   (ACPL) for the side indicated by the `color` parameter. The `scores`
 #'   parameter is assumed to begin with a score for the initial position, prior
-#'   to the first move. Note that pgn files do not store an evaluation of the
+#'   to the first move. Note that PGN files do not store an evaluation of the
 #'   initial position, whereas chess engines usually will provide an evaluation
-#'   of the initial position. When using data from a pgn, it is up to the user
-#'   to supply a score for the initial position before calling `get_acpl()`.
+#'   of the initial position. When using data from a PGN file, it is up to the
+#'   user to supply a score for the initial position before calling `get_acpl()`.
 #'
 #' @details Evaluations may be capped to avoid having blunders or missed mates
 #'   result in excessively large ACPL. If the `cap` parameter is set, then
@@ -66,7 +66,7 @@
 #'
 #' @seealso
 #'   * [rbitr::get_imb()] to determine inaccuracies, mistakes, and blunders.
-#'   * [rbitr::get_evals()] to load scores from a pgn file.
+#'   * [rbitr::get_evals()] to load scores from a PGN file.
 #'   * [rbitr::evaluate_game()] or [rbitr::evaluate_pgn()] to calculate scores.
 #'   * [rbitr::convert_scores()] to set values for 'mate x'.
 #'

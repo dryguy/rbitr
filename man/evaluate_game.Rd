@@ -57,10 +57,10 @@ engine, which must be supplied by the user. The path to the engine's
 executable file is given by the engine_path parameter. The number of CPU's
 to devote to the analysis is determined by the n_cpus parameter.
 
-The game to be analyzed should be in a pgn-compatible format, that
+The game to be analyzed should be in a PGN-compatible format, that
 is, moves should be in standard algebraic notation (SAN), and any comments,
 annotations, or variations should comply with the
-\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm}{pgn specification}.
+\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm}{PGN specification}.
 If variations are present, they will not be analyzed. The game is passed
 into \code{evaluate_game()} as a single-element character vector via the
 movetext parameter. The movetext is typically obtained from \code{get_pgn()},
@@ -90,6 +90,6 @@ evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 \itemize{
 \item \code{\link[=get_pgn]{get_pgn()}} for loading games to evaluate.
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from an evaluated game.
-\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a pgn file.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }
 }

@@ -121,7 +121,7 @@ get_imb(scores, moves, bestmoves, color = 'white')
 \seealso{
 \itemize{
 \item \code{\link[=get_acpl]{get_acpl()}} for calculating average centipawn loss.
-\item \code{\link[=get_evals]{get_evals()}} to load scores from a pgn file.
+\item \code{\link[=get_evals]{get_evals()}} to load scores from a PGN file.
 \item \code{\link[=get_moves]{get_moves()}} to get moves from movetext.
 \item \code{\link[=evaluate_game]{evaluate_game()}} or \code{\link[=evaluate_pgn]{evaluate_pgn()}} to calculate scores.
 \item \code{\link[=convert_scores]{convert_scores()}} to set values for 'mate x'.

@@ -1,7 +1,7 @@
 #' Extract data from rbitr's `evaluate_pgn()` output
 #'
 #' The `parse_pgnlog()` function is a wrapper for the `parse_gamelog()` function
-#'   that iterates over all the games in a pgn.
+#'   that iterates over all the games in a PGN file.
 #'
 #' @details The output of rbitr's `evaluate_pgn()` function is a list of logs
 #'   from the `evaluate_game()` function, where each entry in the list is for a
@@ -26,7 +26,7 @@
 #' @seealso
 #'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
-#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a pgn file.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'
 #' @examples
 #' pgnlog <- list(list(c(

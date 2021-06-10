@@ -3,18 +3,18 @@
 #' Removes comments, annotations, and other formatting that would interfere with
 #'   engine analysis.
 #'
-#' The [pgn specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2)
+#' The [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2)
 #'   allows comments, annotations, game termination markers, and other
 #'   formatting oddities that may not play well with all software. The
 #'   `clean_movetext()` function removes everything but the moves and move
 #'   numbers.
 #'
-#' @param movetext A character vector of pgn movetext data
+#' @param movetext A character vector of PGN movetext data
 #'
 #' @return A character vector of clean movetext.
 #' @export
 #'
-#' @seealso [rbitr::get_pgn()] to get the movetext and other data from a pgn
+#' @seealso [rbitr::get_pgn()] to get the movetext and other data from a PGN
 #'   file.
 #'
 #' @examples
@@ -32,7 +32,7 @@ clean_movetext <- function(movetext) {
   movetext <- stringr::str_replace_all(movetext, '[0-9]+\\.\\.\\.', ' ')
   # Remove traditional annotations (!, !!, ?, ??, !?, ?!) and literal glyphs
   # Instead of NAGs, some websites use actual glyph characters which is not
-  # compliant with the pgn specification. The actual glyph characters are not
+  # compliant with the PGN specification. The actual glyph characters are not
   # used here as the code would be less portable. Instead the characters are
   # identified by their unicode codepoints.
   literal_glyph_regex <- paste0(

@@ -1,29 +1,29 @@
 #' Extract data from movetext
 #'
-#' Extract data from the from the movetext taken from a pgn file.
+#' Extract data from the from the movetext taken from a PGN file.
 #'
 #' @details See the
 #'   [Portable Game Notation Specification and Implementation Guide (Supplement)](http://www.enpassant.dk/chess/palview/enhancedpgn.htm)
-#'   for details on command tags in pgn files.
+#'   for details on command tags in PGN files.
 #'
 #' @details The `get_clocks()` and `get_evals()` functions are intended for use
-#'   with data read from a pgn using the `get_pgn()` function. A tibble obtained
-#'   using `get_pgn()` will have a $Movetext column from which the tag data can
-#'   be extracted if it is present.
+#'   with data read from a PGN file using the `get_pgn()` function. A tibble
+#'   obtained using `get_pgn()` will have a $Movetext column from which the tag
+#'   data can be extracted if it is present.
 #'
-#' @note For games stored in pgn format, the evaluation of the first position
+#' @note For games stored in PGN format, the evaluation of the first position
 #'   before any moves are made is not commonly included. As a result,
 #'   `get_evals()` produces a vector that is  shorter than the one produced by
 #'   `parse_gamelog()` for the same game. The `first_eval` parameter can be used
 #'   to provide a value for this missing evaluation, if desired.
 #'
 #' @note For games ending in mate, a UCI engine gives the final position an
-#'   evaluation of 'mate 0', however, in a pgn, '#0' is omitted when the final
-#'   position is mate. To include an evaluation for mated final positions, set
-#'   the mate0 parameter to TRUE.
+#'   evaluation of 'mate 0', however, in a PGN file, '#0' is omitted when the
+#'   final position is mate. To include an evaluation for mated final positions,
+#'   set the mate0 parameter to TRUE.
 #'
 #'
-#' @param movetext A character vector of pgn movetext.
+#' @param movetext A character vector of movetext.
 #' @param first_eval (Default = NULL) A single-element integer vector indicating
 #'   what value should be assigned to the initial position, before white's first
 #'   move. The default (NULL) adds no initial value.
@@ -38,7 +38,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::get_pgn()] to load a pgn file.
+#'   * [rbitr::get_pgn()] to load a PGN file.
 #'   * [rbitr::get_increments()] to get increment times.
 #'   * [rbitr::get_move_times()] to calculate move times.
 #'   * [rbitr::scaled_advantage_plot()] to plot advantage data.
@@ -74,7 +74,7 @@ get_evals <- function(movetext, first_eval = NULL, mate0 = FALSE,
 #' The function `parse_movetext()` is the parser behind `get_clocks()` and
 #'   `get_evals()`.
 #'
-#' @param movetext A character vector of pgn movetext, where each vector entry
+#' @param movetext A character vector of movetext, where each vector entry
 #'   is for a separate game.
 #' @param cmd_name A single-element character vector of the command to parse
 #' @param first_eval (Default = NULL) A single-element integer vector indicating
