@@ -29,7 +29,8 @@ test_that('evaluate_pgn creates save logs', {
   }
   evaluate_pgn(
     file.path(pgn_path, 'shortest_game.pgn'),
-    engine_path, limiter = 'nodes', limit = 100, mute = TRUE, save_logs = TRUE
+    engine_path, limiter = 'nodes', limit = 100, mute = TRUE, save_logs = TRUE,
+    save_path = file.path(pgn_path, 'shortest_game')
   )
   expect_identical(TRUE, dir.exists(file.path(pgn_path, 'shortest_game')))
   expect_identical(

@@ -12,7 +12,8 @@ evaluate_pgn(
   n_cpus = 1L,
   n_pv = 1L,
   mute = FALSE,
-  save_logs = FALSE
+  save_logs = FALSE,
+  save_path = NULL
 )
 }
 \arguments{
@@ -40,6 +41,9 @@ number of principal variations.}
 
 \item{save_logs}{(Boolean, default = FALSE) Save progress? Recommended for
 long analyses in case it has to be stopped before finishing all games.}
+
+\item{save_path}{A single-element character vector of the path to a directory
+where the game logs should be saved.}
 }
 \value{
 A list of gamelogs (see \code{evaluate_game()} for details).
