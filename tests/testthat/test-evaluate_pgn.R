@@ -1,6 +1,7 @@
 pgn_path <- file.path(
   system.file(package = 'rbitr'),
-  'extdata'
+  'extdata',
+  'test'
 )
 engine_path <- '//stockfish_13_win_x64_bmi2.exe'
 

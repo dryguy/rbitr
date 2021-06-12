@@ -1,6 +1,7 @@
 pgn_path <- file.path(
   system.file(package = 'rbitr'),
-  'extdata'
+  'extdata',
+  'test'
 )
 fools_mate <- tibble::tibble(
   Event    = 'Casual Game',
