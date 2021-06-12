@@ -12,9 +12,12 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.path = "man/figures/README-"
 )
 ```
+
+# rbitr <img src="man/figures/rbitr_logo.png" align="right" width="150">
 
 ## Arbiter: One who ensures adherence to the rules and laws of chess
 
@@ -78,7 +81,7 @@ pgn <- get_pgn(pgn_path)
 strwrap(pgn$Movetext, 70)
 ```
 
-PGN files enclose game comments within curly braces. The clock data and engine evaluations are stored inside comments and further enclosed in brackets, with a % sign that further distinguishes the data from tag pairs. We'll examine how to extract this data in the next section.
+We'll examine how to extract this data in the next section.
 
 To learn more about the PGN format, see the [PGN Specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm) and the [PGN Specification Supplement](http://www.enpassant.dk/chess/palview/enhancedpgn.htm).
 
@@ -95,7 +98,7 @@ movetext <- clean_movetext(pgn$Movetext)
 movetext
 ```
 
-Communicating chess moves to a chess engine through the UCI interface requires a different format know as long algebraic notation (LAN). This format is somewhat less readable for humans, since it leaves out move numbers and does not use any sort of symbols to identify the pieces. The function `get_moves()` removes everything that `clean_movetext()` removes, but also removes move numbers, splits the moves, and converts them to LAN format. (The conversion to LAN is done behind the scene using the bigchess::san2lan() function.)
+Communicating chess moves to a chess engine through the UCI interface requires a different format know as long algebraic notation (LAN). This format is somewhat less readable for humans, since it leaves out move numbers and does not use any sort of symbols to identify the pieces. The function `get_moves()` removes everything that `clean_movetext()` removes, but also removes move numbers, splits the moves, and converts them to LAN format. (The conversion to LAN is done behind the scenes using the function bigchess::san2lan().)
 
 ```{r}
 moves <- get_moves(pgn$Movetext)
