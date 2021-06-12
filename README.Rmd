@@ -1,0 +1,270 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# rbitr <img src="man/figures/rbitr_logo.png" align="right" width="150">
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Arbiter: One who ensures adherence to the rules and laws of chess
+
+## Installation
+
+You can install the beta version of rbitr from github with:
+```{r, eval = FALSE}
+devtools::install_github("dryguy/rbitr")
+```
+
+### Introduction
+
+rbitr is a an R package for analyzing chess games, with emphasis on generating game statistics that may be useful for the detection of illicit computer assistance.
+
+For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/)  chess engine, and currently has only been tested with this engine. Other UCI-compatible engines should also work, but your mileage may vary.
+
+A big thanks is due to Wojciech Rosa for creating the package [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on bigchess to handle the interface between R and the chess engine. It is unlikely that rbitr would exist without it.
+
+Once you have installed rbitr and are ready to begin, simply load the package.
+
+```{r setup}
+library(rbitr)
+```
+
+### Importing Games from PGN Files
+
+Chess games stored in the Portable Game Notation (PGN) format can easily be imported into R using the function `get_pgn()`. 
+
+A chess game stored in a PGN file looks something like this:
+```
+[Event "Casual Game"]
+[Site "Arctic Ocean"]
+[Date "17-"]
+[Round "?"]
+[White "Victor Frankenstein"]
+[Black "'Adam'"]
+[Result "0-1"]
+
+1. f3 e6 2. g4 Qh4#
+```
+
+The data in brackets are known as tag pairs, and the first word in each bracket is the tag name. Below the tags is the "movetext" section.
+
+rbitr stores chess games as [tibbles](https://github.com/tidyverse/tibble). The main reason for this is that the moves of longer chess games can make the onscreen display of a data frame rather unwieldy, whereas tibbles are designed to provide a nice orderly display. With `get_pgn()`, each game in a PGN file will become a row in a tibble, each tag will become a column, and each tag name will become a column name. The moves become an additional column named "Movetext".
+
+A few example PGN files have been included with the rbitr package. Here's an example showing how to import a PGN file containing two short games.
+
+```{r}
+two_games_path <- file.path(
+  system.file(package = 'rbitr'),
+  'extdata',
+  'two_games.pgn'
+)
+get_pgn(two_games_path)
+```
+
+PGN files often contain more data than the simple examples just shown. PGN files of online games will often store data from the clocks for timed games, or game analyses by chess engines. Here's an example from a PGN file containing both of these types of data.
+
+```{r}
+pgn_path <- file.path(
+  system.file(package = 'rbitr'),
+  'extdata',
+  'short_game.pgn'
+)
+pgn <- get_pgn(pgn_path)
+strwrap(pgn$Movetext, 70)
+```
+
+We'll examine how to extract this data in the next section.
+
+To learn more about the PGN format, see the [PGN Specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm) and the [PGN Specification Supplement](http://www.enpassant.dk/chess/palview/enhancedpgn.htm).
+
+(Note that `get_pgn()` is a fairly bare bones function. It has no options to limit which tags are read, and has no support for large PGN files. For a PGN reader in R with more features, check out the function `bigchess::read.pgn()`.)
+
+### Extracting Data from Imported PGN Files
+
+As we saw in the last section, PGN files may store commentary, annotations, clock data, engine analysis, or other content interspersed among the moves of the game. In this section, we'll examine ways to extract some of this data.
+
+rbitr has two ways to extract the moves of the game from an imported PGN file. The function `clean_movetext()` removes any comments, annotations, embedded data, or extra white space, leaving just the moves and the move numbers. PGN files store moves in standard algebraic notation (SAN), so the end result after using `clean_movetext()` is in a format easily read by most human chess players.
+
+```{r}
+movetext <- clean_movetext(pgn$Movetext)
+movetext
+```
+
+Communicating chess moves to a chess engine through the UCI interface requires a different format know as long algebraic notation (LAN). This format is somewhat less readable for humans, since it leaves out move numbers and does not use any sort of symbols to identify the pieces. The function `get_moves()` removes everything that `clean_movetext()` removes, but also removes move numbers, splits the moves, and converts them to LAN format. (The conversion to LAN is done behind the scenes using the function bigchess::san2lan().)
+
+```{r}
+moves <- get_moves(pgn$Movetext)
+moves
+```
+
+rbitr can also extract the times or the evaluations using `get_clocks()` or `get_evals()`.
+
+```{r}
+clocks <- get_clocks(pgn$Movetext)
+clocks
+evals <- get_evals(pgn$Movetext)
+evals
+```
+
+Note that the clock data has been converted from minutes to seconds, and the evaluations have been converted from pawns to centipawns.
+
+Having the clock data is nice, but what we usually care about is the time taken for each move. To calculate this, we need to know if the time control for the game included an increment, so we'll look at the TimeControl tag from the PGN file.
+
+```{r}
+pgn$TimeControl
+```
+
+We can see that in this case, the time control was 300 seconds plus an additional 8 seconds per move. For PGN files with a lot of games, it is convenient to be able to extract the increments using the function `get_incrememnts()`. Here there's just one game, but we'll demonstrate the use of `get_increments()` anyway.
+
+```{r}
+increments <- get_increments(pgn$TimeControl)
+increments
+```
+
+Once we have that in hand, it is now possible to calculate the move times using `get_move_times()`.
+ 
+```{r}
+white_move_times <- get_move_times(clocks[[1]], increments[[1]], 'white')
+white_move_times
+black_move_times <- get_move_times(clocks[[1]], increments[[1]], 'black')
+black_move_times
+```
+
+Note that since the PGN file can contain more than one game, `clocks` and `increments` are returned as lists. Since we are dealing with the first (and only) game in this PGN file, we had to specify the first elements of `clocks` and `increments` when calling `get_move_times()`.
+
+There is some variation in how clocks are treated when it comes to each player's first move. According to FIDE's [laws of chess](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf), white's clock is started before white plays their first move. On the website lichess.org, neither player's clock starts until after they play their first move (i.e., each player's first move is counted as 0 seconds). Since PGN files containing over-the-board games rarely include data for the clocks, rbitr currently follows the convention that each player's first move counts as 0 seconds.
+
+### Plotting Move Times
+
+To visualize move times over the course of the game, rbitr borrows a scaling function from the website [lichess.org](lichess.org). The logarithmic scaling function for [move times](https://lichess.org/blog/WOEVrjAAALNI-fWS/a-better-game-clock-history) ensures that rapid moves made in long games don't disappear into the baseline of the plot. This same scaling function is used in rbitr's `scaled_time_plot()`.
+
+```{r, fig.width = 7.1, warning = FALSE}
+scaled_time_plot(white_move_times, black_move_times)
+```
+
+In chess, each time a player moves a piece is considered a "half-move". So, in the strictest sense, anywhere we've said "move time", we've actually been referring to "half-move times", and the x-axis on the scaled time plot is given in half-moves. The plot begins with white's first half-move, and black's half-move times are plotted with the opposite sign of white's.
+
+### Plotting Evaluations
+
+Scaling is also useful when plotting engine evaluations, because the players may place less value on material in proportion to how imbalanced the position is. In other words, losing a pawn when you are up a queen has much less impact on your game than it does when material is even. To reflect this, rbitr again borrows a scaling function from [lichess](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes). The function `scaled_advantage_plot()` plots an engine's evaluations of the game's positions after applying this scaling function.
+
+Before making an advantage plot, there is one wrinkle to address. A chess engine will provide an evaluation for each position in a chess game, including the first position, and also for mated positions (where the evaluation is 'mate 0'). PGN files do not generally store an engine's evaluation of the first position. If desired, this initial evaluation can be supplied to the `get_evals()` function so that the output is in sync with what an engine would produce. Also, `get_evals()` will only provide a centipawn value for the final mated position if the `mate0` parameter is set to TRUE.
+
+```{r, fig.width = 7.1}
+evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
+scaled_advantage_plot(evals[[1]])
+```
+
+The sign convention used here is that positive evaluations mean that white has the advantage, while negative evaluations mean that black has the advantage. The x-axis is numbered starting with 1 for the first evaluation that was supplied (in this case, for the initial position). There is one more position than there were half-moves, as expected, since half-moves can only occur in between adjacent positions.
+
+Notice that we had to specify that we want the evaluations for game 1, because like `get_clocks()` and `get_increments()`, the function `get_evals()` returns a list of results, with each list entry corresponding to a different game in the original PGN file. 
+
+### Analyzing Games Using an External Chess Engine
+
+Next, we'll look at how to analyze games using an external chess engine. To analyze games, we'll use the function `evaluate_game()`. In order to use the function, you will need to provide the path to the engine you'll be using for the game analysis. In the next line of code, you'll need to change the path as required by your engine location and operating system.
+
+```{r}
+engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+```
+
+Depending on your processor speed, this step may take some time. If you have more than one CPU, you can speed up the analysis by changing the `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1 is used. We will set the `mute` parameter to `FALSE` in order to monitor game progress. This will cause the function to print the ply number before starting to analyze each position. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.
+
+```{r}
+gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
+                         limit = 2250000, mute = FALSE)
+gamelog[[1]]
+```
+
+The result of the analysis is a list of raw chess engine output for each position in the game. The output can get to be quite verbose; we've only displayed the output for the first position, and it's already quite long. We see the name of the engine that was used, some messages that the engine was ready, a line telling us that the engine-specific NNUE option was turned on, and a number of lines showing evaluations at various depths. The last line tells us the best move that was found, and the move that the engine would "ponder" on the opponent's time, if it was in a game. We'll show how to extract the data we want from the engine output in the next section.
+
+(Note that the `evaluate_game()` and `parse_gamelog()` functions essentially duplicate features that are available in the bigchess package. I overlooked the existence of those features, and wound up writing my own code, thus proving that "weeks of coding will save you hours of planning." The silver lining is that, for whatever reason, `evaluate_game()` runs about 3-4 times faster than `bigchess::analyze_game()` so I've kept it in. There's a number of other places where rbitr's features overlap with bigchess, but those are more deliberate decisions having to do with creating the types of work flow that I wanted for rbitr.)
+
+Batch analysis of games is also possible using the function `evaluate_pgn()`, which is essentially a fancy wrapper for `evaluate_game()`. The results of `evaluate_pgn()` are not saved to disk by default. However, deep analysis of large number of games can take a *very* long time. It is highly recommended to set the `save_logs` parameter to `TRUE`. That way, if the analysis has to be interrupted, you will not lose what could be many hours of analysis, and can resume the analysis later, if desired. The analyses will be saved to a directory with the same base name as the PGN file.
+
+```{r}
+pgnlog <- evaluate_pgn(two_games_path, engine_path,
+                       limiter = 'nodes', limit = 2250000)
+```
+
+### Extracting Data from Chess Engine Logs
+
+The `parse_gamelog()` function can extract evaluations ('score'), the best moves the engine found ('bestmove'), or the principal variations ('pv').
+
+```{r}
+bestmoves <- unlist(parse_gamelog(gamelog, 'bestmove'))
+bestmoves
+scores <- unlist(parse_gamelog(gamelog, 'score'))
+scores
+pvs <- unlist(parse_gamelog(gamelog, 'pv'))
+pvs
+```
+
+Note that the output of parse_gamelog is a list. That's because games may be analyzed in multi-PV mode, resulting in multiple results for scores, bestmoves, and pvs at each position in the game. Here we analyzed in single PV mode, so we don't have to get fancy trying to extract just the data for the PVs we are interested in. Instead, we can just unlist the results.
+
+The parsed scores are a character vector, rather than numeric. There are also a couple of scores that are in the form 'mate x'. We can use the function `convert_scores()` to assign a centipawn value for 'mate x', and convert the rest to numeric values.
+
+```{r}
+evals <- convert_scores(scores)
+evals
+```
+
+The output from `evaluate_pgn()` will be a list of game logs from the `evaluate_game()` function. The logs can be parsed individually with `parse_gamelog()`, or in a batch using `parse_pgnlog()`.
+
+```{r}
+pgn_scores <- parse_pgnlog(pgnlog, 'score')
+lapply(pgn_scores, unlist)
+pgn_bestmoves <- parse_pgnlog(pgnlog, 'bestmove')
+lapply(pgn_bestmoves, unlist)
+pgn_pvs <- parse_pgnlog(pgnlog, 'pv')
+lapply(pgn_pvs, unlist)
+```
+
+### Determining Inaccuracies, Mistakes, and Blunders
+
+Next, we'll take a look at finding inaccuracies, mistakes, and blunders using `get_imb()`. These are identified by looking at how the evaluation changes after a move is made. A big loss would count as a blunder, a smaller loss as a mistake, and so on. However, a move doesn't count as an error if it was the best available move, even if the evaluation drops heavily after the move. There fore, `get_imb()` needs to compare the moves of the game to the best moves found by the engine.
+
+```{r}
+white_imb <- get_imb(evals, moves[[1]], bestmoves, 'white')
+white_imb
+black_imb <- get_imb(evals, moves[[1]], bestmoves, 'black')
+black_imb
+```
+
+Now we can see that according to the engine, white played an inaccuracy on move 3, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
+
+### Average Centipawn Loss
+
+Average centipawn loss is a measure of how bad a player's moves were compared to the "best" moves in the same positions. The evaluation of a strong chess engine is used to determine which moves are the "best". When a player chooses a move that is not the engine's favorite, the difference in the evaluations of the two moves is the "loss" for that move. The loss is averaged over all moves to get the average centipawn loss (ACPL). In practice, rather than having the engine evaluate the position after both the engine's move and the played move, the loss is just taken to be the drop in evaluation after the played move. This is really only an approximation, because the evaluation after the move has been played is now one ply deeper, but this approximation halves the analysis time.
+
+Not every source calculates average centipawn loss using the same rules. Therefore, `get_acpl()` has options to control the method of calculation. The `cap` parameter sets a threshold for evaluations to avoid having one bad move dominate the final value. Some sources will discard values outside the range [-cap, cap], while others will replace values outside the range with ±cap. This behavior is controlled using the `cap_action` parameter.
+
+```{r}
+white_acpl <- get_acpl(evals, 'white', cap = 1000, cap_action = 'replace')
+white_acpl
+black_acpl <- get_acpl(evals, 'black', cap = 1000, cap_action = 'replace')
+black_acpl
+```
+
+### Summarizing Game Data
+
+The function `game_summary_plot()` combines many of the features that were introduced above into a single graphic. To specify a game to summarize, we need only provide the path to a PGN file containing the game, and indicate which game in the file to summarize. In this case, there is only one game, so we set the game_number parameter to 1. We can also choose whether or not to use any evaluations that are already present in the file.
+
+```{r fig.height = 4, fig.width = 7.5, warning = FALSE}
+game_summary_plot(pgn_path, game_number = 1, use_pgn_evals = FALSE)
+```
+
+If this plot looks familiar, that's because it was inspired by the game analysis functions available on lichess.org. On the left, we see a scaled move time plot and a scaled advantage plot, both of which we have already covered.
+
+To the right of the plots are tables summarizing some statistics for each player. At the top right are statistics for white, beginning with the white player's name. Next are the total number of inaccuracies, mistakes, and blunders. Lastly, the average centipawn loss is shown. The same stats for black are shown in the bottom right.
