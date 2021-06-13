@@ -102,7 +102,7 @@ movetext <- clean_movetext(pgn$Movetext)
 movetext
 ```
 
-Communicating chess moves to a chess engine through the UCI interface requires a different format know as long algebraic notation (LAN). This format is somewhat less readable for humans, since it leaves out move numbers and does not use any sort of symbols to identify the pieces. The function `get_moves()` removes everything that `clean_movetext()` removes, but also removes move numbers, splits the moves, and converts them to LAN format. (The conversion to LAN is done behind the scenes using the function bigchess::san2lan().)
+Communicating chess moves to a chess engine through the UCI interface requires a different format know as long algebraic notation (LAN). This format is somewhat less readable for humans, since it leaves out move numbers and does not use letters or symbols to identify the pieces. The function `get_moves()` removes everything that `clean_movetext()` removes, but also removes move numbers, splits the moves, and converts them to LAN format. (The conversion to LAN is done behind the scenes using the function bigchess::san2lan().)
 
 ```{r}
 moves <- get_moves(pgn$Movetext)

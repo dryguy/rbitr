@@ -149,7 +149,7 @@ movetext
 Communicating chess moves to a chess engine through the UCI interface
 requires a different format know as long algebraic notation (LAN). This
 format is somewhat less readable for humans, since it leaves out move
-numbers and does not use any sort of symbols to identify the pieces. The
+numbers and does not use letters or symbols to identify the pieces. The
 function `get_moves()` removes everything that `clean_movetext()`
 removes, but also removes move numbers, splits the moves, and converts
 them to LAN format. (The conversion to LAN is done behind the scenes
@@ -340,25 +340,25 @@ gamelog[[1]]
 #>  [4] "info string NNUE evaluation using nn-62ef826d1a6d.nnue enabled"                                                                                                                                                                      
 #>  [5] "info depth 1 seldepth 1 multipv 1 score cp 29 nodes 20 nps 20000 tbhits 0 time 1 pv d2d4"                                                                                                                                            
 #>  [6] "info depth 2 seldepth 2 multipv 1 score cp 89 nodes 42 nps 42000 tbhits 0 time 1 pv d2d4 a7a6"                                                                                                                                       
-#>  [7] "info depth 3 seldepth 3 multipv 1 score cp 65 nodes 84 nps 42000 tbhits 0 time 2 pv e2e4 e7e6 d2d4"                                                                                                                                  
+#>  [7] "info depth 3 seldepth 3 multipv 1 score cp 65 nodes 84 nps 84000 tbhits 0 time 1 pv e2e4 e7e6 d2d4"                                                                                                                                  
 #>  [8] "info depth 4 seldepth 4 multipv 1 score cp 114 nodes 241 nps 120500 tbhits 0 time 2 pv g1f3 d7d5"                                                                                                                                    
 #>  [9] "info depth 5 seldepth 5 multipv 1 score cp -2 nodes 572 nps 286000 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 b1d2"                                                                                                                      
 #> [10] "info depth 6 seldepth 6 multipv 1 score cp 9 nodes 741 nps 370500 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 b1d2"                                                                                                                       
-#> [11] "info depth 7 seldepth 7 multipv 1 score cp 4 nodes 1169 nps 584500 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 c1e3 b8d7"                                                                                                                 
+#> [11] "info depth 7 seldepth 7 multipv 1 score cp 4 nodes 1169 nps 389666 tbhits 0 time 3 pv g1f3 d7d5 d2d4 g8f6 c1e3 b8d7"                                                                                                                 
 #> [12] "info depth 8 seldepth 10 multipv 1 score cp 21 nodes 1849 nps 616333 tbhits 0 time 3 pv e2e4 c7c5 g1f3 b8c6 d2d4 c5d4"                                                                                                               
 #> [13] "info depth 9 seldepth 10 multipv 1 score cp 40 nodes 3894 nps 973500 tbhits 0 time 4 pv d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3"                                                                                                          
-#> [14] "info depth 10 seldepth 12 multipv 1 score cp 38 nodes 10144 nps 1127111 tbhits 0 time 9 pv e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6"                                                                                                  
+#> [14] "info depth 10 seldepth 12 multipv 1 score cp 38 nodes 10144 nps 1268000 tbhits 0 time 8 pv e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6"                                                                                                  
 #> [15] "info depth 11 seldepth 16 multipv 1 score cp 31 nodes 29662 nps 1348272 tbhits 0 time 22 pv e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 d7d6 h2h3 c6d4 f3d4 c5d4"                                                                             
-#> [16] "info depth 12 seldepth 20 multipv 1 score cp 17 nodes 57232 nps 1395902 tbhits 0 time 41 pv e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 g1f3 d7d6 e1g1 c8e6 c4e6 f7e6 d2d4 e5d4 f3d4"                                                              
+#> [16] "info depth 12 seldepth 20 multipv 1 score cp 17 nodes 57232 nps 1430800 tbhits 0 time 40 pv e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 g1f3 d7d6 e1g1 c8e6 c4e6 f7e6 d2d4 e5d4 f3d4"                                                              
 #> [17] "info depth 13 seldepth 19 multipv 1 score cp 34 nodes 89986 nps 1406031 tbhits 0 time 64 pv e2e4 c7c5 b1c3 b8c6 f1b5 g8f6 b5c6 b7c6 e4e5 f6d5"                                                                                       
-#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1432525 tbhits 0 time 80 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
-#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1403287 tbhits 0 time 188 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
-#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1407233 tbhits 0 time 227 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
-#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1380291 tbhits 0 time 391 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
-#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1378530 tbhits 0 time 439 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
-#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1357746 tbhits 0 time 626 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
-#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1347924 hashfull 631 tbhits 0 time 1116 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
-#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1345433 hashfull 814 tbhits 0 time 1673 pv d2d4 g8f6"                                                                                                              
+#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1397585 tbhits 0 time 82 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
+#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1410791 tbhits 0 time 187 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
+#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1426080 tbhits 0 time 224 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
+#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1409122 tbhits 0 time 383 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
+#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1404118 tbhits 0 time 431 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
+#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1397942 tbhits 0 time 608 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
+#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1378812 hashfull 631 tbhits 0 time 1091 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
+#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1372506 hashfull 814 tbhits 0 time 1640 pv d2d4 g8f6"                                                                                                              
 #> [26] "bestmove d2d4 ponder g8f6"
 ```
 
