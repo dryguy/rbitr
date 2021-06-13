@@ -31,7 +31,7 @@ devtools::install_github("dryguy/rbitr")
 
 rbitr is a an R package for analyzing chess games, with emphasis on generating game statistics that may be useful for the detection of illicit computer assistance.
 
-For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/)  chess engine, and currently has only been tested with this engine. Other UCI-compatible engines should also work, but your mileage may vary.
+For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/)  chess engine, and currently has only been tested with this engine. Other UCI-compatible engines should also work, but your mileage may vary.
 
 A big thanks is due to Wojciech Rosa for creating the package [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on bigchess to handle the interface between R and the chess engine. It is unlikely that rbitr would exist without it.
 

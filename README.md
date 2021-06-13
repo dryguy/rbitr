@@ -26,8 +26,8 @@ For game analysis, rbitr relies on an external chess engine.
 Communication between rbitr and the chess engine is done via the
 [Universal Chess Interface
 Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess
-engine that is compatible with the UCI protocol is required in order to
-use many of rbitr’s functions. rbitr was developed using the [Stockfish
+engine that is compatible with the UCI protocol is required to use many
+of rbitr’s functions. rbitr was developed using the [Stockfish
 13](https://stockfishchess.org/) chess engine, and currently has only
 been tested with this engine. Other UCI-compatible engines should also
 work, but your mileage may vary.
@@ -344,21 +344,21 @@ gamelog[[1]]
 #>  [8] "info depth 4 seldepth 4 multipv 1 score cp 114 nodes 241 nps 120500 tbhits 0 time 2 pv g1f3 d7d5"                                                                                                                                    
 #>  [9] "info depth 5 seldepth 5 multipv 1 score cp -2 nodes 572 nps 286000 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 b1d2"                                                                                                                      
 #> [10] "info depth 6 seldepth 6 multipv 1 score cp 9 nodes 741 nps 370500 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 b1d2"                                                                                                                       
-#> [11] "info depth 7 seldepth 7 multipv 1 score cp 4 nodes 1169 nps 389666 tbhits 0 time 3 pv g1f3 d7d5 d2d4 g8f6 c1e3 b8d7"                                                                                                                 
+#> [11] "info depth 7 seldepth 7 multipv 1 score cp 4 nodes 1169 nps 584500 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 c1e3 b8d7"                                                                                                                 
 #> [12] "info depth 8 seldepth 10 multipv 1 score cp 21 nodes 1849 nps 616333 tbhits 0 time 3 pv e2e4 c7c5 g1f3 b8c6 d2d4 c5d4"                                                                                                               
 #> [13] "info depth 9 seldepth 10 multipv 1 score cp 40 nodes 3894 nps 973500 tbhits 0 time 4 pv d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3"                                                                                                          
 #> [14] "info depth 10 seldepth 12 multipv 1 score cp 38 nodes 10144 nps 1268000 tbhits 0 time 8 pv e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6"                                                                                                  
 #> [15] "info depth 11 seldepth 16 multipv 1 score cp 31 nodes 29662 nps 1348272 tbhits 0 time 22 pv e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 d7d6 h2h3 c6d4 f3d4 c5d4"                                                                             
 #> [16] "info depth 12 seldepth 20 multipv 1 score cp 17 nodes 57232 nps 1430800 tbhits 0 time 40 pv e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 g1f3 d7d6 e1g1 c8e6 c4e6 f7e6 d2d4 e5d4 f3d4"                                                              
 #> [17] "info depth 13 seldepth 19 multipv 1 score cp 34 nodes 89986 nps 1406031 tbhits 0 time 64 pv e2e4 c7c5 b1c3 b8c6 f1b5 g8f6 b5c6 b7c6 e4e5 f6d5"                                                                                       
-#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1397585 tbhits 0 time 82 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
-#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1410791 tbhits 0 time 187 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
-#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1426080 tbhits 0 time 224 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
-#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1409122 tbhits 0 time 383 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
-#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1404118 tbhits 0 time 431 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
-#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1397942 tbhits 0 time 608 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
-#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1378812 hashfull 631 tbhits 0 time 1091 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
-#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1372506 hashfull 814 tbhits 0 time 1640 pv d2d4 g8f6"                                                                                                              
+#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1414839 tbhits 0 time 81 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
+#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1418376 tbhits 0 time 186 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
+#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1419742 tbhits 0 time 225 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
+#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1401802 tbhits 0 time 385 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
+#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1407383 tbhits 0 time 430 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
+#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1388805 tbhits 0 time 612 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
+#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1373775 hashfull 631 tbhits 0 time 1095 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
+#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1360066 hashfull 814 tbhits 0 time 1655 pv d2d4 g8f6"                                                                                                              
 #> [26] "bestmove d2d4 ponder g8f6"
 ```
 
