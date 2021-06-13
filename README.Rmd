@@ -150,7 +150,7 @@ There is some variation in how clocks are treated when it comes to each player's
 
 To visualize move times over the course of the game, rbitr borrows a scaling function from the website [lichess.org](lichess.org). The logarithmic scaling function for [move times](https://lichess.org/blog/WOEVrjAAALNI-fWS/a-better-game-clock-history) ensures that rapid moves made in long games don't disappear into the baseline of the plot. This same scaling function is used in rbitr's `scaled_time_plot()`.
 
-```{r, fig.width = 7.1, warning = FALSE}
+```{r, fig.width = 7.1, fig.height = 3, warning = FALSE, dpi = 300}
 scaled_time_plot(white_move_times, black_move_times)
 ```
 
@@ -162,7 +162,7 @@ Scaling is also useful when plotting engine evaluations, because the players may
 
 Before making an advantage plot, there is one wrinkle to address. A chess engine will provide an evaluation for each position in a chess game, including the first position, and also for mated positions (where the evaluation is 'mate 0'). PGN files do not generally store an engine's evaluation of the first position. If desired, this initial evaluation can be supplied to the `get_evals()` function so that the output is in sync with what an engine would produce. Also, `get_evals()` will only provide a centipawn value for the final mated position if the `mate0` parameter is set to TRUE.
 
-```{r, fig.width = 7.1}
+```{r, fig.width = 7.1, fig.height = 3, dpi = 300}
 evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
 scaled_advantage_plot(evals[[1]])
 ```
@@ -261,7 +261,7 @@ black_acpl
 
 The function `game_summary_plot()` combines many of the features that were introduced above into a single graphic. To specify a game to summarize, we need only provide the path to a PGN file containing the game, and indicate which game in the file to summarize. In this case, there is only one game, so we set the game_number parameter to 1. We can also choose whether or not to use any evaluations that are already present in the file.
 
-```{r fig.height = 4, fig.width = 7.5, warning = FALSE}
+```{r fig.height = 4, fig.width = 7.5, warning = FALSE, dpi = 300}
 game_summary_plot(pgn_path, game_number = 1, use_pgn_evals = FALSE)
 ```
 

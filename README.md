@@ -347,18 +347,18 @@ gamelog[[1]]
 #> [11] "info depth 7 seldepth 7 multipv 1 score cp 4 nodes 1169 nps 584500 tbhits 0 time 2 pv g1f3 d7d5 d2d4 g8f6 c1e3 b8d7"                                                                                                                 
 #> [12] "info depth 8 seldepth 10 multipv 1 score cp 21 nodes 1849 nps 616333 tbhits 0 time 3 pv e2e4 c7c5 g1f3 b8c6 d2d4 c5d4"                                                                                                               
 #> [13] "info depth 9 seldepth 10 multipv 1 score cp 40 nodes 3894 nps 973500 tbhits 0 time 4 pv d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3"                                                                                                          
-#> [14] "info depth 10 seldepth 12 multipv 1 score cp 38 nodes 10144 nps 1268000 tbhits 0 time 8 pv e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6"                                                                                                  
+#> [14] "info depth 10 seldepth 12 multipv 1 score cp 38 nodes 10144 nps 1127111 tbhits 0 time 9 pv e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6"                                                                                                  
 #> [15] "info depth 11 seldepth 16 multipv 1 score cp 31 nodes 29662 nps 1348272 tbhits 0 time 22 pv e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 d7d6 h2h3 c6d4 f3d4 c5d4"                                                                             
 #> [16] "info depth 12 seldepth 20 multipv 1 score cp 17 nodes 57232 nps 1395902 tbhits 0 time 41 pv e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 g1f3 d7d6 e1g1 c8e6 c4e6 f7e6 d2d4 e5d4 f3d4"                                                              
 #> [17] "info depth 13 seldepth 19 multipv 1 score cp 34 nodes 89986 nps 1406031 tbhits 0 time 64 pv e2e4 c7c5 b1c3 b8c6 f1b5 g8f6 b5c6 b7c6 e4e5 f6d5"                                                                                       
-#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1450658 tbhits 0 time 79 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
-#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1426043 tbhits 0 time 185 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
-#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1394943 tbhits 0 time 229 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
-#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1405453 tbhits 0 time 384 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
-#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1410664 tbhits 0 time 429 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
-#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1382030 tbhits 0 time 615 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
-#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1371270 hashfull 631 tbhits 0 time 1097 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
-#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1370000 hashfull 814 tbhits 0 time 1643 pv d2d4 g8f6"                                                                                                              
+#> [18] "info depth 14 seldepth 15 multipv 1 score cp 43 nodes 114602 nps 1432525 tbhits 0 time 80 pv e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 g8f6 b5c6 d7c6 d2d3 d8e7 a2a4"                                                                       
+#> [19] "info depth 15 seldepth 21 multipv 1 score cp 27 nodes 263818 nps 1403287 tbhits 0 time 188 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c1g5 d5c4 e2e3 b8c6 f1c4 c5d4 e3d4"                                                            
+#> [20] "info depth 16 seldepth 21 multipv 1 score cp 42 nodes 319442 nps 1407233 tbhits 0 time 227 pv d2d4 d7d5 c2c4 e7e6 b1c3 h7h6 g1f3 g8f6 e2e3 c7c5 c4d5 e6d5 a2a3 c5d4 e3d4 b8c6"                                                       
+#> [21] "info depth 17 seldepth 21 multipv 1 score cp 27 nodes 539694 nps 1380291 tbhits 0 time 391 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8b4 c1g5 h7h6 g5f6 d8f6 d1b3 c7c5 c4d5 e6d5 d4c5 b4c3 b2c3"                                        
+#> [22] "info depth 18 seldepth 23 multipv 1 score cp 32 nodes 605175 nps 1378530 tbhits 0 time 439 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 c1g5 c5d4 f3d4 d5c4 e2e3 b8c6 d4c6 d8d1 a1d1 b7c6 f1c4 f8e7 e3e4 a8b8"                         
+#> [23] "info depth 19 seldepth 31 multipv 1 score cp 35 nodes 849949 nps 1357746 tbhits 0 time 626 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7 a2a3 c7c5 c4d5 f6d5 c3d5 e6d5 d4c5 d7c5"                                   
+#> [24] "info depth 20 seldepth 26 multipv 1 score cp 21 nodes 1504284 nps 1347924 hashfull 631 tbhits 0 time 1116 pv d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 c1d2 d7d5 g1f3 c7c5 a2a3 b4c3 d2c3 f6e4 c4d5 e4c3 b2c3 e6d5 d4c5 d8a5 a1c1 a5a3"
+#> [25] "info depth 21 seldepth 29 multipv 1 score cp 12 nodes 2250910 nps 1345433 hashfull 814 tbhits 0 time 1673 pv d2d4 g8f6"                                                                                                              
 #> [26] "bestmove d2d4 ponder g8f6"
 ```
 
@@ -398,7 +398,7 @@ directory with the same base name as the PGN file.
 pgnlog <- evaluate_pgn(two_games_path, engine_path,
                        limiter = 'nodes', limit = 2250000)
 #> [1] "game 1 of 2"
-#> [1] "estimated time remaining 7.3 secs"
+#> [1] "estimated time remaining 7.4 secs"
 #> [1] "game 2 of 2"
 #> [1] "estimated time remaining 0 secs"
 ```
