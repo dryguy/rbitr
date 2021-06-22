@@ -62,21 +62,29 @@ if a cap will be applied to evaluations, it is only necessary to convert
 'mate x' or 'mate -x' to values outside the range [-cap, cap]. The rbitr
 function \code{convert_scores()} may be used for this conversion.
 
-The method for calculating average centipawn loss varies.
-In Guid & Bratko, 'MeanLoss' is calculated only after excluding
-the first 11 moves, and also after excluding moves where both the best move
-and the played move result in evaluations outside the range [-200, 200].
-To replicate Guid & Bratko's MeanLoss, set \code{cap} to 200, \code{cap_action} to
-'exclude' and, \code{first_ply} to 23. (The ply count starts with the initial
-position, so the beginning of the second move occurs at ply 3, and each
-subsequent move begins on an odd ply.)
+The method for calculating average centipawn loss varies. The
+concept of average centipawn loss was introduced by Guid & Bratko (which
+they called mean loss). It was calculated only after excluding the first
+11 moves, and also after excluding moves where both the best move and the
+played move result in evaluations outside the range [-200, 200]. To
+replicate Guid & Bratko's MeanLoss, set \code{cap} to 200, \code{cap_action} to
+'exclude' and, \code{first_ply} to 23. (The ply count starts at 1 for the
+initial position, just before the first move, so the position before
+white's nth move always occurs at ply 2n - 1.)
 
-The website lichess.org uses a different method, in which
+The website \url{lichess.org} uses a different method, in which
 evaluations outside the range [-1000, 1000] are replaced with +-1000, and
 the initial position is always given a score of 15. To replicate the
 lichess ACPL, set \code{cap} to 1000, \code{cap_action} to 'replace', and make sure
 that the first element of the \code{scores} parameter is an evaluation of the
 initial position and is equal to 15.
+
+Regan, \emph{et} \emph{al.}, use yet another method to calculate ACPL, which
+they refer to as average error (AE). They exclude evaluations outside the
+range [-300, 300], and turns 1-8. They also exclude positions that are
+repetitions. However, rbitr does not currently have the ability to detect
+repetitions. To approximate AE without accounting for repetitions, set
+\code{cap} to 300, \code{cap_action} to exclude, and \code{first_ply} to 17.
 }
 \note{
 For games that use alternative starting positions, or for partial
@@ -88,8 +96,13 @@ scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
 get_acpl(scores, 'white')
 }
 \references{
-M. Guid, I. Bratko. Computer analysis of world chess champions.
-ICGA Journal, 29(2):65-73, 2006.
+\itemize{
+\item Guid, M., & Bratko, I. (2006). Computer Analysis of World Chess
+Champions. ICGA Journal, 29(2), 65-73.
+\item Regan, K. W., Macieja, B., & Haworth, G. M. C. (2012). Understanding
+distributions of chess performances. Lecture Notes in Computer Science,
+7168, 230-243. https://doi.org/10.1007/978-3-642-31866-5_20
+}
 }
 \seealso{
 \itemize{
