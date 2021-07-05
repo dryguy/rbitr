@@ -54,7 +54,7 @@
 #'
 #' @examples
 #' # Modify engine_path as required for your engine location & operating system
-#' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+#' engine_path <- '//stockfish_14_x64_avx2.exe'
 #' pgn_path <- file.path(
 #'   system.file(package = 'rbitr'),
 #'   'extdata',

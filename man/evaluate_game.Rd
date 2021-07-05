@@ -83,7 +83,7 @@ mimic this, set limiter = 'nodes', and limit = 2250000.
 \examples{
 movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
 # Modify engine_path as required for your engine location & operating system
-engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+engine_path <- '//stockfish_14_x64_avx2.exe'
 evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 }
 \seealso{

@@ -3,7 +3,7 @@ pgn_path <- file.path(
   'extdata',
   'test'
 )
-engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+engine_path <- '//stockfish_14_x64_avx2.exe'
 
 test_that('evaluate_pgn evaluates a pgn', {
   pgn_path <- file.path(pgn_path, 'dr_who.pgn')
