@@ -46,7 +46,7 @@
 #'   'short_game.pgn'
 #' )
 #' # Modify engine_path as required for your engine location & operating system
-#' engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+#' engine_path <- '//stockfish_14_x64_avx2.exe'
 #' game_summary_plot(pgn_path, game_number = 1, engine_path)
 game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
                               n_cpus = 1, use_pgn_evals = TRUE, nodes = 2250000,

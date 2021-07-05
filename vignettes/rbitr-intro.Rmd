@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 rbitr is a an R package for analyzing chess games, with emphasis on generating game statistics that may be useful for the detection of illicit computer assistance.
 
-For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/)  chess engine, and currently has only been tested with this engine. Other UCI-compatible engines should also work, but your mileage may vary.
+For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/) chess engine. It has currently only been tested with this engine and with the newer Stockfish 14.. Other UCI-compatible engines should also work, but your mileage may vary.
 
 A big thanks is due to Wojciech Rosa for creating the package [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on bigchess to handle the interface between R and the chess engine. It is unlikely that rbitr would exist without it.
 
@@ -172,7 +172,7 @@ Notice that we had to specify that we want the evaluations for game 1, because l
 Next, we'll look at how to analyze games using an external chess engine. To analyze games, we'll use the function `evaluate_game()`. In order to use the function, you will need to provide the path to the engine you'll be using for the game analysis. In the next line of code, you'll need to change the path as required by your engine location and operating system.
 
 ```{r}
-engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+engine_path <- '//stockfish_14_x64_avx2.exe'
 ```
 
 Depending on your processor speed, this step may take some time. If you have more than one CPU, you can speed up the analysis by changing the `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1 is used. We will set the `mute` parameter to `FALSE` in order to monitor game progress. This will cause the function to print the ply number before starting to analyze each position. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.

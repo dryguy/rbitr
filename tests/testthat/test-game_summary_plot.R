@@ -2,7 +2,7 @@ pgn_path <- file.path(
   system.file(package = 'rbitr'),
   'extdata'
 )
-engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+engine_path <- '//stockfish_14_x64_avx2.exe'
 game_number <- 1
 test_that('game_summary_plot is a ggplot', {
   pgn_path <- file.path(pgn_path, 'short_game.pgn')

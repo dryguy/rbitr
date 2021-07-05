@@ -1,6 +1,6 @@
 test_that('evaluate_game evaluates a game', {
   movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
-  engine_path <- '//stockfish_13_win_x64_bmi2.exe'
+  engine_path <- '//stockfish_14_x64_avx2.exe'
   analysis <- evaluate_game(movetext, engine_path,
                             limiter = 'depth', limit = 1)
   expect_identical(class(analysis), 'list')
