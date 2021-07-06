@@ -238,7 +238,7 @@ black_imb <- get_imb(evals, moves[[1]], bestmoves, 'black')
 black_imb
 ```
 
-Now we can see that according to the engine, white played no inaccuracies, mistakes, or bluders, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
+Now we can see that according to the engine, white played no inaccuracies, mistakes, or blunders, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
 
 ### Average Centipawn Loss
 
