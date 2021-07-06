@@ -37,7 +37,7 @@ Once you have installed rbitr and are ready to begin, simply load the package.
 library(rbitr)
 ```
 
-### Importing Games from PGN Files
+### Importing Games From PGN Files
 
 Chess games stored in the Portable Game Notation (PGN) format can easily be imported into R using the function `get_pgn()`. 
 
@@ -87,7 +87,7 @@ To learn more about the PGN format, see the [PGN Specification](http://www.sarem
 
 (Note that `get_pgn()` is a fairly bare bones function. It has no options to limit which tags are read, and has no support for large PGN files. For a PGN reader in R with more features, check out the function `bigchess::read.pgn()`.)
 
-### Extracting Data from Imported PGN Files
+### Extracting Data From Imported PGN Files
 
 As we saw in the last section, PGN files may store commentary, annotations, clock data, engine analysis, or other content interspersed among the moves of the game. In this section, we'll examine ways to extract some of this data.
 
@@ -194,7 +194,7 @@ pgnlog <- evaluate_pgn(two_games_path, engine_path,
                        limiter = 'nodes', limit = 2250000)
 ```
 
-### Extracting Data from Chess Engine Logs
+### Extracting Data From Chess Engine Logs
 
 The `parse_gamelog()` function can extract evaluations ('score'), the best moves the engine found ('bestmove'), or the principal variations ('pv').
 
