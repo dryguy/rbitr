@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 rbitr is a an R package for analyzing chess games, with emphasis on generating game statistics that may be useful for the detection of illicit computer assistance.
 
-For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/) chess engine. It has currently only been tested with this engine and with the newer Stockfish 14.. Other UCI-compatible engines should also work, but your mileage may vary.
+For game analysis, rbitr relies on an external chess engine. Communication between rbitr and the chess engine is done via the [Universal Chess Interface Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess engine that is compatible with the UCI protocol is required in order to use many of rbitr's functions. rbitr was developed using the [Stockfish 13](https://stockfishchess.org/) chess engine. It has currently only been tested with this engine and with the newer Stockfish 14. Other UCI-compatible engines should also work, but your mileage may vary.
 
 A big thanks is due to Wojciech Rosa for creating the package [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on bigchess to handle the interface between R and the chess engine. It is unlikely that rbitr would exist without it.
 
@@ -238,7 +238,7 @@ black_imb <- get_imb(evals, moves[[1]], bestmoves, 'black')
 black_imb
 ```
 
-Now we can see that according to the engine, white played an inaccuracy on move 3, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
+Now we can see that according to the engine, white played no inaccuracies, mistakes, or bluders, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
 
 ### Average Centipawn Loss
 
