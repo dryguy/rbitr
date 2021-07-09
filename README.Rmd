@@ -60,7 +60,7 @@ A chess game stored in a PGN file looks something like this:
 
 The data in brackets are known as tag pairs, and the first word in each bracket is the tag name. Below the tags is the "movetext" section.
 
-rbitr stores chess games as [tibbles](https://github.com/tidyverse/tibble). The main reason for this is that the moves of longer chess games can make the onscreen display of a data frame rather unwieldy, whereas tibbles are designed to provide a nice orderly display. With `get_pgn()`, each game in a PGN file will become a row in a tibble, each tag will become a column, and each tag name will become a column name. The moves become an additional column named "Movetext".
+rbitr stores chess games as [tibbles](https://github.com/tidyverse/tibble). The main reason for this is that the moves of longer chess games can make the onscreen display of a data frame rather unwieldy, whereas tibbles are designed to provide a nice orderly display. With `get_pgn()`, each game in a PGN file will become a row in a tibble, each tag will become a column, and each tag name will become a column name. The moves become an additional column named "Movetext". Tibbles or data frames in this format may be saved as PGN files with the function `save_pgn()`.
 
 A few example PGN files have been included with the rbitr package. Here's an example showing how to import a PGN file containing two short games.
 
@@ -89,7 +89,7 @@ We'll examine how to extract this data in the next section.
 
 To learn more about the PGN format, see the [PGN Specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm) and the [PGN Specification Supplement](http://www.enpassant.dk/chess/palview/enhancedpgn.htm).
 
-(Note that `get_pgn()` is a fairly bare bones function. It has no options to limit which tags are read, and has no support for large PGN files. For a PGN reader in R with more features, check out the function `bigchess::read.pgn()`.)
+(Note that `get_pgn()` and `save_pgn()` are fairly bare-bones functions. They have no options to control which tags are read/written, and have no support for large PGN files. For a PGN management in R with more features, check out `bigchess::read.pgn()` and `bigchess::write.pgn()`.)
 
 ### Extracting Data From Imported PGN Files
 

@@ -35,6 +35,7 @@ get_pgn(pgn_path)
 }
 \seealso{
 \itemize{
+\item \code{\link[=save_pgn]{save_pgn()}} to save a PGN file.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} to analyze all the games in a PGN file
 \item \code{\link[=evaluate_game]{evaluate_game()}} to analyze a single game from a PGN file
 \item \code{\link[=clean_movetext]{clean_movetext()}} to strip comments and annotations.

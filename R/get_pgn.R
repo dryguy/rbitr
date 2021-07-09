@@ -17,6 +17,7 @@
 #' @export
 #'
 #' @seealso
+#'   * [rbitr::save_pgn()] to save a PGN file.
 #'   * [rbitr::evaluate_pgn()] to analyze all the games in a PGN file
 #'   * [rbitr::evaluate_game()] to analyze a single game from a PGN file
 #'   * [rbitr::clean_movetext()] to strip comments and annotations.

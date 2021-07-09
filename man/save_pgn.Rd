@@ -58,3 +58,11 @@ fools_mate <- tibble::tibble(
 save_pgn(fools_mate, pgn_path = 'save_pgn_example.pgn')
 file.remove('save_pgn_example.pgn')
 }
+\seealso{
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
+\item \code{\link[=clean_movetext]{clean_movetext()}} to strip comments and annotations.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} to analyze all the games in a PGN file
+\item \code{\link[=evaluate_game]{evaluate_game()}} to analyze a single game from a PGN file
+}
+}

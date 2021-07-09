@@ -33,6 +33,12 @@
 #' @return `save_pgn()` returns `NULL`.
 #' @export
 #'
+#' @seealso
+#'   * [rbitr::get_pgn()] for loading PGN files.
+#'   * [rbitr::clean_movetext()] to strip comments and annotations.
+#'   * [rbitr::evaluate_pgn()] to analyze all the games in a PGN file
+#'   * [rbitr::evaluate_game()] to analyze a single game from a PGN file
+#'
 #' @examples
 #' fools_mate <- tibble::tibble(
 #'   Event    = 'Casual Game',
