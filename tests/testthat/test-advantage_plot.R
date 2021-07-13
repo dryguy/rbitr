@@ -1,0 +1,11 @@
+test_that('advantage_plot returns a ggplot', {
+  scores <- c(15, 5, 29, -94, 67, 76, 154, -31, 1000, 1000)
+  p1 <- advantage_plot(scores, scaling = 'none')
+  expect_equal(class(p1), c('gg', 'ggplot'))
+  p1 <- advantage_plot(scores, scaling = 'lichess')
+  expect_equal(class(p1), c('gg', 'ggplot'))
+  p1 <- advantage_plot(scores, scaling = 'regan')
+  expect_equal(class(p1), c('gg', 'ggplot'))
+  p1 <- advantage_plot(scores, style = 'infographic')
+  expect_equal(class(p1), c('gg', 'ggplot'))
+})

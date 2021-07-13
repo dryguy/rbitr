@@ -1,6 +1,6 @@
 #' Time plot
 #'
-#' Generate a plot of scaled move times.
+#' Generate a plot of move times.
 #'
 #' @details Move times (in seconds) are plotted using a scaling function
 #'   borrowed from [lichess.org](lichess.org). The
@@ -15,6 +15,10 @@
 #'   indicating the plot style. Allowed values are 'graph' for a traditional
 #'   graph with axes, or 'infographic' to add a background gradient and remove
 #'   the axes (similar to [lichess.org](lichess.org)).
+#' @param scaling (Default = 'lichess') A single-element character vector
+#'   indicating how the plot should be scaled. Allowed values are 'none' to plot
+#'   the data as is, 'lichess' to apply the same scaling function used by
+#'   lichess.org.
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
@@ -27,15 +31,17 @@
 #' @examples
 #'   white_move_times <- c(4, 10, 5, 10)
 #'   black_move_times <- c(3, 4, 7)
-#'   scaled_time_plot(white_move_times, black_move_times)
-scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph') {
+#'   time_plot(white_move_times, black_move_times)
+time_plot <- function(white_move_times, black_move_times,
+                      style = 'graph', scaling = 'lichess') {
   # Validate input
   assertthat::assert_that(is.numeric(white_move_times))
   assertthat::assert_that(is.numeric(black_move_times))
   assertthat::assert_that(length(white_move_times) -
-                          length(black_move_times) < 2)
+                            length(black_move_times) < 2)
   assertthat::assert_that(style == 'graph' |
                           style == 'infographic')
+  assertthat::assert_that(scaling == 'lichess' | scaling == 'none')
   n_white_move_times <- length(white_move_times)
   # Create a data frame of move times
   if (length(white_move_times) == 0) {
@@ -43,6 +49,13 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
   }
   if (length(black_move_times) == 0) {
     black_move_times <- 0
+  }
+  if (scaling == 'lichess') {
+    white_move_times <- scale_move_times(white_move_times)
+    black_move_times <- scale_move_times(black_move_times)
+    y_label <- 'Move Times (Lichess Scaling)'
+  } else if (scaling == 'none') {
+    y_label <- 'Move Times (Seconds)'
   }
   max_y <- max(c(white_move_times, black_move_times))
   if (n_white_move_times == 0) {
@@ -94,7 +107,7 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                        alpha   = 0.71) +
     ggplot2::geom_area(data    = lichess_move_times,
                        mapping = ggplot2::aes(x = .data$black_ply,
-                                             y = -.data$black_times - y_offset),
+                                              y = -.data$black_times - y_offset),
                        fill    = grDevices::rgb(164, 162, 160,
                                                 maxColorValue = 255),
                        color   = grDevices::rgb(83,  160, 233,
@@ -103,7 +116,7 @@ scaled_time_plot <- function(white_move_times, black_move_times, style = 'graph'
                        alpha   = 0.71) +
     ggplot2::ylim(c(-y_lim, y_lim)) +
     ggplot2::xlab('Half Move') +
-    ggplot2::ylab('Move Times (Scaled)') +
+    ggplot2::ylab(y_label) +
     ggplot2::scale_x_continuous(
       breaks = function(x) unique(floor(pretty(x, 20))),
       limits = c(1, n_ply - 1)) +
