@@ -34,8 +34,8 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::scaled_advantage_plot()] to plot advantage data.
-#'   * [rbitr::scaled_time_plot()] to plot move time data.
+#'   * [rbitr::advantage_plot()] to plot advantage data.
+#'   * [rbitr::time_plot()] to plot move time data.
 #'   * [rbitr::get_acpl()] to calculate average centipawn loss.
 #'   * [rbitr::get_imb()] to calculate inaccuracies, mistakes, and blunders.
 #'
@@ -130,9 +130,10 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
     p_time_annotation <- ggplot2::geom_blank()
     p_advantage_annotation <- ggplot2::geom_blank()
   }
-  p1 <- scaled_time_plot(white_move_times, black_move_times, style = style) +
+  p1 <- time_plot(white_move_times, black_move_times, style = style,
+                  scaling = 'lichess') +
     p_time_annotation
-  p2 <- scaled_advantage_plot(evals, style = style) +
+  p2 <- advantage_plot(evals, style = style, scaling = 'lichess') +
     p_advantage_annotation
   moves <- get_moves(pgn$Movetext[[game_number]])[[1]]
   white_imb <- get_imb(evals, moves, bestmoves, 'white')

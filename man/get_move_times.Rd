@@ -56,7 +56,7 @@ get_move_times(clock, 8, 'black')
 file.
 \item \code{\link[=get_clocks]{get_clocks()}} to extract the clock data from a PGN file.
 \item \code{\link[=get_increments]{get_increments()}} to extract increment data from a PGN file.
-\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} and \code{\link[=game_summary_plot]{game_summary_plot()}} to plot move
+\item \code{\link[=time_plot]{time_plot()}} and \code{\link[=game_summary_plot]{game_summary_plot()}} to plot move
 times.
 }
 }

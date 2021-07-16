@@ -144,23 +144,25 @@ There is some variation in how clocks are treated when it comes to each player's
 
 ### Plotting Move Times
 
-To visualize move times over the course of the game, rbitr borrows a scaling function from the website [lichess.org](lichess.org). The logarithmic scaling function for [move times](https://lichess.org/blog/WOEVrjAAALNI-fWS/a-better-game-clock-history) ensures that rapid moves made in long games don't disappear into the baseline of the plot. This same scaling function is used in rbitr's `scaled_time_plot()`.
+To visualize move times over the course of the game, rbitr borrows a scaling function from the website [lichess.org](lichess.org). The logarithmic scaling function for [move times](https://lichess.org/blog/WOEVrjAAALNI-fWS/a-better-game-clock-history) ensures that rapid moves made in long games don't disappear into the baseline of the plot. This same scaling function is available in rbitr's `time_plot()`.
 
-```{r, fig.width = 7.1, warning = FALSE}
-scaled_time_plot(white_move_times, black_move_times)
+```{r, fig.width = 7.1, fig.height = 3, warning = FALSE}
+time_plot(white_move_times, black_move_times)
 ```
 
-In chess, each time a player moves a piece is considered a "half-move". So, in the strictest sense, anywhere we've said "move time", we've actually been referring to "half-move times", and the x-axis on the scaled time plot is given in half-moves. The plot begins with white's first half-move, and black's half-move times are plotted with the opposite sign of white's.
+In chess, each time a player moves a piece is considered a "half-move". So, in the strictest sense, anywhere we've said "move time", we've actually been referring to "half-move times", and the x-axis on the time plot is given in half-moves. The plot begins with white's first half-move, and black's half-move times are plotted with the opposite sign of white's.
 
 ### Plotting Evaluations
 
-Scaling is also useful when plotting engine evaluations, because the players may place less value on material in proportion to how imbalanced the position is. In other words, losing a pawn when you are up a queen has much less impact on your game than it does when material is even. To reflect this, rbitr again borrows a scaling function from [lichess](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes). The function `scaled_advantage_plot()` plots an engine's evaluations of the game's positions after applying this scaling function.
+An engine's evaluation of the positions in a game may be plotted using the function `advantage_plot()`.
+
+When plotting engine evaluations, it can be useful to apply a scaling function, because the players may place less value on material in proportion to how imbalanced the position is. In other words, losing a pawn when you are up a queen has much less impact on your game than it does when material is even. To reflect this, the `scaling` parameter for `advantage_plot()` can be used to apply the same scaling function used by [lichess](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes), or it can apply a [different](https://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/view/3779) scaling [function](https://doi.org/10.1007/978-3-642-31866-5_20) developed by Prof. Ken Regan at the University of Buffalo. The function `advantage_plot()` plots an engine's evaluations of the game's positions after applying the chosen scaling function. Lichess scaling is currently the default.
 
 Before making an advantage plot, there is one wrinkle to address. A chess engine will provide an evaluation for each position in a chess game, including the first position, and also for mated positions (where the evaluation is 'mate 0'). PGN files do not generally store an engine's evaluation of the first position. If desired, this initial evaluation can be supplied to the `get_evals()` function so that the output is in sync with what an engine would produce. Also, `get_evals()` will only provide a centipawn value for the final mated position if the `mate0` parameter is set to TRUE.
 
-```{r, fig.width = 7.1}
+```{r, fig.width = 7.1, fig.height = 3}
 evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
-scaled_advantage_plot(evals[[1]])
+advantage_plot(evals[[1]])
 ```
 
 The sign convention used here is that positive evaluations mean that white has the advantage, while negative evaluations mean that black has the advantage. The x-axis is numbered starting with 1 for the first evaluation that was supplied (in this case, for the initial position). There is one more position than there were half-moves, as expected, since half-moves can only occur in between adjacent positions.
@@ -257,7 +259,7 @@ black_acpl
 
 The function `game_summary_plot()` combines many of the features that were introduced above into a single graphic. To specify a game to summarize, we need only provide the path to a PGN file containing the game, and indicate which game in the file to summarize. In this case, there is only one game, so we set the game_number parameter to 1. We can also choose whether or not to use any evaluations that are already present in the file.
 
-```{r fig.height = 4, fig.width = 7.5, warning = FALSE}
+```{r fig.height = 5, fig.width = 7.5, warning = FALSE}
 game_summary_plot(pgn_path, game_number = 1, use_pgn_evals = FALSE)
 ```
 

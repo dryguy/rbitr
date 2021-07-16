@@ -237,32 +237,42 @@ scaling function from the website [lichess.org](lichess.org). The
 logarithmic scaling function for [move
 times](https://lichess.org/blog/WOEVrjAAALNI-fWS/a-better-game-clock-history)
 ensures that rapid moves made in long games don’t disappear into the
-baseline of the plot. This same scaling function is used in rbitr’s
-`scaled_time_plot()`.
+baseline of the plot. This same scaling function is available in rbitr’s
+`time_plot()`.
 
 ``` r
-scaled_time_plot(white_move_times, black_move_times)
+time_plot(white_move_times, black_move_times)
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 In chess, each time a player moves a piece is considered a “half-move”.
 So, in the strictest sense, anywhere we’ve said “move time”, we’ve
-actually been referring to “half-move times”, and the x-axis on the
-scaled time plot is given in half-moves. The plot begins with white’s
-first half-move, and black’s half-move times are plotted with the
-opposite sign of white’s.
+actually been referring to “half-move times”, and the x-axis on the time
+plot is given in half-moves. The plot begins with white’s first
+half-move, and black’s half-move times are plotted with the opposite
+sign of white’s.
 
 ### Plotting Evaluations
 
-Scaling is also useful when plotting engine evaluations, because the
-players may place less value on material in proportion to how imbalanced
-the position is. In other words, losing a pawn when you are up a queen
-has much less impact on your game than it does when material is even. To
-reflect this, rbitr again borrows a scaling function from
-[lichess](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes).
-The function `scaled_advantage_plot()` plots an engine’s evaluations of
-the game’s positions after applying this scaling function.
+An engine’s evaluation of the positions in a game may be plotted using
+the function `advantage_plot()`.
+
+When plotting engine evaluations, it can be useful to apply a scaling
+function, because the players may place less value on material in
+proportion to how imbalanced the position is. In other words, losing a
+pawn when you are up a queen has much less impact on your game than it
+does when material is even. To reflect this, the `scaling` parameter for
+`advantage_plot()` can be used to apply the same scaling function used
+by
+[lichess](https://lichess.org/blog/WFvLpiQAACMA8e9D/learn-from-your-mistakes),
+or it can apply a
+[different](https://www.aaai.org/ocs/index.php/AAAI/AAAI11/paper/view/3779)
+scaling [function](https://doi.org/10.1007/978-3-642-31866-5_20)
+developed by Prof. Ken Regan at the University of Buffalo. The function
+`advantage_plot()` plots an engine’s evaluations of the game’s positions
+after applying the chosen scaling function. Lichess scaling is currently
+the default.
 
 Before making an advantage plot, there is one wrinkle to address. A
 chess engine will provide an evaluation for each position in a chess
@@ -276,7 +286,7 @@ will only provide a centipawn value for the final mated position if the
 
 ``` r
 evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
-scaled_advantage_plot(evals[[1]])
+advantage_plot(evals[[1]])
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
@@ -339,27 +349,27 @@ gamelog[[1]]
 #>  [2] "readyok"                                                                                                                                                                                                                                  
 #>  [3] "readyok"                                                                                                                                                                                                                                  
 #>  [4] "info string NNUE evaluation using nn-3475407dc199.nnue enabled"                                                                                                                                                                           
-#>  [5] "info depth 1 seldepth 1 multipv 1 score cp 43 nodes 20 nps 20000 tbhits 0 time 1 pv d2d4"                                                                                                                                                 
-#>  [6] "info depth 2 seldepth 2 multipv 1 score cp 79 nodes 48 nps 48000 tbhits 0 time 1 pv d2d4 a7a6"                                                                                                                                            
-#>  [7] "info depth 3 seldepth 3 multipv 1 score cp 75 nodes 181 nps 181000 tbhits 0 time 1 pv g1f3 c7c6 d2d4"                                                                                                                                     
-#>  [8] "info depth 4 seldepth 4 multipv 1 score cp 26 nodes 630 nps 630000 tbhits 0 time 1 pv d2d4 d7d5 c2c4 d5c4"                                                                                                                                
+#>  [5] "info depth 1 seldepth 1 multipv 1 score cp 43 nodes 20 nps 10000 tbhits 0 time 2 pv d2d4"                                                                                                                                                 
+#>  [6] "info depth 2 seldepth 2 multipv 1 score cp 79 nodes 48 nps 24000 tbhits 0 time 2 pv d2d4 a7a6"                                                                                                                                            
+#>  [7] "info depth 3 seldepth 3 multipv 1 score cp 75 nodes 181 nps 90500 tbhits 0 time 2 pv g1f3 c7c6 d2d4"                                                                                                                                      
+#>  [8] "info depth 4 seldepth 4 multipv 1 score cp 26 nodes 630 nps 315000 tbhits 0 time 2 pv d2d4 d7d5 c2c4 d5c4"                                                                                                                                
 #>  [9] "info depth 5 seldepth 5 multipv 1 score cp 145 nodes 741 nps 370500 tbhits 0 time 2 pv e2e4 g8f6"                                                                                                                                         
-#> [10] "info depth 6 seldepth 6 multipv 1 score cp 25 nodes 2448 nps 816000 tbhits 0 time 3 pv e2e4 d7d6 c2c3 g8f6 g1f3 e7e5"                                                                                                                     
-#> [11] "info depth 7 seldepth 7 multipv 1 score cp 29 nodes 3488 nps 872000 tbhits 0 time 4 pv d2d4 d7d5 e2e3 e7e6 c2c4 g8f6 g1f3"                                                                                                                
-#> [12] "info depth 8 seldepth 8 multipv 1 score cp 65 nodes 5172 nps 1034400 tbhits 0 time 5 pv e2e4 e7e6 d2d4 d7d5 b1c3 d5e4"                                                                                                                    
-#> [13] "info depth 9 seldepth 11 multipv 1 score cp 37 nodes 10602 nps 1178000 tbhits 0 time 9 pv d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4c5 g7g6 g1f3"                                                                                                   
-#> [14] "info depth 10 seldepth 13 multipv 1 score cp 32 nodes 23676 nps 1392705 tbhits 0 time 17 pv d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 f8b4 b1d2 e8g8 f1g2 d7d5"                                                                                  
-#> [15] "info depth 11 seldepth 15 multipv 1 score cp 35 nodes 44751 nps 1356090 tbhits 0 time 33 pv e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 d7d5 e4d5"                                                                                                 
-#> [16] "info depth 12 seldepth 14 multipv 1 score cp 37 nodes 60151 nps 1336688 tbhits 0 time 45 pv e2e4 c7c5 g1f3 d7d6 f1c4 b8c6 e1g1 g8f6 b1c3 e7e6 d2d4 c5d4 f3d4"                                                                             
-#> [17] "info depth 13 seldepth 16 multipv 1 score cp 30 nodes 99443 nps 1325906 tbhits 0 time 75 pv d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 e8g8 e2e3 c7c5 d4c5"                                                                             
-#> [18] "info depth 14 seldepth 21 multipv 1 score cp 36 nodes 140890 nps 1341809 tbhits 0 time 105 pv d2d4 d7d5 c2c4 e7e6 g1f3 f8e7 b1c3 g8f6 c1g5 h7h6 g5f6 e7f6 e2e3 e8g8 c4d5 e6d5 f1d3"                                                       
-#> [19] "info depth 15 seldepth 22 multipv 1 score cp 32 nodes 206290 nps 1322371 tbhits 0 time 156 pv e2e4 c7c5 g1f3 d7d6 f1b5 c8d7 b5d7 d8d7 e1g1 e7e6 c2c3 g8f6 f1e1 f8e7 d2d4 e8g8 d4d5"                                                       
-#> [20] "info depth 16 seldepth 21 multipv 1 score cp 40 nodes 327876 nps 1311504 tbhits 0 time 250 pv d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 c5d4 f3d4 b8c6 c1f4 g8f6 e2e3 f8c5 f1e2 c5d4 e3d4 e8g8"                                        
-#> [21] "info depth 17 seldepth 23 multipv 1 score cp 47 nodes 700175 nps 1301440 tbhits 0 time 538 pv d2d4 g8f6 c2c4 e7e6 g1f3 f8e7 b1c3 d7d5 c1g5 c7c6 e2e3 e8g8 c4d5 e6d5 f1d3 f8e8 d1c2 h7h6 g5f4 e7d6"                                        
-#> [22] "info depth 18 seldepth 26 multipv 1 score cp 35 nodes 1254757 nps 1269996 tbhits 0 time 988 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 c5d4 d1d4 e6d5 c1g5 f8e7 a1d1 b8c6 d4d2 c8e6 e2e3 a8c8 g5f6 e7f6 c3d5"                        
-#> [23] "info depth 19 seldepth 26 multipv 1 score cp 39 nodes 1461089 nps 1270512 hashfull 637 tbhits 0 time 1150 pv d2d4 g8f6 c2c4 c7c6 b1c3 d7d5 g1f3 d5c4 a2a4 e7e6 e2e3 c6c5 f1c4 c5d4 e3d4 b8c6 e1g1 f8e7 f1e1 e8g8"                         
-#> [24] "info depth 20 seldepth 27 multipv 1 score cp 35 nodes 2142551 nps 1252953 hashfull 809 tbhits 0 time 1710 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 c7c6 f3e5 f8b4 c1d2 b4e7 e2e3 b8d7 e5c4 e8g8 e1g1 b7b5 g2c6"                    
-#> [25] "info depth 21 seldepth 28 multipv 1 score cp 33 nodes 2250978 nps 1247079 hashfull 830 tbhits 0 time 1805 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"
+#> [10] "info depth 6 seldepth 6 multipv 1 score cp 25 nodes 2448 nps 612000 tbhits 0 time 4 pv e2e4 d7d6 c2c3 g8f6 g1f3 e7e5"                                                                                                                     
+#> [11] "info depth 7 seldepth 7 multipv 1 score cp 29 nodes 3488 nps 697600 tbhits 0 time 5 pv d2d4 d7d5 e2e3 e7e6 c2c4 g8f6 g1f3"                                                                                                                
+#> [12] "info depth 8 seldepth 8 multipv 1 score cp 65 nodes 5172 nps 862000 tbhits 0 time 6 pv e2e4 e7e6 d2d4 d7d5 b1c3 d5e4"                                                                                                                     
+#> [13] "info depth 9 seldepth 11 multipv 1 score cp 37 nodes 10602 nps 1060200 tbhits 0 time 10 pv d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4c5 g7g6 g1f3"                                                                                                  
+#> [14] "info depth 10 seldepth 13 multipv 1 score cp 32 nodes 23676 nps 1127428 tbhits 0 time 21 pv d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 f8b4 b1d2 e8g8 f1g2 d7d5"                                                                                  
+#> [15] "info depth 11 seldepth 15 multipv 1 score cp 35 nodes 44751 nps 1209486 tbhits 0 time 37 pv e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 d7d5 e4d5"                                                                                                 
+#> [16] "info depth 12 seldepth 14 multipv 1 score cp 37 nodes 60151 nps 1156750 tbhits 0 time 52 pv e2e4 c7c5 g1f3 d7d6 f1c4 b8c6 e1g1 g8f6 b1c3 e7e6 d2d4 c5d4 f3d4"                                                                             
+#> [17] "info depth 13 seldepth 16 multipv 1 score cp 30 nodes 99443 nps 1169917 tbhits 0 time 85 pv d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 e8g8 e2e3 c7c5 d4c5"                                                                             
+#> [18] "info depth 14 seldepth 21 multipv 1 score cp 36 nodes 140890 nps 1174083 tbhits 0 time 120 pv d2d4 d7d5 c2c4 e7e6 g1f3 f8e7 b1c3 g8f6 c1g5 h7h6 g5f6 e7f6 e2e3 e8g8 c4d5 e6d5 f1d3"                                                       
+#> [19] "info depth 15 seldepth 22 multipv 1 score cp 32 nodes 206290 nps 1172102 tbhits 0 time 176 pv e2e4 c7c5 g1f3 d7d6 f1b5 c8d7 b5d7 d8d7 e1g1 e7e6 c2c3 g8f6 f1e1 f8e7 d2d4 e8g8 d4d5"                                                       
+#> [20] "info depth 16 seldepth 21 multipv 1 score cp 40 nodes 327876 nps 1183667 tbhits 0 time 277 pv d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 c5d4 f3d4 b8c6 c1f4 g8f6 e2e3 f8c5 f1e2 c5d4 e3d4 e8g8"                                        
+#> [21] "info depth 17 seldepth 23 multipv 1 score cp 47 nodes 700175 nps 1170861 tbhits 0 time 598 pv d2d4 g8f6 c2c4 e7e6 g1f3 f8e7 b1c3 d7d5 c1g5 c7c6 e2e3 e8g8 c4d5 e6d5 f1d3 f8e8 d1c2 h7h6 g5f4 e7d6"                                        
+#> [22] "info depth 18 seldepth 26 multipv 1 score cp 35 nodes 1254757 nps 1137585 hashfull 574 tbhits 0 time 1103 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 c5d4 d1d4 e6d5 c1g5 f8e7 a1d1 b8c6 d4d2 c8e6 e2e3 a8c8 g5f6 e7f6 c3d5"          
+#> [23] "info depth 19 seldepth 26 multipv 1 score cp 39 nodes 1461089 nps 1139695 hashfull 637 tbhits 0 time 1282 pv d2d4 g8f6 c2c4 c7c6 b1c3 d7d5 g1f3 d5c4 a2a4 e7e6 e2e3 c6c5 f1c4 c5d4 e3d4 b8c6 e1g1 f8e7 f1e1 e8g8"                         
+#> [24] "info depth 20 seldepth 27 multipv 1 score cp 35 nodes 2142551 nps 1124108 hashfull 809 tbhits 0 time 1906 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 c7c6 f3e5 f8b4 c1d2 b4e7 e2e3 b8d7 e5c4 e8g8 e1g1 b7b5 g2c6"                    
+#> [25] "info depth 21 seldepth 28 multipv 1 score cp 33 nodes 2250978 nps 1123242 hashfull 830 tbhits 0 time 2004 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"
 #> [26] "bestmove d2d4 ponder g8f6"
 ```
 
@@ -399,7 +409,7 @@ directory with the same base name as the PGN file.
 pgnlog <- evaluate_pgn(two_games_path, engine_path,
                        limiter = 'nodes', limit = 2250000)
 #> [1] "game 1 of 2"
-#> [1] "estimated time remaining 8.5 secs"
+#> [1] "estimated time remaining 9.3 secs"
 #> [1] "game 2 of 2"
 #> [1] "estimated time remaining 0 secs"
 ```

@@ -69,7 +69,7 @@ get_evals(movetext)
 \item \code{\link[=get_pgn]{get_pgn()}} to load a PGN file.
 \item \code{\link[=get_increments]{get_increments()}} to get increment times.
 \item \code{\link[=get_move_times]{get_move_times()}} to calculate move times.
-\item \code{\link[=scaled_advantage_plot]{scaled_advantage_plot()}} to plot advantage data.
-\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} to plot move time data.
+\item \code{\link[=advantage_plot]{advantage_plot()}} to plot advantage data.
+\item \code{\link[=time_plot]{time_plot()}} to plot move time data.
 }
 }

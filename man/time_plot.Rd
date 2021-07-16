@@ -47,7 +47,7 @@ times are shown as negative values with a dark gray fill.
 }
 \seealso{
 \itemize{
-\item \code{\link[=scaled_advantage_plot]{scaled_advantage_plot()}} to plot advantage data.
+\item \code{\link[=advantage_plot]{advantage_plot()}} to plot advantage data.
 \item \code{\link[=game_summary_plot]{game_summary_plot()}} to plot move time and advantage data with a
 table of game stats.
 }

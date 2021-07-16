@@ -31,7 +31,7 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::scaled_time_plot()] to plot move time data.
+#'   * [rbitr::time_plot()] to plot move time data.
 #'   * [rbitr::game_summary_plot()] to plot move time and advantage data with a
 #'     table of game stats.
 #'

@@ -47,7 +47,7 @@ the opponent. The scaled values are plotted vs. the number of half-moves.
 }
 \seealso{
 \itemize{
-\item \code{\link[=scaled_time_plot]{scaled_time_plot()}} to plot move time data.
+\item \code{\link[=time_plot]{time_plot()}} to plot move time data.
 \item \code{\link[=game_summary_plot]{game_summary_plot()}} to plot move time and advantage data with a
 table of game stats.
 }

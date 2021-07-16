@@ -41,8 +41,8 @@
 #'   * [rbitr::get_pgn()] to load a PGN file.
 #'   * [rbitr::get_increments()] to get increment times.
 #'   * [rbitr::get_move_times()] to calculate move times.
-#'   * [rbitr::scaled_advantage_plot()] to plot advantage data.
-#'   * [rbitr::scaled_time_plot()] to plot move time data.
+#'   * [rbitr::advantage_plot()] to plot advantage data.
+#'   * [rbitr::time_plot()] to plot move time data.
 #'
 #' @examples
 #' movetext <- c(
