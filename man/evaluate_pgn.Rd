@@ -76,7 +76,7 @@ mimic this, set limiter = 'nodes', and limit = 2250000.
 }
 \examples{
 # Modify engine_path as required for your engine location & operating system
-engine_path <- '//stockfish_14_x64_avx2.exe'
+engine_path <- '//stockfish.exe'
 pgn_path <- file.path(
   system.file(package = 'rbitr'),
   'extdata',

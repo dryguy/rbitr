@@ -6,10 +6,7 @@
 \alias{rbitr-package}
 \title{rbitr: Arbiter: One who ensures adherence to the rules and laws of chess}
 \description{
-rbitr is a suite of tools for calculating chess game metrics used
-  by some game arbiters to look for signs of the clandestine use of chess
-  engines. The author makes NO claim that any metric obtained using rbitr can
-  either confirm or refute the use of cheating in any game.
+rbitr is a suite of tools for calculating chess game metrics used by some game arbiters to look for signs of the clandestine use of chess engines. The author makes NO claim that any metric obtained using rbitr can either confirm or refute the use of cheating in any game.
 }
 \author{
 \strong{Maintainer}: First Last \email{dryguy@comcast.net} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})

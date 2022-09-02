@@ -1,11 +1,13 @@
+# Load the locations of the chess engines that will be tested
+engines_file_path <- file.path(
+  system.file(package = 'rbitr'),
+  'extdata',
+  'engine_paths.R'
+)
+source(engines_file_path)
+
 test_that('evaluate_game evaluates a game', {
   movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'
-  engine_paths <- c(
-    '//stockfish_20090216_x64_bmi2.exe',
-    '//stockfish_13_win_x64_bmi2.exe',
-    '//stockfish_14_x64_avx2.exe',
-    '//stockfish_14.1_win_x64_avx2.exe',
-    '//stockfish_15_x64_avx2.exe')
   for (engine_path in engine_paths) {
     analysis <- evaluate_game(movetext, engine_path,
                               limiter = 'depth', limit = 1)

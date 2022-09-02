@@ -1,14 +1,18 @@
+# Path for pgn files used in unit tests
 pgn_path <- file.path(
   system.file(package = 'rbitr'),
   'extdata',
   'test'
 )
-engine_paths <- c(
-  '//stockfish_20090216_x64_bmi2.exe',
-  '//stockfish_13_win_x64_bmi2.exe',
-  '//stockfish_14_x64_avx2.exe',
-  '//stockfish_14.1_win_x64_avx2.exe',
-  '//stockfish_15_x64_avx2.exe')
+
+# Load the locations of the chess engines that will be tested
+engines_file_path <- file.path(
+  system.file(package = 'rbitr'),
+  'extdata',
+  'engine_paths.R'
+)
+source(engines_file_path)
+
 for (engine_path in engine_paths) {
   test_that('evaluate_pgn evaluates a pgn', {
     pgn_path <- file.path(pgn_path, 'dr_who.pgn')

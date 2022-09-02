@@ -15,7 +15,7 @@ License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Suggests: 
     knitr,
     rmarkdown,
@@ -29,7 +29,6 @@ Imports:
     dplyr,
     assertthat,
     tibble,
-    scales,
     ggplot2,
     png,
     grDevices,
