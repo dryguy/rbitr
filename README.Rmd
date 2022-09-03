@@ -250,7 +250,7 @@ lapply(pgn_pvs, unlist)
 
 ### Determining Inaccuracies, Mistakes, and Blunders
 
-Next, we'll take a look at finding inaccuracies, mistakes, and blunders using `get_imb()`. These are identified by looking at how the evaluation changes after a move is made. A big loss would count as a blunder, a smaller loss as a mistake, and so on. However, a move doesn't count as an error if it was the best available move, even if the evaluation drops heavily after the move. There fore, `get_imb()` needs to compare the moves of the game to the best moves found by the engine.
+Next, we'll take a look at finding inaccuracies, mistakes, and blunders using `get_imb()`. These are identified by looking at how the evaluation changes after a move is made. A big loss would count as a blunder, a smaller loss as a mistake, and so on. However, a move doesn't count as an error if it was the best available move, even if the evaluation drops heavily after the move. Therefore, `get_imb()` needs to compare the moves of the game to the best moves found by the engine.
 
 ```{r}
 white_imb <- get_imb(evals, moves[[1]], bestmoves, 'white')
