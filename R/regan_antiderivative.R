@@ -18,9 +18,13 @@
 #' @note The antiderivative is undefined at 1 or -1. At these points
 #'   `regan_antiderivative()` will return the limiting value (+-log(4)/2).
 #'
+#'   The input is treated as a complex number with an imaginary component of 0i.
+#'   The actual antiderivative may have a non-zero imaginary part, but only the
+#'   real part is returned.
+#'
 #' @param x A numeric vector of chess evaluations, in centipawns.
 #'
-#' @return A complex vector of the antiderivative of 1 / (1 + abs(x)).
+#' @return Th real part of the antiderivative of 1 / (1 + abs(x)).
 #' @export
 #'
 #' @references

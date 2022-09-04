@@ -10,7 +10,7 @@ regan_antiderivative(x)
 \item{x}{A numeric vector of chess evaluations, in centipawns.}
 }
 \value{
-A complex vector of the antiderivative of 1 / (1 + abs(x)).
+Th real part of the antiderivative of 1 / (1 + abs(x)).
 }
 \description{
 Calculate the antiderivative of 1 / (1 + abs(x)).
@@ -32,6 +32,10 @@ The antiderivative of 1 / (1 + abs(x)) is:
 \note{
 The antiderivative is undefined at 1 or -1. At these points
 \code{regan_antiderivative()} will return the limiting value (+-log(4)/2).
+
+The input is treated as a complex number with an imaginary component of 0i.
+The actual antiderivative may have a non-zero imaginary part, but only the
+real part is returned.
 }
 \examples{
 regan_antiderivative(c(-100, -10, -1, 0, 1, 10, 100))
