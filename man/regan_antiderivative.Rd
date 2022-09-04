@@ -7,7 +7,7 @@
 regan_antiderivative(x)
 }
 \arguments{
-\item{x}{An numeric vector of chess evaluations, in centipawns.}
+\item{x}{A numeric vector of chess evaluations, in centipawns.}
 }
 \value{
 A complex vector of the antiderivative of 1 / (1 + abs(x)).
@@ -30,8 +30,8 @@ The antiderivative of 1 / (1 + abs(x)) is:
 1/2 * (sign(x) * (log(1 - x) + log(x + 1)) - log(1 - x) + log(x + 1))
 }
 \note{
-The antiderivative is undefined at 1 or -1. At these points the
-function will return the corresponding limit (+-log(4)/2).
+The antiderivative is undefined at 1 or -1. At these points
+\code{regan_antiderivative()} will return the limiting value (+-log(4)/2).
 }
 \examples{
 regan_antiderivative(c(-100, -10, -1, 0, 1, 10, 100))
