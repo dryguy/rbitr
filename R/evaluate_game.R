@@ -84,7 +84,7 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
   moves <- bigchess::san2lan(moves)
   moves <- unlist(strsplit(moves, split = ' '), use.names = FALSE)
   moves <- c('', moves)
-  n_ply <- length(moves)
+  n_moves <- length(moves)
   # Set up the engine
   engine <- bigchess::uci_engine(engine_path)
   cpu_command <- paste0('setoption name Threads value ', n_cpus)
@@ -96,12 +96,12 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
   engine <- bigchess::uci_position(engine)
   go_command <- paste('go', limiter, limit)
   # Analyze the game
-  analyze_position <- function(ply_index, moves, engine, go_command, n_ply,
+  analyze_position <- function(move_index, moves, engine, go_command, n_moves,
                            mute) {
     if (!mute) {
-      print(paste0('Analyzing position ', ply_index, ' of ', n_ply))
+      print(paste0('Analyzing position ', move_index, ' of ', n_moves))
     }
-    moves <- paste0(moves[1:ply_index], collapse = ' ')
+    moves <- paste0(moves[1:move_index], collapse = ' ')
     move_command <- paste0('position startpos moves ', moves)
     engine <- bigchess::uci_cmd(engine, command = move_command)
     engine <- bigchess::uci_cmd(engine, command = go_command)
@@ -113,9 +113,9 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
     }
     bigchess::uci_read(engine)$temp
   }
-  ply_index <- 1:n_ply
-  result <- lapply(ply_index, analyze_position, moves = moves, engine = engine,
-         go_command = go_command, n_ply = n_ply, mute = mute)
+  move_index <- 1:n_moves
+  result <- lapply(move_index, analyze_position, moves = moves, engine = engine,
+         go_command = go_command, n_moves = n_moves, mute = mute)
   bigchess::uci_quit(engine)
   return(result)
 }
