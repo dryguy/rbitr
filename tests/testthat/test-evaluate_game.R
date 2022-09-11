@@ -22,5 +22,8 @@ test_that('evaluate_game evaluates a game', {
     expect_identical(analysis[[1]][2], 'readyok')
     expect_output(evaluate_game('1. e4 e5', engine_path, limiter = 'nodes',
                                 limit = 10, mute = FALSE))
+    analysis <- evaluate_game(movetext, engine_path,
+                              limiter = 'depth', limit = 1, hash_size = 32)
+    expect_identical(analysis[[6]][4], 'info depth 0 score mate 0')
   }
 })

@@ -11,7 +11,8 @@ evaluate_game(
   limit,
   n_cpus = 1L,
   n_pv = 1L,
-  mute = TRUE
+  mute = TRUE,
+  hash_size = NULL
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ number of principal variations.}
 
 \item{mute}{(Default = TRUE) A single-element boolean vector indicating
 whether to display progress.}
+
+\item{hash_size}{(Default = NULL) A single-element integer vector of the
+desired hash size, in MB.}
 }
 \value{
 A list containing character vectors of the engine's output. Each

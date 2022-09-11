@@ -49,6 +49,8 @@
 #'   number of principal variations.
 #' @param mute (Default = TRUE) A single-element boolean vector indicating
 #'   whether to display progress.
+#' @param hash_size (Default = NULL) A single-element integer vector of the
+#'   desired hash size, in MB.
 #'
 #' @return A list containing character vectors of the engine's output. Each
 #'   element in the list corresponds to a position in the game. The first entry
@@ -68,7 +70,8 @@
 #' evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 
 evaluate_game <- function(movetext, engine_path, limiter, limit,
-                          n_cpus = 1L, n_pv = 1L, mute = TRUE) {
+                          n_cpus = 1L, n_pv = 1L, mute = TRUE,
+                          hash_size = NULL) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(movetext))
   assertthat::assert_that(assertthat::is.string(engine_path))
@@ -79,6 +82,8 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
                           limiter == 'movetime')
   assertthat::assert_that(assertthat::is.count(limit))
   assertthat::assert_that(assertthat::is.flag(mute))
+  assertthat::assert_that(assertthat::is.count(hash_size) |
+                          is.null(hash_size))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
   moves <- bigchess::san2lan(moves)
@@ -91,6 +96,10 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
   engine <- bigchess::uci_cmd(engine, command = cpu_command)
   pv_command <- paste0('setoption name MultiPV value ', n_pv)
   engine <- bigchess::uci_cmd(engine, command = pv_command)
+  if (!is.null(hash_size)) {
+    hash_command <- paste0('setoption name Hash value ', hash_size)
+    engine <- bigchess::uci_cmd(engine, command = hash_command)
+  }
   engine <- bigchess::uci_ucinewgame(engine)
   engine <- bigchess::uci_isready(engine)
   engine <- bigchess::uci_position(engine)
@@ -106,7 +115,7 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
     engine <- bigchess::uci_cmd(engine, command = move_command)
     engine <- bigchess::uci_cmd(engine, command = go_command)
     uci_bestmove <- ''
-    while (length(grep("bestmove", uci_bestmove)) < 1) {
+    while (length(grep('bestmove', uci_bestmove)) < 1) {
       engine <- bigchess::uci_read(engine)
       ucilog <- engine$temp
       uci_bestmove <- ucilog[length(ucilog)]
