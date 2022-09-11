@@ -11,6 +11,7 @@ evaluate_pgn(
   limit,
   n_cpus = 1L,
   n_pv = 1L,
+  hash_size = NULL,
   mute = FALSE,
   save_logs = FALSE,
   save_path = NULL
@@ -36,6 +37,9 @@ cpus to use.}
 
 \item{n_pv}{(Default = 1) A single-element integer vector of the desired
 number of principal variations.}
+
+\item{hash_size}{(Default = NULL) A single-element integer vector of the
+desired hash size, in MB.}
 
 \item{mute}{(Boolean, default = FALSE) Suppress progress report?}
 

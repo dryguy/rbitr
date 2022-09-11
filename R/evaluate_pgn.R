@@ -42,6 +42,8 @@
 #'   long analyses in case it has to be stopped before finishing all games.
 #' @param save_path A single-element character vector of the path to a directory
 #'   where the game logs should be saved.
+#' @param hash_size (Default = NULL) A single-element integer vector of the
+#'   desired hash size, in MB.
 #'
 #' @return A list of gamelogs (see `evaluate_game()` for details).
 #' @export
@@ -62,7 +64,7 @@
 #' )
 #' evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
 evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
-                         n_cpus = 1L, n_pv = 1L,
+                         n_cpus = 1L, n_pv = 1L, hash_size = NULL,
                          mute = FALSE, save_logs = FALSE, save_path = NULL) {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
@@ -80,6 +82,8 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
   } else {
     assertthat::assert_that(is.null(save_path))
   }
+  assertthat::assert_that(assertthat::is.count(hash_size) |
+                            is.null(hash_size))
   # Check for directory of saved progress
   progress_path <- tools::file_path_sans_ext(pgn_path)
   if (!is.null(save_path)) {
@@ -121,7 +125,7 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
     }
     movetext <- clean_movetext(pgn$Movetext[row_number])
     gamelog <- evaluate_game(movetext, engine_path, limiter, limit,
-                                n_cpus, n_pv)
+                                n_cpus, n_pv, hash_size = hash_size)
     # Show progress
     if (!mute) {
       total_time <- difftime(Sys.time(), start_time, units = 'secs')
