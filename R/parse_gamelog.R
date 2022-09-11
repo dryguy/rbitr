@@ -129,7 +129,10 @@ parse_gamelog_score <- function(gamelog, target, depth) {
     depth_line_index <-
       stringr::str_detect(gamelog[[gamelog_index]],
                           desired_depth_regexes[[gamelog_index]])
-    gamelog[[gamelog_index]][depth_line_index]
+    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][depth_line_index]
+    # Remove lines with no analyses
+    multipv_index <- stringr::str_detect(gamelog[[gamelog_index]], 'multipv')
+    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][multipv_index]
   }
   gamelog <- lapply(gamelog_index, delete_unused_lines, gamelog,
                     desired_depth_regexes)

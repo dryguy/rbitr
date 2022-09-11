@@ -40,6 +40,20 @@ test_that("parse_gamelog_bestmove returns best moves", {
   test <- parse_gamelog_bestmove(gamelog)
   expect_identical(test, list('d2d4', 'f8g7'))
 })
+test_that("parse_gamelog handles gamelogs with extra or missing pvs", {
+  gamelog_path <- file.path(
+    system.file(package = 'rbitr'),
+    'extdata',
+    'test',
+    'parse_gamelog_test_data.R'
+  )
+  load(gamelog_path)
+  test_parse <- parse_gamelog(gamelog, target = 'score')
+  expect_identical(test_parse, list(c("-19", "-22", "-25", "-42", "-48", "-59",
+                                 "-59", "-68", "-69", "-84", "-87", "-95",
+                                 "-95", "-113", "-132", "-140", "-155", "-202",
+                                 "-205", "-209")))
+})
 
 # Load the locations of the chess engines that will be tested
 engines_file_path <- file.path(
