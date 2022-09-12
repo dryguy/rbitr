@@ -19,6 +19,8 @@
 #'    cpus to use.
 #' @param n_pv (Default = 1) A single-element integer vector of the desired
 #'   number of principal variations.
+#' @param hash_size (Default = NULL) A single-element integer vector of the
+#'   desired hash size, in MB.
 #'
 #' @return A list containing a character vector of the engine's output.
 #' @export
@@ -30,7 +32,7 @@
 #' evaluate_position(position, engine_path, n_pv = 1, n_cpus = 1,
 #'                   limiter = 'depth', limit = 1)
 evaluate_position <- function(position, engine_path, limiter, limit, n_cpus,
-                              n_pv) {
+                              n_pv, hash_size = NULL) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(position))
   assertthat::assert_that(assertthat::is.string(engine_path))
@@ -39,12 +41,18 @@ evaluate_position <- function(position, engine_path, limiter, limit, n_cpus,
   assertthat::assert_that(assertthat::is.string(limiter))
   assertthat::assert_that(limiter %in% c('depth', 'nodes', 'movetime'))
   assertthat::assert_that(assertthat::is.count(limit))
+  assertthat::assert_that(assertthat::is.count(hash_size) |
+                          is.null(hash_size))
   # Set up the engine
   engine <- bigchess::uci_engine(engine_path)
   cpu_command <- paste0('setoption name Threads value ', n_cpus)
   engine <- bigchess::uci_cmd(engine, command = cpu_command)
   pv_command <- paste0('setoption name MultiPV value ', n_pv)
   engine <- bigchess::uci_cmd(engine, command = pv_command)
+  if (!is.null(hash_size)) {
+    hash_command <- paste0('setoption name Hash value ', hash_size)
+    engine <- bigchess::uci_cmd(engine, command = hash_command)
+  }
   engine <- bigchess::uci_ucinewgame(engine)
   engine <- bigchess::uci_isready(engine)
   engine <- bigchess::uci_position(engine)

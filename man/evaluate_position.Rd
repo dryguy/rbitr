@@ -4,7 +4,15 @@
 \alias{evaluate_position}
 \title{Evaluate a chess position}
 \usage{
-evaluate_position(position, engine_path, limiter, limit, n_cpus, n_pv)
+evaluate_position(
+  position,
+  engine_path,
+  limiter,
+  limit,
+  n_cpus,
+  n_pv,
+  hash_size = NULL
+)
 }
 \arguments{
 \item{position}{A single-element character vector containing a series of
@@ -27,6 +35,9 @@ cpus to use.}
 
 \item{n_pv}{(Default = 1) A single-element integer vector of the desired
 number of principal variations.}
+
+\item{hash_size}{(Default = NULL) A single-element integer vector of the
+desired hash size, in MB.}
 }
 \value{
 A list containing a character vector of the engine's output.

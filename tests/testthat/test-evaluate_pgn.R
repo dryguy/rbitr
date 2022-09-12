@@ -55,7 +55,7 @@ for (engine_path in engine_paths) {
   test_that('evaluate_pgn reports progress with mute = FALSE', {
     expect_output(evaluate_pgn(
       file.path(pgn_path, 'shortest_game.pgn'),
-      engine_path, limiter = 'nodes', limit = 100, mute = FALSE
+      engine_path, limiter = 'nodes', limit = 100, mute = FALSE, hash_size = 8
     ))
   })
 }
