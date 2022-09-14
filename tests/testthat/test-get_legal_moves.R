@@ -36,4 +36,11 @@ for (engine_path in engine_paths) {
   test_that("get_legal_moves works when many moves exist", {
     expect_identical(length(legal_moves), 79L)
   })
+  test_that("get_legal_moves works when PV have > 1 move in string", {
+    legal_moves <- sort(get_legal_moves('b1a3', engine_path))
+    expect_identical(legal_moves, c("a7a5", "a7a6", "b7b5", "b7b6", "b8a6",
+                                    "b8c6", "c7c5", "c7c6", "d7d5", "d7d6",
+                                    "e7e5", "e7e6", "f7f5", "f7f6", "g7g5",
+                                    "g7g6", "g8f6", "g8h6", "h7h5", "h7h6"))
+  })
 }

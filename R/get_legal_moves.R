@@ -59,6 +59,10 @@ get_legal_moves <- function(position, engine_path) {
   }
   bigchess::uci_read(engine)$temp
   bigchess::uci_quit(engine)
-  legal_moves <- parse_gamelog(list(ucilog), 'pv')
+  legal_moves <- unlist(rbitr::parse_gamelog(list(ucilog), 'pv'))
+  get_first_move <- function(position) {
+    first_move <- strsplit(position, ' ')[[1]][1]
+  }
+  legal_moves <- lapply(legal_moves, get_first_move)
   return(unlist(legal_moves))
 }
