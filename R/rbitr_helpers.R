@@ -186,18 +186,26 @@ plot_2_color_area <- function(dataframe, x_name, y_name, background = 'none') {
   } else if (background == 'none') {
     p_background <- ggplot2::geom_blank()
   }
+  if (nrow(dataframe[dataframe$y <= 0, ]) > 1) {
+    area1 <- ggplot2::geom_area(data    = dataframe[dataframe$y <= 0, ],
+                                mapping = ggplot2::aes(x = .data$x, y = .data$y),
+                                fill    = grDevices::rgb(164, 162, 160,
+                                                         maxColorValue = 255),
+                                alpha   = 0.71)
+  } else {
+    area1 <- ggplot2::geom_blank()
+  }
+  if (nrow(dataframe[dataframe$y >= 0, ]) > 1) {
+    area2 <- ggplot2::geom_area(data    = dataframe[dataframe$y >= 0, ],
+                                mapping = ggplot2::aes(x = .data$x, y = .data$y),
+                                fill    = grDevices::rgb(252, 251, 250,
+                                                         maxColorValue = 255),
+                                alpha   = 0.71)
+  } else {
+    area2 <- ggplot2::geom_blank()
+  }
   p1 <- ggplot2::ggplot() +
-    p_background +
-    ggplot2::geom_area(data    = dataframe[dataframe$y <= 0, ],
-                       mapping = ggplot2::aes(x = .data$x, y = .data$y),
-                       fill    = grDevices::rgb(164, 162, 160,
-                                                maxColorValue = 255),
-                       alpha   = 0.71) +
-    ggplot2::geom_area(data    = dataframe[dataframe$y >= 0, ],
-                       mapping = ggplot2::aes(x = .data$x, y = .data$y),
-                       fill    = grDevices::rgb(252, 251, 250,
-                                                maxColorValue = 255),
-                       alpha   = 0.71)
+    p_background + area1 + area2
   p1
 }
 

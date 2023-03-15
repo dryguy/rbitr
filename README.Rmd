@@ -45,6 +45,7 @@ currently only been tested in Windows with the following Stockfish engines:
     stockfish_14_x64_avx2.exe
     stockfish_14.1_win_x64_avx2.exe
     stockfish_15_x64_avx2.exe
+    stockfish-windows-2022-x86-64-avx2.exe
 
 Other UCI-compatible engines should also work, but your mileage may vary.
 
@@ -88,7 +89,7 @@ two_games_path <- file.path(
 get_pgn(two_games_path)
 ```
 
-PGN files often contain more data than the simple examples just shown. PGN files of online games will often store data from the clocks for timed games, or game analyses by chess engines. Here's an example from a PGN file containing both of these types of data.
+PGN files often contain more data than the simple examples just shown. For example, PGN files of online games may store clock data for timed games, or game analyses by chess engines. Here's an example from a PGN file containing both of these types of data.
 
 ```{r}
 pgn_path <- file.path(
@@ -110,7 +111,7 @@ To learn more about the PGN format, see the [PGN Specification](http://www.sarem
 
 As we saw in the last section, PGN files may store commentary, annotations, clock data, engine analysis, or other content interspersed among the moves of the game. In this section, we'll examine ways to extract some of this data.
 
-rbitr has two ways to extract the moves of the game from an imported PGN file. The function `clean_movetext()` removes any comments, annotations, embedded data, or extra white space, leaving just the moves and the move numbers. PGN files store moves in standard algebraic notation (SAN), so the end result after using `clean_movetext()` is in a format easily read by most human chess players.
+rbitr has two ways to extract the moves of a game that has been imported from a PGN file. The function `clean_movetext()` removes any comments, annotations, embedded data, or extra white space, leaving just the moves and the move numbers. PGN files store moves in standard algebraic notation (SAN), so the end result after using `clean_movetext()` is in a format easily read by most human chess players.
 
 ```{r}
 movetext <- clean_movetext(pgn$Movetext)
@@ -159,7 +160,7 @@ black_move_times
 
 Note that since the PGN file can contain more than one game, `clocks` and `increments` are returned as lists. Since we are dealing with the first (and only) game in this PGN file, we had to specify the first elements of `clocks` and `increments` when calling `get_move_times()`.
 
-There is some variation in how clocks are treated when it comes to each player's first move. According to FIDE's [laws of chess](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf), white's clock is started before white plays their first move. On the website lichess.org, neither player's clock starts until after they play their first move (i.e., each player's first move is counted as 0 seconds). Since PGN files containing over-the-board games rarely include data for the clocks, rbitr currently follows the convention that each player's first move counts as 0 seconds.
+There is some variation in how clocks are treated when it comes to each player's first move. According to FIDE's [laws of chess](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf), white's clock is started before white plays their first move. On the website lichess.org, neither player's clock starts until after they play their first move (i.e., each player's first move is counted as 0 seconds). rbitr currently follows the convention that each player's first move counts as 0 seconds.
 
 ### Plotting Move Times
 
@@ -193,10 +194,10 @@ Notice that we had to specify that we want the evaluations for game 1, because l
 Next, we'll look at how to analyze games using an external chess engine. To analyze games, we'll use the function `evaluate_game()`. In order to use the function, you will need to provide the path to the engine you'll be using for the game analysis. In the next line of code, you'll need to change the path as required by your engine location and operating system.
 
 ```{r}
-engine_path <- '//stockfish_14_x64_avx2.exe'
+engine_path <- '//stockfish.exe'
 ```
 
-Depending on your processor speed, this step may take some time. If you have more than one CPU, you can speed up the analysis by changing the `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1 is used. We will set the `mute` parameter to `FALSE` in order to monitor game progress. This will cause the function to print the ply number before starting to analyze each position. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.
+Depending on your processor speed, this step may take some time. If you have more than one CPU, you can speed up the analysis by changing the `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1 is used. We will set the `mute` parameter to `FALSE` to show the progress of the analysis. The search termination can be controlled by limiting the depth, by limiting the total number of positions or 'nodes' evaluated, or by limiting the time. Here we will set the `limiter` parameter to 'nodes', and set the `limit` parameter to 2250000.
 
 ```{r}
 gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
@@ -259,7 +260,9 @@ black_imb <- get_imb(evals, moves[[1]], bestmoves, 'black')
 black_imb
 ```
 
-Now we can see that according to the engine, white played no inaccuracies, mistakes, or blunders, and black blundered moves 2 and 3. Also, note that we still had to specify the game number for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
+The output gives lists of moves that were identified as inaccuracies, mistakes or blunders. (A value of integer(0) indicates that the list is empty). The output can vary when different engines are used. On repeat analyses, even the same engine may not give exactly the same results for borderline cases.
+
+Note that we still had to specify the game number (1) for `moves[[1]]` because it is a list taken from a PGN file, and these files often contain multiple games. However, `bestmoves` and `evals` came from `parse_gamelog()` which only ever operates on a single game at a time.
 
 ### Average Centipawn Loss
 

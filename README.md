@@ -37,6 +37,7 @@ engines:
     stockfish_14_x64_avx2.exe
     stockfish_14.1_win_x64_avx2.exe
     stockfish_15_x64_avx2.exe
+    stockfish-windows-2022-x86-64-avx2.exe
 
 Other UCI-compatible engines should also work, but your mileage may
 vary.
@@ -103,9 +104,9 @@ get_pgn(two_games_path)
 ```
 
 PGN files often contain more data than the simple examples just shown.
-PGN files of online games will often store data from the clocks for
-timed games, or game analyses by chess engines. Here’s an example from a
-PGN file containing both of these types of data.
+For example, PGN files of online games may store clock data for timed
+games, or game analyses by chess engines. Here’s an example from a PGN
+file containing both of these types of data.
 
 ``` r
 pgn_path <- file.path(
@@ -144,12 +145,12 @@ annotations, clock data, engine analysis, or other content interspersed
 among the moves of the game. In this section, we’ll examine ways to
 extract some of this data.
 
-rbitr has two ways to extract the moves of the game from an imported PGN
-file. The function `clean_movetext()` removes any comments, annotations,
-embedded data, or extra white space, leaving just the moves and the move
-numbers. PGN files store moves in standard algebraic notation (SAN), so
-the end result after using `clean_movetext()` is in a format easily read
-by most human chess players.
+rbitr has two ways to extract the moves of a game that has been imported
+from a PGN file. The function `clean_movetext()` removes any comments,
+annotations, embedded data, or extra white space, leaving just the moves
+and the move numbers. PGN files store moves in standard algebraic
+notation (SAN), so the end result after using `clean_movetext()` is in a
+format easily read by most human chess players.
 
 ``` r
 movetext <- clean_movetext(pgn$Movetext)
@@ -236,9 +237,8 @@ chess](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf), white’s
 clock is started before white plays their first move. On the website
 lichess.org, neither player’s clock starts until after they play their
 first move (i.e., each player’s first move is counted as 0 seconds).
-Since PGN files containing over-the-board games rarely include data for
-the clocks, rbitr currently follows the convention that each player’s
-first move counts as 0 seconds.
+rbitr currently follows the convention that each player’s first move
+counts as 0 seconds.
 
 ### Plotting Move Times
 
@@ -297,6 +297,8 @@ will only provide a centipawn value for the final mated position if the
 ``` r
 evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
 advantage_plot(evals[[1]])
+#> Warning in min(diff(unique_loc)): no non-missing arguments to min; returning
+#> Inf
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
@@ -323,19 +325,17 @@ change the path as required by your engine location and operating
 system.
 
 ``` r
-engine_path <- '//stockfish_14_x64_avx2.exe'
+engine_path <- '//stockfish.exe'
 ```
 
 Depending on your processor speed, this step may take some time. If you
 have more than one CPU, you can speed up the analysis by changing the
 `n_cpus` parameter. In this example, the default setting of `n_cpus` = 1
-is used. We will set the `mute` parameter to `FALSE` in order to monitor
-game progress. This will cause the function to print the ply number
-before starting to analyze each position. The search termination can be
-controlled by limiting the depth, by limiting the total number of
-positions or ‘nodes’ evaluated, or by limiting the time. Here we will
-set the `limiter` parameter to ‘nodes’, and set the `limit` parameter to
-2250000.
+is used. We will set the `mute` parameter to `FALSE` to show the
+progress of the analysis. The search termination can be controlled by
+limiting the depth, by limiting the total number of positions or ‘nodes’
+evaluated, or by limiting the time. Here we will set the `limiter`
+parameter to ‘nodes’, and set the `limit` parameter to 2250000.
 
 ``` r
 gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
@@ -355,32 +355,35 @@ gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
 #> [1] "Analyzing position 13 of 14"
 #> [1] "Analyzing position 14 of 14"
 gamelog[[1]]
-#>  [1] "Stockfish 14 by the Stockfish developers (see AUTHORS file)"                                                                                                                                                                             
-#>  [2] "readyok"                                                                                                                                                                                                                                 
-#>  [3] "readyok"                                                                                                                                                                                                                                 
-#>  [4] "info string NNUE evaluation using nn-3475407dc199.nnue enabled"                                                                                                                                                                          
-#>  [5] "info depth 1 seldepth 1 multipv 1 score cp 43 nodes 20 nps 10000 tbhits 0 time 2 pv d2d4"                                                                                                                                                
-#>  [6] "info depth 2 seldepth 2 multipv 1 score cp 79 nodes 48 nps 24000 tbhits 0 time 2 pv d2d4 a7a6"                                                                                                                                           
-#>  [7] "info depth 3 seldepth 3 multipv 1 score cp 75 nodes 181 nps 90500 tbhits 0 time 2 pv g1f3 c7c6 d2d4"                                                                                                                                     
-#>  [8] "info depth 4 seldepth 4 multipv 1 score cp 26 nodes 630 nps 210000 tbhits 0 time 3 pv d2d4 d7d5 c2c4 d5c4"                                                                                                                               
-#>  [9] "info depth 5 seldepth 5 multipv 1 score cp 145 nodes 741 nps 247000 tbhits 0 time 3 pv e2e4 g8f6"                                                                                                                                        
-#> [10] "info depth 6 seldepth 6 multipv 1 score cp 25 nodes 2448 nps 489600 tbhits 0 time 5 pv e2e4 d7d6 c2c3 g8f6 g1f3 e7e5"                                                                                                                    
-#> [11] "info depth 7 seldepth 7 multipv 1 score cp 29 nodes 3488 nps 581333 tbhits 0 time 6 pv d2d4 d7d5 e2e3 e7e6 c2c4 g8f6 g1f3"                                                                                                               
-#> [12] "info depth 8 seldepth 8 multipv 1 score cp 65 nodes 5172 nps 646500 tbhits 0 time 8 pv e2e4 e7e6 d2d4 d7d5 b1c3 d5e4"                                                                                                                    
-#> [13] "info depth 9 seldepth 11 multipv 1 score cp 37 nodes 10602 nps 706800 tbhits 0 time 15 pv d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4c5 g7g6 g1f3"                                                                                                  
-#> [14] "info depth 10 seldepth 13 multipv 1 score cp 32 nodes 23676 nps 763741 tbhits 0 time 31 pv d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 f8b4 b1d2 e8g8 f1g2 d7d5"                                                                                  
-#> [15] "info depth 11 seldepth 15 multipv 1 score cp 35 nodes 44751 nps 799125 tbhits 0 time 56 pv e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 d7d5 e4d5"                                                                                                 
-#> [16] "info depth 12 seldepth 14 multipv 1 score cp 37 nodes 60151 nps 802013 tbhits 0 time 75 pv e2e4 c7c5 g1f3 d7d6 f1c4 b8c6 e1g1 g8f6 b1c3 e7e6 d2d4 c5d4 f3d4"                                                                             
-#> [17] "info depth 13 seldepth 16 multipv 1 score cp 30 nodes 99443 nps 821842 tbhits 0 time 121 pv d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 e8g8 e2e3 c7c5 d4c5"                                                                            
-#> [18] "info depth 14 seldepth 21 multipv 1 score cp 36 nodes 140890 nps 819127 tbhits 0 time 172 pv d2d4 d7d5 c2c4 e7e6 g1f3 f8e7 b1c3 g8f6 c1g5 h7h6 g5f6 e7f6 e2e3 e8g8 c4d5 e6d5 f1d3"                                                       
-#> [19] "info depth 15 seldepth 22 multipv 1 score cp 32 nodes 206290 nps 815375 tbhits 0 time 253 pv e2e4 c7c5 g1f3 d7d6 f1b5 c8d7 b5d7 d8d7 e1g1 e7e6 c2c3 g8f6 f1e1 f8e7 d2d4 e8g8 d4d5"                                                       
-#> [20] "info depth 16 seldepth 21 multipv 1 score cp 40 nodes 327876 nps 809570 tbhits 0 time 405 pv d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 c5d4 f3d4 b8c6 c1f4 g8f6 e2e3 f8c5 f1e2 c5d4 e3d4 e8g8"                                        
-#> [21] "info depth 17 seldepth 23 multipv 1 score cp 47 nodes 700175 nps 803874 tbhits 0 time 871 pv d2d4 g8f6 c2c4 e7e6 g1f3 f8e7 b1c3 d7d5 c1g5 c7c6 e2e3 e8g8 c4d5 e6d5 f1d3 f8e8 d1c2 h7h6 g5f4 e7d6"                                        
-#> [22] "info depth 18 seldepth 26 multipv 1 score cp 35 nodes 1254757 nps 786681 hashfull 574 tbhits 0 time 1595 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 c5d4 d1d4 e6d5 c1g5 f8e7 a1d1 b8c6 d4d2 c8e6 e2e3 a8c8 g5f6 e7f6 c3d5"          
-#> [23] "info depth 19 seldepth 26 multipv 1 score cp 39 nodes 1461089 nps 786377 hashfull 637 tbhits 0 time 1858 pv d2d4 g8f6 c2c4 c7c6 b1c3 d7d5 g1f3 d5c4 a2a4 e7e6 e2e3 c6c5 f1c4 c5d4 e3d4 b8c6 e1g1 f8e7 f1e1 e8g8"                         
-#> [24] "info depth 20 seldepth 27 multipv 1 score cp 35 nodes 2142551 nps 775724 hashfull 809 tbhits 0 time 2762 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 c7c6 f3e5 f8b4 c1d2 b4e7 e2e3 b8d7 e5c4 e8g8 e1g1 b7b5 g2c6"                    
-#> [25] "info depth 21 seldepth 28 multipv 1 score cp 33 nodes 2250978 nps 773531 hashfull 830 tbhits 0 time 2910 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"
-#> [26] "bestmove d2d4 ponder g8f6"
+#>  [1] "Stockfish 15.1 by the Stockfish developers (see AUTHORS file)"                                                                                                                                                                       
+#>  [2] "readyok"                                                                                                                                                                                                                             
+#>  [3] "readyok"                                                                                                                                                                                                                             
+#>  [4] "info string NNUE evaluation using nn-ad9b42354671.nnue enabled"                                                                                                                                                                      
+#>  [5] "info depth 1 seldepth 1 multipv 1 score cp 18 nodes 20 nps 20000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                                 
+#>  [6] "info depth 2 seldepth 2 multipv 1 score cp 46 nodes 66 nps 66000 hashfull 0 tbhits 0 time 1 pv d2d4"                                                                                                                                 
+#>  [7] "info depth 3 seldepth 2 multipv 1 score cp 51 nodes 120 nps 120000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                               
+#>  [8] "info depth 4 seldepth 2 multipv 1 score cp 58 nodes 144 nps 144000 hashfull 0 tbhits 0 time 1 pv d2d4"                                                                                                                               
+#>  [9] "info depth 5 seldepth 2 multipv 1 score cp 58 nodes 174 nps 174000 hashfull 0 tbhits 0 time 1 pv d2d4 a7a6"                                                                                                                          
+#> [10] "info depth 6 seldepth 7 multipv 1 score cp 34 nodes 1303 nps 651500 hashfull 0 tbhits 0 time 2 pv e2e4 c7c5 g1f3 b8c6 c2c3"                                                                                                          
+#> [11] "info depth 7 seldepth 6 multipv 1 score cp 29 nodes 3126 nps 781500 hashfull 1 tbhits 0 time 4 pv d2d4 g8f6 e2e3 d7d5 c2c4 d5c4"                                                                                                     
+#> [12] "info depth 8 seldepth 7 multipv 1 score cp 26 nodes 5791 nps 965166 hashfull 4 tbhits 0 time 6 pv g1f3 g8f6 d2d4 d7d5 e2e3"                                                                                                          
+#> [13] "info depth 9 seldepth 9 multipv 1 score cp 31 nodes 8541 nps 1067625 hashfull 5 tbhits 0 time 8 pv g1f3 c7c5 e2e4 e7e6 d2d4 c5d4 f3d4"                                                                                               
+#> [14] "info depth 10 seldepth 13 multipv 1 score cp 25 nodes 20978 nps 1165444 hashfull 10 tbhits 0 time 18 pv e2e4 c7c5 g1f3 b8c6 f1c4 e7e6 e1g1 g8f6"                                                                                     
+#> [15] "info depth 11 seldepth 13 multipv 1 score cp 32 nodes 29040 nps 1161600 hashfull 14 tbhits 0 time 25 pv e2e4 c7c5 c2c3 g8f6 e4e5 f6d5 d2d4"                                                                                          
+#> [16] "info depth 12 seldepth 14 multipv 1 score cp 38 nodes 41207 nps 1084394 hashfull 18 tbhits 0 time 38 pv e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4"                                                                                          
+#> [17] "info depth 13 seldepth 15 multipv 1 score cp 31 nodes 60308 nps 1116814 hashfull 25 tbhits 0 time 54 pv e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 b8c6 c1e3 g8f6 b1c3 g7g6"                                                                 
+#> [18] "info depth 14 seldepth 18 multipv 1 score cp 35 nodes 97789 nps 1111238 hashfull 44 tbhits 0 time 88 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 b1c3 c7c5"                                                                           
+#> [19] "info depth 15 seldepth 21 multipv 1 score cp 31 nodes 142447 nps 1087381 hashfull 64 tbhits 0 time 131 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 c1g5 f8e7 b1c3 e8g8 e2e3 h7h6 g5h4 f6e4 h4e7 d8e7"                                           
+#> [20] "info depth 16 seldepth 21 multipv 1 score cp 40 nodes 199887 nps 1074661 hashfull 88 tbhits 0 time 186 pv d2d4 d7d5 c2c4 d5c4 g1f3 a7a6 b1c3 c7c6 a2a4"                                                                              
+#> [21] "info depth 17 seldepth 19 multipv 1 score cp 32 nodes 268004 nps 1072016 hashfull 120 tbhits 0 time 250 pv d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 g1f3 f8e7 f1g2 e8g8 e1g1 c7c5 c4d5 e6d5 b1c3 h7h6 d4c5 e7c5"                                
+#> [22] "info depth 18 seldepth 21 multipv 1 score cp 29 nodes 298071 nps 1083894 hashfull 131 tbhits 0 time 275 pv d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 g1f3 f8e7 f1g2 e8g8 e1g1 c7c5 c4d5 e6d5 c1g5 b8c6 d4c5 e7c5 g5f6 d8f6"                      
+#> [23] "info depth 19 seldepth 25 multipv 1 score cp 28 nodes 332202 nps 1089186 hashfull 142 tbhits 0 time 305 pv d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 c1g5 f8e7 b1c3 e8g8 e2e3 h7h6 g5f4 c7c5 d4c5 e7c5 c4d5 f6d5 c3d5 e6d5"                      
+#> [24] "info depth 20 seldepth 23 multipv 1 score cp 37 nodes 557706 nps 1066359 hashfull 243 tbhits 0 time 523 pv d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 d5c4 d1a4 a7a6 a4c4 b7b5 c4c2 c8b7 c1f4 f6d5"                      
+#> [25] "info depth 21 seldepth 23 multipv 1 score cp 31 nodes 753633 nps 1051092 hashfull 326 tbhits 0 time 717 pv d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 c4d5 f6d5 e2e4 d5c3 b2c3 c7c5 c1e3 c5d4 c3d4 e8g8 f1c4 c8g4 e1g1"                 
+#> [26] "info depth 22 seldepth 28 multipv 1 score cp 29 nodes 1197489 nps 1055056 hashfull 487 tbhits 0 time 1135 pv d2d4 d7d5 c2c4 e7e6 b1c3 f8b4 e2e3 g8f6 d1a4 b8c6 c1d2 c8d7 a4c2 e8g8 g1f3 d5c4 f1c4"                                   
+#> [27] "info depth 23 seldepth 27 multipv 1 score cp 30 nodes 1586189 nps 1041489 hashfull 610 tbhits 0 time 1523 pv d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 g2g3 f8e7 f1g2 e8g8 e1g1 d5c4 d1a4 a7a6 a4c4 b7b5 c4c2 c8b7 c1f4 c7c5 d4c5 b8d7 b2b4 a6a5"
+#> [28] "info depth 24 seldepth 29 multipv 1 score cp 25 upperbound nodes 2250166 nps 1033134 hashfull 770 tbhits 0 time 2178 pv d2d4 d7d5"                                                                                                   
+#> [29] "bestmove d2d4 ponder d7d5"
 ```
 
 The result of the analysis is a list of raw chess engine output for each
@@ -419,7 +422,7 @@ directory with the same base name as the PGN file.
 pgnlog <- evaluate_pgn(two_games_path, engine_path,
                        limiter = 'nodes', limit = 2250000)
 #> [1] "game 1 of 2"
-#> [1] "estimated time remaining 12.6 secs"
+#> [1] "estimated time remaining 8.8 secs"
 #> [1] "game 2 of 2"
 #> [1] "estimated time remaining 0 secs"
 ```
@@ -433,82 +436,27 @@ best moves the engine found (‘bestmove’), or the principal variations
 ``` r
 bestmoves <- unlist(parse_gamelog(gamelog, 'bestmove'))
 bestmoves
-#>  [1] "d2d4" "e7e5" "g1f3" "e5d4" "f1c4" "d8e7" "d1h5" "g7g6" "h5e5" "e7f7"
+#>  [1] "d2d4" "c7c5" "g1f3" "e5d4" "f1c4" "b8c6" "d1h5" "g7g6" "h5e5" "e7f7"
 #> [11] "f1c4" "d7d5" "e5f5" ""
 scores <- unlist(parse_gamelog(gamelog, 'score'))
 scores
-#>  [1] "33"     NA       NA       NA       "-41"    "37"     "11"     NA      
-#>  [9] NA       NA       NA       NA       NA       NA       NA       NA      
-#> [17] NA       NA       NA       NA       NA       NA       NA       NA      
-#> [25] NA       NA       NA       NA       NA       NA       NA       NA      
-#> [33] NA       NA       NA       NA       NA       NA       NA       NA      
-#> [41] NA       NA       NA       NA       "200"    NA       "200"    NA      
-#> [49] NA       NA       NA       NA       NA       "-173"   "869"    "-868"  
-#> [57] "1153"   "-1138"  "1123"   "-1153"  "mate 1" "mate 0"
+#>  [1] "25"     "-42"    "43"     "29"     "154"    "-133"   "570"    "-575"  
+#>  [9] "737"    "-750"   "741"    "-770"   "mate 1"
 pvs <- unlist(parse_gamelog(gamelog, 'pv'))
 pvs
-#>  [1] "d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"                                             
-#>  [2] NA                                                                                                                                                                         
-#>  [3] NA                                                                                                                                                                         
-#>  [4] NA                                                                                                                                                                         
-#>  [5] "e7e5 g1f3"                                                                                                                                                                
-#>  [6] "g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 b1c3 d6e8 c3d5 e7h4 g2g3 c7c6 g3h4 c6d5 e5d5 e8c7 d5e5 d7d6 e5g5 h7h6 g5g2 c8f5"                    
-#>  [7] "e5d4 g1f3 f8b4 c1d2 b4d2 b1d2 c7c5 c2c3 d4c3 b2c3 g8e7 e4e5 d7d5 e5d6 d8d6 f1b5 b8c6 d2e4 d6d1 a1d1 e8g8 e4c5 b7b6 c5a6 c8g4"                                             
-#>  [8] NA                                                                                                                                                                         
-#>  [9] NA                                                                                                                                                                         
-#> [10] NA                                                                                                                                                                         
-#> [11] NA                                                                                                                                                                         
-#> [12] NA                                                                                                                                                                         
-#> [13] NA                                                                                                                                                                         
-#> [14] NA                                                                                                                                                                         
-#> [15] NA                                                                                                                                                                         
-#> [16] NA                                                                                                                                                                         
-#> [17] NA                                                                                                                                                                         
-#> [18] NA                                                                                                                                                                         
-#> [19] NA                                                                                                                                                                         
-#> [20] NA                                                                                                                                                                         
-#> [21] NA                                                                                                                                                                         
-#> [22] NA                                                                                                                                                                         
-#> [23] NA                                                                                                                                                                         
-#> [24] NA                                                                                                                                                                         
-#> [25] NA                                                                                                                                                                         
-#> [26] NA                                                                                                                                                                         
-#> [27] NA                                                                                                                                                                         
-#> [28] NA                                                                                                                                                                         
-#> [29] NA                                                                                                                                                                         
-#> [30] NA                                                                                                                                                                         
-#> [31] NA                                                                                                                                                                         
-#> [32] NA                                                                                                                                                                         
-#> [33] NA                                                                                                                                                                         
-#> [34] NA                                                                                                                                                                         
-#> [35] NA                                                                                                                                                                         
-#> [36] NA                                                                                                                                                                         
-#> [37] NA                                                                                                                                                                         
-#> [38] NA                                                                                                                                                                         
-#> [39] NA                                                                                                                                                                         
-#> [40] NA                                                                                                                                                                         
-#> [41] NA                                                                                                                                                                         
-#> [42] NA                                                                                                                                                                         
-#> [43] NA                                                                                                                                                                         
-#> [44] NA                                                                                                                                                                         
-#> [45] "f1c4 e5d4"                                                                                                                                                                
-#> [46] NA                                                                                                                                                                         
-#> [47] "f1c4 e5d4"                                                                                                                                                                
-#> [48] NA                                                                                                                                                                         
-#> [49] NA                                                                                                                                                                         
-#> [50] NA                                                                                                                                                                         
-#> [51] NA                                                                                                                                                                         
-#> [52] NA                                                                                                                                                                         
-#> [53] NA                                                                                                                                                                         
-#> [54] "d8e7 b1c3"                                                                                                                                                                
-#> [55] "d1h5 g7g6 h5e5 d8e7 e5h8 e7g7 h8g7 f8g7 g1f3 b7b6 f1c4 g8e7 b1c3 c8a6 c4d3 a6d3 c2d3 b8c6 c3b5 e8c8 b5c7 g7b2 c1b2 c8c7 e1e2 d8f8 f3g5 a7a6 g5h7"                         
-#> [56] "g7g6 h5e5"                                                                                                                                                                
-#> [57] "h5e5 e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8e7 b1c3 g7g6 g1e2 c8d7 c1g5 h7h6 e1c1 h6g5 f7f6 d8c8 f6h8"                                                       
-#> [58] "e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 d5g5 g6f7 g1f3 b8c6 g5f4 f7e8 f4c7 g8e7 b1c3 h7h6 c3b5 e8f7 b5d6 f7g8 d6c8 a8c8 c7b7 g7g5 e1g1 f8g7 c2c3 c8b8 b7a6 g7e5 c1e3 e5g7 e3a7"
-#> [59] "f1c4 d7d5"                                                                                                                                                                
-#> [60] "d7d5 c4d5 d8d5 e5d5 f7g6 d5g5 g6f7 g1f3 b8c6 g5f4 f7e8 f4c7 g8e7 b1c3 h7h6 c3b5 e8f7 b5d6 f7g8 d6c8 a8c8 c7b7 c8d8 b7b3 g8h7 c2c3 d8b8 b3a4 g7g5 e1g1 f8g7 f3d2 b8e8 a2a3"
-#> [61] "e5f5"                                                                                                                                                                     
-#> [62] NA
+#>  [1] "d2d4 d7d5"                                                                                                                                                                     
+#>  [2] "c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 d4c6 b7c6 e4e5 f6g8 f2f4 d7d6 d1d2 g8h6 e1c1 c8g4 f1e2 e8g8 c1b1 g4e2"                                                  
+#>  [3] "g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 e7f6 e5e1 f8e8 e1e8 d6e8 d4d5 b7b6 a2a4 f6e5 c2c4 c8b7 b1c3"                                        
+#>  [4] "e5d4"                                                                                                                                                                          
+#>  [5] "f1c4"                                                                                                                                                                          
+#>  [6] "b8c6"                                                                                                                                                                          
+#>  [7] "d1h5 g7g6 h5e5 d8e7 e5h8 d7d5 g1f3 d5e4 f3d4 c7c5 d4b5 b8c6 h8g8 c8f5 b1c3 e8c8 c3d5 e7e5 c1f4 e5d5 g8d5 d8d5 a1d1 c6d4 b5a7 c8d7"                                             
+#>  [8] "g7g6 h5e5 d8e7 e5h8 d7d5 g1f3 b8c6 b1c3 c8e6 c1g5 e7f7 f3e5 c6e5 h8e5 f8g7 e5f4 f7f4 g5f4 e8c8 e4e5 g8e7 c3b5"                                                                 
+#>  [9] "h5e5 e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8f6 c1g5 f8e7 e4e5 h8e8 b1c3 c8g4 f7g7 b8d7 e5f6 d7f6 g1e2 e8g8 g7h6 g8g6 a1d1 d8e8 h6h4 e8f7 g5f6 e7f6 h4h7 g6g7"     
+#> [10] "e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8e7 b1c3 c8d7 c1g5 b8c6 e1c1 d8c8 g1f3 b7b6 c1b1 h7h6 d1d7 c8d7 h1d1 d7c8 g5f4 g7g5"                                        
+#> [11] "f1c4 d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8f6 b1c3 b8d7 c1f4 f8d6 f4d6 c7d6 e1c1 h8e8 d1d6 f6e4 c3e4 e8e4 g1e2 d8c7 h1d1 c7b8 e2c3 e4e5 f7g7 e5e8 d6d7 c8d7 d1d7 e8e1 c1d2"
+#> [12] "d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8e7 c1g5 c8d7 b1c3 b8c6 g1f3 d8c8 e1c1 b7b6 h2h3 a7a6 g5f4 c6d8 f7h5 d8e6 d1d7 c8d7 h5g4 e7g6 h1d1 f8d6 f4h2 d7c8 g4e6 c8b7 h2d6 h8d8"
+#> [13] "e5f5"
 ```
 
 Note that the output of parse_gamelog is a list. That’s because games
@@ -526,11 +474,7 @@ and convert the rest to numeric values.
 ``` r
 evals <- convert_scores(scores)
 evals
-#>  [1]   33   NA   NA   NA  -41  -37   11   NA   NA   NA   NA   NA   NA   NA   NA
-#> [16]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
-#> [31]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA  200
-#> [46]   NA  200   NA   NA   NA   NA   NA   NA  173  869  868 1153 1138 1123 1153
-#> [61] 5000 5000
+#>  [1]   25   42   43  -29  154  133  570  575  737  750  741  770 5000
 ```
 
 The output from `evaluate_pgn()` will be a list of game logs from the
@@ -541,73 +485,32 @@ The output from `evaluate_pgn()` will be a list of game logs from the
 pgn_scores <- parse_pgnlog(pgnlog, 'score')
 lapply(pgn_scores, unlist)
 #> [[1]]
-#>  [1] "33"     NA       NA       NA       NA       NA       NA       NA      
-#>  [9] NA       NA       NA       NA       NA       "-33"    NA       NA      
-#> [17] NA       NA       "-41"    "257"    "257"    "-257"   "mate 1" "mate 0"
+#> [1] "25"     "-42"    "168"    "-180"   "mate 1"
 #> 
 #> [[2]]
-#>  [1] "33"     NA       NA       NA       NA       NA       NA       NA      
-#>  [9] NA       NA       NA       NA       NA       "-33"    NA       NA      
-#> [17] NA       NA       "-41"    "242"    "-71"    "mate 1" "mate 0"
+#> [1] "25"     "-42"    "156"    "-43"    "mate 1"
 pgn_bestmoves <- parse_pgnlog(pgnlog, 'bestmove')
 lapply(pgn_bestmoves, unlist)
 #> [[1]]
-#> [1] "d2d4" "e7e5" "d2d4" "d7d6" "d1h5" ""    
+#> [1] "d2d4" "c7c5" "b1c3" "d7d6" "d1h5" ""    
 #> 
 #> [[2]]
-#> [1] "d2d4" "e7e5" "e4f5" "f5e4" "d1h5" ""
+#> [1] "d2d4" "c7c5" "e4f5" "f5e4" "d1h5" ""
 pgn_pvs <- parse_pgnlog(pgnlog, 'pv')
 lapply(pgn_pvs, unlist)
 #> [[1]]
-#>  [1] "d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"          
-#>  [2] NA                                                                                                                                      
-#>  [3] NA                                                                                                                                      
-#>  [4] NA                                                                                                                                      
-#>  [5] NA                                                                                                                                      
-#>  [6] NA                                                                                                                                      
-#>  [7] NA                                                                                                                                      
-#>  [8] NA                                                                                                                                      
-#>  [9] NA                                                                                                                                      
-#> [10] NA                                                                                                                                      
-#> [11] NA                                                                                                                                      
-#> [12] NA                                                                                                                                      
-#> [13] NA                                                                                                                                      
-#> [14] "e7e5 g1f3"                                                                                                                             
-#> [15] NA                                                                                                                                      
-#> [16] NA                                                                                                                                      
-#> [17] NA                                                                                                                                      
-#> [18] NA                                                                                                                                      
-#> [19] "e7e5 g1f3"                                                                                                                             
-#> [20] "d2d4"                                                                                                                                  
-#> [21] "d2d4"                                                                                                                                  
-#> [22] "d7d6 d2d4 h7h6 c1e3 g8f6 f2f3 e7e5 g1e2 b8c6 d1d2 f6h5 e1c1 a7a6 d4e5 c6e5 e2g3 h5g3 h2g3 f8g7 c3d5 c8e6 f1e2 e6d5 d2d5 e5c6 f3f4 d8e7"
-#> [23] "d1h5"                                                                                                                                  
-#> [24] NA                                                                                                                                      
+#> [1] "d2d4 d7d5"                                                                                                                   
+#> [2] "c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 d4c6 b7c6 e4e5 f6g8 f2f4 d7d6 d1d2 g8h6 e1c1 c8g4 f1e2 e8g8 c1b1 g4e2"
+#> [3] "b1c3 d7d6 d2d4 h7h6 h2h4 g5h4 g1f3 c7c6 h1h4 f8g7 c1f4 b8d7 h4g4 g7f8 f1d3 g8f6 g4h4 e7e5 d4e5 d6e5 f3e5 f6e4 c3e4 d8h4"     
+#> [4] "d7d6 d2d4"                                                                                                                   
+#> [5] "d1h5"                                                                                                                        
 #> 
 #> [[2]]
-#>  [1] "d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 d5c4 f1g2 f8b4 c1d2 c7c5 e1g1 e8g8 d4c5 b4c5 d1c2 b8c6 c2c4 c5b6 b1c3 e6e5 c3e4 f6e4 c4e4"                              
-#>  [2] NA                                                                                                                                                          
-#>  [3] NA                                                                                                                                                          
-#>  [4] NA                                                                                                                                                          
-#>  [5] NA                                                                                                                                                          
-#>  [6] NA                                                                                                                                                          
-#>  [7] NA                                                                                                                                                          
-#>  [8] NA                                                                                                                                                          
-#>  [9] NA                                                                                                                                                          
-#> [10] NA                                                                                                                                                          
-#> [11] NA                                                                                                                                                          
-#> [12] NA                                                                                                                                                          
-#> [13] NA                                                                                                                                                          
-#> [14] "e7e5 g1f3"                                                                                                                                                 
-#> [15] NA                                                                                                                                                          
-#> [16] NA                                                                                                                                                          
-#> [17] NA                                                                                                                                                          
-#> [18] NA                                                                                                                                                          
-#> [19] "e7e5 g1f3"                                                                                                                                                 
-#> [20] "e4f5 g8f6 d2d4 d7d5 f1d3 c7c5 c2c3 c5c4 d3c2 e7e6 d1e2 f8d6 f5e6 d8e7 g1f3 e8g8 e1g1 e7e6 e2e6 c8e6 c1g5 b8c6 f1e1 a8e8 b1d2 g8h8 g5h4 e6f7 h4f6 g7f6 e1e8"
-#> [21] "f5e4 d2d3 e4d3 f1d3 g8f6 g1f3 d7d5 f3g5 e7e6 e1g1 f8b4 d1e2 d8e7 f1e1 e8g8 c3d5 f6d5 d3h7 g8h8 c2c3 b4c5 h7g6 h8g8 g5e4 d5f6 c1g5 b8c6 e4f6 g7f6"          
-#> [22] "d1h5"                                                                                                                                                      
-#> [23] NA
+#> [1] "d2d4 d7d5"                                                                                                                             
+#> [2] "c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 d4c6 b7c6 e4e5 f6g8 f2f4 d7d6 d1d2 g8h6 e1c1 c8g4 f1e2 e8g8 c1b1 g4e2"          
+#> [3] "e4f5 g8f6 d2d4 d7d5 f1d3 c7c5 c2c3 e7e6 f5e6 f8d6 d1e2 d8e7 g1f3 e8g8 b1d2 e7e6 e2e6 c8e6 d4c5 d6c5 d2b3 c5b6 b3d4 e6d7 e1g1 b8c6 c1e3"
+#> [4] "f5e4 c3e4"                                                                                                                             
+#> [5] "d1h5"
 ```
 
 ### Determining Inaccuracies, Mistakes, and Blunders
@@ -624,7 +527,7 @@ moves of the game to the best moves found by the engine.
 white_imb <- get_imb(evals, moves[[1]], bestmoves, 'white')
 white_imb
 #> $inaccuracies
-#> integer(0)
+#> [1] 2
 #> 
 #> $mistakes
 #> integer(0)
@@ -640,12 +543,16 @@ black_imb
 #> integer(0)
 #> 
 #> $blunders
-#> integer(0)
+#> [1] 2 3
 ```
 
-Now we can see that according to the engine, white played no
-inaccuracies, mistakes, or blunders, and black blundered moves 2 and 3.
-Also, note that we still had to specify the game number for `moves[[1]]`
+The output gives lists of moves that were identified as inaccuracies,
+mistakes or blunders. (A value of integer(0) indicates that the list is
+empty). The output can vary when different engines are used. On repeat
+analyses, even the same engine may not give exactly the same results for
+borderline cases.
+
+Note that we still had to specify the game number (1) for `moves[[1]]`
 because it is a list taken from a PGN file, and these files often
 contain multiple games. However, `bestmoves` and `evals` came from
 `parse_gamelog()` which only ever operates on a single game at a time.
@@ -676,10 +583,10 @@ using the `cap_action` parameter.
 ``` r
 white_acpl <- get_acpl(evals, 'white', cap = 1000, cap_action = 'replace')
 white_acpl
-#> [1] 0
+#> [1] 15
 black_acpl <- get_acpl(evals, 'black', cap = 1000, cap_action = 'replace')
 black_acpl
-#> [1] 175
+#> [1] 168
 ```
 
 ### Summarizing Game Data
