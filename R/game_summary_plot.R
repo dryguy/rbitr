@@ -1,4 +1,4 @@
-#' Game summery plot
+#' Game summary plot
 #'
 #' Generate a plot of various game statistics.
 #'
@@ -49,7 +49,7 @@
 #' engine_path <- '//stockfish.exe'
 #' game_summary_plot(pgn_path, game_number = 1, engine_path)
 game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
-                              n_cpus = 1, use_pgn_evals = TRUE, nodes = 2250000,
+                              n_cpus = 1, use_pgn_evals = TRUE, limiter, limit,
                               style = 'graph') {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
@@ -57,10 +57,13 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
   assertthat::assert_that(assertthat::is.string(engine_path) |
                           is.null(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
-  assertthat::assert_that(assertthat::is.flag(use_pgn_evals))
+  assertthat::assert_that(assertthat::is.flag(use_pgn_evals))    
+  assertthat::assert_that(limiter == 'depth' |
+                                limiter == 'nodes' |
+                                limiter == 'movetime')
+  assertthat::assert_that(assertthat::is.count(limit))
   assertthat::assert_that(style == 'graph' |
                           style == 'infographic')
-  assertthat::assert_that(assertthat::is.count(nodes))
   # Load the game
   pgn <- get_pgn(pgn_path)
   assertthat::assert_that(game_number <= nrow(pgn))
@@ -101,7 +104,7 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
                   '* An engine is required to analyze the game.'))
     }
     evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
-                                n_pv = 1, limiter = 'nodes', limit = nodes)
+                                    n_pv = 1, limiter = limiter, limit = limit)
   }
   if (!use_pgn_evals | identical(evals, numeric(0))) {
     evals <- parse_gamelog(evaluation, target = 'score')
