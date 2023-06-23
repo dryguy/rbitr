@@ -2,7 +2,7 @@
 % Please edit documentation in R/game_summary_plot.R
 \name{game_summary_plot}
 \alias{game_summary_plot}
-\title{Game summery plot}
+\title{Game summary plot}
 \usage{
 game_summary_plot(
   pgn_path,
@@ -10,7 +10,8 @@ game_summary_plot(
   engine_path = NULL,
   n_cpus = 1,
   use_pgn_evals = TRUE,
-  nodes = 2250000,
+  limiter = "nodes",
+  limit = 2250000,
   style = "graph"
 )
 }
@@ -29,8 +30,16 @@ many cpus to use for analysis.}
 \item{use_pgn_evals}{(Default = TRUE) A single-element boolean indicating
 whether to use evals from the PGN file, if present.}
 
-\item{nodes}{(Default = 2250000) A single-element integer vector of the depth
-to analyze to, in nodes.}
+\item{limiter}{(Default = 'nodes') A single-element character vector
+indicating the desire mode of search termination. Allowed values are
+'depth' (to search a fixed number of plies), 'nodes' (to search a fixed
+number of nodes), and 'movetime' (to search a fixed number of
+milliseconds).}
+
+\item{limit}{(Default = 2250000) A single-element integer vector of the
+desired search depth (# of plies), search nodes (# of nodes), or search
+time
+(# of milliseconds).}
 
 \item{style}{(Default = 'graph') A single-element character vector
 indicating the plot style. Allowed values are 'graph' for a traditional
@@ -47,7 +56,8 @@ Generate a plot of various game statistics.
 The function \code{game_summary_plot()} will first look for existing
 analysis in the PGN file, and if not found, it will look for a saved
 analysis. If no analysis data is found, it will analyze the game. The
-default search depth is 2,250,000 nodes.
+default search is by depth, and the default depth is 2,250,000 nodes. The
+defaults may be changed via the \code{limiter} and \code{limit} parameters.
 
 An advantage plot and move time plot will be generated. (See
 \code{advantage_plot()} and \code{scaled_time_plot()} for details.) In addition, a

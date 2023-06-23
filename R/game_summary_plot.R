@@ -5,7 +5,8 @@
 #' @details The function `game_summary_plot()` will first look for existing
 #'   analysis in the PGN file, and if not found, it will look for a saved
 #'   analysis. If no analysis data is found, it will analyze the game. The
-#'   default search depth is 2,250,000 nodes.
+#'   default search is by depth, and the default depth is 2,250,000 nodes. The
+#'   defaults may be changed via the `limiter` and `limit` parameters.
 #'
 #' @details An advantage plot and move time plot will be generated. (See
 #'   `advantage_plot()` and `scaled_time_plot()` for details.) In addition, a
@@ -23,12 +24,19 @@
 #'   many cpus to use for analysis.
 #' @param use_pgn_evals (Default = TRUE) A single-element boolean indicating
 #'   whether to use evals from the PGN file, if present.
-#' @param nodes (Default = 2250000) A single-element integer vector of the depth
-#'   to analyze to, in nodes.
 #' @param style (Default = 'graph') A single-element character vector
 #'   indicating the plot style. Allowed values are 'graph' for a traditional
 #'   graph with axes, or 'infographic' to add a background gradient and remove
 #'   the axes (similar to [lichess.org](lichess.org)).
+#' @param limiter (Default = 'nodes') A single-element character vector
+#'   indicating the desire mode of search termination. Allowed values are
+#'   'depth' (to search a fixed number of plies), 'nodes' (to search a fixed
+#'   number of nodes), and 'movetime' (to search a fixed number of
+#'   milliseconds).
+#' @param limit (Default = 2250000) A single-element integer vector of the
+#'   desired search depth (# of plies), search nodes (# of nodes), or search
+#'   time
+#'   (# of milliseconds).
 #'
 #' @return A ggplot object of the plotted data.
 #' @export
@@ -49,7 +57,8 @@
 #' engine_path <- '//stockfish.exe'
 #' game_summary_plot(pgn_path, game_number = 1, engine_path)
 game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
-                              n_cpus = 1, use_pgn_evals = TRUE, limiter, limit,
+                              n_cpus = 1, use_pgn_evals = TRUE,
+                              limiter = 'nodes', limit = 2250000,
                               style = 'graph') {
   # Validate input
   assertthat::assert_that(assertthat::is.string(pgn_path))
@@ -57,10 +66,10 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
   assertthat::assert_that(assertthat::is.string(engine_path) |
                           is.null(engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
-  assertthat::assert_that(assertthat::is.flag(use_pgn_evals))    
+  assertthat::assert_that(assertthat::is.flag(use_pgn_evals))
   assertthat::assert_that(limiter == 'depth' |
-                                limiter == 'nodes' |
-                                limiter == 'movetime')
+                          limiter == 'nodes' |
+                          limiter == 'movetime')
   assertthat::assert_that(assertthat::is.count(limit))
   assertthat::assert_that(style == 'graph' |
                           style == 'infographic')
@@ -104,7 +113,7 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
                   '* An engine is required to analyze the game.'))
     }
     evaluation <- evaluate_game(pgn$Movetext[[game_number]], engine_path,
-                                    n_pv = 1, limiter = limiter, limit = limit)
+                                n_pv = 1, limiter = limiter, limit = limit)
   }
   if (!use_pgn_evals | identical(evals, numeric(0))) {
     evals <- parse_gamelog(evaluation, target = 'score')
@@ -128,7 +137,8 @@ game_summary_plot <- function(pgn_path, game_number, engine_path = NULL,
                                            label = 'Scaled Move Times',
                                            hjust = 0)
     p_advantage_annotation <- ggplot2::annotate('text', x = ax, y = 0.95,
-                                                label = 'Scaled Advantage', hjust = 0)
+                                                label = 'Scaled Advantage',
+                                                hjust = 0)
   } else if (style == 'graph') {
     p_time_annotation <- ggplot2::geom_blank()
     p_advantage_annotation <- ggplot2::geom_blank()
