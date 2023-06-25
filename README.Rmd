@@ -22,11 +22,11 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-Arbiter: One who ensures adherence to the rules and laws of chess
+Arbiter: One who ensures adherence to the rules and laws of chess.
 
 ## Installation
 
-You can install the beta version of rbitr from github with:
+You can install the beta version of rbitr from GitHub with:
 
 ```{r, eval = FALSE}
 devtools::install_github("dryguy/rbitr")
@@ -34,7 +34,7 @@ devtools::install_github("dryguy/rbitr")
 
 ### Introduction
 
-rbitr is a an R package for analyzing chess games, with emphasis on
+rbitr is an R package for analyzing chess games, with emphasis on
 generating game statistics that may be useful for the detection of
 illicit computer assistance.
 
@@ -160,7 +160,7 @@ movetext
 ```
 
 Communicating chess moves to a chess engine through the UCI interface
-requires a different format know as long algebraic notation (LAN). This
+requires a different format known as long algebraic notation (LAN). This
 format is somewhat less readable for humans, since it leaves out move
 numbers and does not use letters or symbols to identify the pieces. The
 function `get_moves()` removes everything that `clean_movetext()`
