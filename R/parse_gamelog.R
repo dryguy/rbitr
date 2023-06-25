@@ -5,9 +5,9 @@
 #'   will be of no interest to someone analyzing a game. The `parse_gamelog()`
 #'   function can extract the parts of interest into a more manageable format.
 #'
-#' @details Use the `target` parameter to specify what `parse_gamelog()` should return:
-#'   positional evaluations in centipawns (score), principal variations (pv), or
-#'   best moves (bestmove).
+#' @details Use the `target` parameter to specify what `parse_gamelog()` should
+#'   return: positional evaluations in centipawns (score), principal variations
+#'   (pv), or best moves (bestmove).
 #'
 #' @details The data for the deepest available search depth is returned by
 #'   default. To extract data for shallower depths, set the `depth`
@@ -17,8 +17,8 @@
 #'   available for some moves, `evaluate_game()` will return an error.
 #'
 #' @details See
-#' [the UCI protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html) for
-#' details of UCI engine output.
+#'   [the UCI protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html) for
+#'   details of UCI engine output.
 #'
 #' @param gamelog A list of engine output from rbitr's `evaluate_game()`
 #'   function.
@@ -150,7 +150,8 @@ parse_gamelog_score <- function(gamelog, target, depth) {
     if (target == 'score') {
       gamelog[[gamelog_index]] <- stringr::str_match(gamelog[[gamelog_index]],
                                                      'score (\\w+\\s-?\\d+)')[, 2]
-      gamelog[[gamelog_index]] <- stringr::str_replace(gamelog[[gamelog_index]], 'cp ', '')
+      gamelog[[gamelog_index]] <- stringr::str_replace(gamelog[[gamelog_index]],
+                                                       'cp ', '')
     }
     if (target == 'pv') {
       gamelog[[gamelog_index]] <- stringr::str_match(gamelog[[gamelog_index]],
@@ -186,5 +187,5 @@ parse_gamelog_bestmove <- function(gamelog) {
       stringr::str_match(gamelog[[position_index]], 'bestmove (\\w*)')[, 2]
     result[!is.na(result)]
   }
-  bestmoves <- lapply(position_index, parse_analyses, gamelog)
+  return(lapply(position_index, parse_analyses, gamelog))
 }

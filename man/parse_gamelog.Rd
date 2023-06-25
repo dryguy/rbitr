@@ -30,9 +30,9 @@ will be of no interest to someone analyzing a game. The \code{parse_gamelog()}
 function can extract the parts of interest into a more manageable format.
 }
 \details{
-Use the \code{target} parameter to specify what \code{parse_gamelog()} should return:
-positional evaluations in centipawns (score), principal variations (pv), or
-best moves (bestmove).
+Use the \code{target} parameter to specify what \code{parse_gamelog()} should
+return: positional evaluations in centipawns (score), principal variations
+(pv), or best moves (bestmove).
 
 The data for the deepest available search depth is returned by
 default. To extract data for shallower depths, set the \code{depth}
