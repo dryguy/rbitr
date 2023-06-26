@@ -17,7 +17,7 @@ principal variation, or 'bestmove' for the best move.}
 \item{depth}{(Optional, default = NULL) A single-element integer vector
 indicating which search depth to return. The value must not be less than 1
 or greater than the maximum depth reported by the engine. A value of NULL
-returns data for the maximum depth.}
+returns data for the maximum available depth.}
 }
 \value{
 A list of character vectors of the extracted data, where each list
