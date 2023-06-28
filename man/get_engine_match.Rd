@@ -20,7 +20,7 @@ returns data for the maximum available depth.}
 }
 \value{
 A list containing the ratio of engine-matching moves to the total
-number of moves for both $white_ratio and $black_ratio.
+number of moves for both white ($white_ratio) and black ($black_ratio).
 }
 \description{
 The \code{get_engine_match()} function calculates the fraction of moves played

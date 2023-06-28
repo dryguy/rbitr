@@ -36,7 +36,7 @@
 #'   returns data for the maximum available depth.
 #'
 #' @return A list containing the ratio of engine-matching moves to the total
-#'   number of moves for both $white_ratio and $black_ratio.
+#'   number of moves for both white ($white_ratio) and black ($black_ratio).
 #' @export
 #'
 #' @seealso
@@ -59,14 +59,12 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   moves <- get_moves(movetext)[[1]]
   n_ply <- length(moves)
   bestmoves <- bestmoves[1:n_ply]
-
   white_ply <- seq.int(from = 1L, to = n_ply, by = 2L)
   if (n_ply < 2) {
     black_ply <- NA
   } else {
    black_ply <- seq.int(from = 2L, to = n_ply, by = 2L)
   }
-
   white_match <- sum(moves[white_ply] == bestmoves[white_ply])
   black_match <- sum(moves[black_ply] == bestmoves[black_ply])
   n_white_ply <- length(white_ply)

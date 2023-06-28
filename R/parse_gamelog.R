@@ -90,76 +90,76 @@ parse_gamelog <- function(gamelog, target, depth = NULL) {
 #'   * [rbitr::parse_gamelog()]
 parse_gamelog_score <- function(gamelog, target, depth) {
   # Input validated by parent function `parse_gamelog()`
+
   # Get the maximum search depth at each position
   # (depth not always the same for every position)
-  gamelog_index <- 1:length(gamelog)
-  get_max_depths <- function(gamelog_index, gamelog) {
-    depths <- stringr::str_match(gamelog[[gamelog_index]],
-                                 'info depth ([0-9]+) ')[, 2]
-    depths <- unlist(depths)
-    return(max(as.integer(depths), na.rm = TRUE))
-  }
-  max_depths <- unlist(lapply(gamelog_index, get_max_depths, gamelog),
-                       use.names = FALSE)
-  # Verify that requested depth exists
+  gamelog_indices <- 1:length(gamelog)
+  max_depths <- vapply(gamelog_indices, function(i) {
+    depths <- stringr::str_match(gamelog[[i]], 'info depth ([0-9]+) ')[, 2]
+    max(as.integer(depths), na.rm = TRUE)
+  }, numeric(1))
+
+  # Verify that the requested depth exists at each position
   if (!is.null(depth)) {
-    temp_depths <- max_depths[max_depths != 0]
-    if (any(depth > temp_depths)) {
-      problem_moves <- which(depth > temp_depths)
+    available_depths <- max_depths[max_depths != 0]
+    if (any(depth > available_depths)) {
+      invalid_depth_requests <- which(depth > available_depths)
       error_message <- paste(
         'Maximum available search depths are ',
-        paste0(temp_depths[problem_moves], collapse = ' '),
+        paste0(available_depths[invalid_depth_requests], collapse = ' '),
         '\nfor moves ',
-        paste0(problem_moves, collapse = ' '), '.',
+        paste0(invalid_depth_requests, collapse = ' '), '.',
         '\n * You requested a depth of ', depth, '.', sep = ''
       )
       stop(error_message)
     }
   }
-  # If no depth specified, use max depth(s)
-  if (is.null(depth)) {
-    desired_depths <- max_depths
-  } else {
-    desired_depths <- rep(depth, length(gamelog))
-  }
+
+  # Use max depth(s) if no depth is specified
+  desired_depths <- if (is.null(depth)) max_depths
+                    else rep(depth, length(gamelog))
+
   # Remove lines not containing desired depth(s)
   desired_depth_regexes <- paste0('info depth ', desired_depths)
-  delete_unused_lines <- function(gamelog_index, gamelog,
+  delete_unused_lines <- function(gamelog_indices, gamelog,
                                   desired_depth_regexes) {
     depth_line_index <-
-      stringr::str_detect(gamelog[[gamelog_index]],
-                          desired_depth_regexes[[gamelog_index]])
-    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][depth_line_index]
+      stringr::str_detect(gamelog[[gamelog_indices]],
+                          desired_depth_regexes[[gamelog_indices]])
+    gamelog[[gamelog_indices]] <- gamelog[[gamelog_indices]][depth_line_index]
     # Remove lines with no analyses
-    multipv_index <- stringr::str_detect(gamelog[[gamelog_index]], 'multipv')
-    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][multipv_index]
+    multipv_index <- stringr::str_detect(gamelog[[gamelog_indices]], 'multipv')
+    gamelog[[gamelog_indices]] <- gamelog[[gamelog_indices]][multipv_index]
   }
-  gamelog <- lapply(gamelog_index, delete_unused_lines, gamelog,
+  gamelog <- lapply(gamelog_indices, delete_unused_lines, gamelog,
                     desired_depth_regexes)
+
   # Remove duplicate pvs (leave final pv intact)
-  remove_duplicate_pvs <- function(gamelog_index, gamelog) {
-    pv_numbers <- stringr::str_match(gamelog[[gamelog_index]],
+  remove_duplicate_pvs <- function(gamelog_indices, gamelog) {
+    pv_numbers <- stringr::str_match(gamelog[[gamelog_indices]],
                                      'multipv ([0-9]+)')[, 2]
     rev_pv <- rev(pv_numbers)
     pv_dupe_index <- rev(duplicated(rev_pv))
-    gamelog[[gamelog_index]][!pv_dupe_index]
+    gamelog[[gamelog_indices]][!pv_dupe_index]
   }
-  gamelog <- lapply(gamelog_index, remove_duplicate_pvs, gamelog)
+  gamelog <- lapply(gamelog_indices, remove_duplicate_pvs, gamelog)
+
   # Parse the gamelog
-  parse_gamelog_internal <- function(gamelog_index, gamelog) {
+  parse_gamelog_internal <- function(gamelog_indices, gamelog) {
     if (target == 'score') {
-      gamelog[[gamelog_index]] <- stringr::str_match(gamelog[[gamelog_index]],
-                                                     'score (\\w+\\s-?\\d+)')[, 2]
-      gamelog[[gamelog_index]] <- stringr::str_replace(gamelog[[gamelog_index]],
-                                                       'cp ', '')
+      gamelog[[gamelog_indices]] <-
+        stringr::str_match(gamelog[[gamelog_indices]],
+                           'score (\\w+\\s-?\\d+)')[, 2]
+      gamelog[[gamelog_indices]] <-
+        stringr::str_replace(gamelog[[gamelog_indices]], 'cp ', '')
     }
     if (target == 'pv') {
-      gamelog[[gamelog_index]] <- stringr::str_match(gamelog[[gamelog_index]],
-                                                     ' pv (.*)$')[, 2]
+      gamelog[[gamelog_indices]] <-
+        stringr::str_match(gamelog[[gamelog_indices]], ' pv (.*)$')[, 2]
     }
-    return(gamelog[[gamelog_index]])
+    return(gamelog[[gamelog_indices]])
   }
-  return(lapply(gamelog_index, parse_gamelog_internal, gamelog))
+  return(lapply(gamelog_indices, parse_gamelog_internal, gamelog))
 }
 
 #' Extract the best moves from rbitr's `evaluate_game()` output
@@ -187,5 +187,5 @@ parse_gamelog_bestmove <- function(gamelog) {
       stringr::str_match(gamelog[[position_index]], 'bestmove (\\w*)')[, 2]
     result[!is.na(result)]
   }
-  return(lapply(position_index, parse_analyses, gamelog))
+  return(vapply(position_index, parse_analyses, character(1), gamelog))
 }
