@@ -1,11 +1,11 @@
-#' Create a data frame containing engine analysis of a single chess position
+#' Creates a data frame containing engine analysis of a single chess position
 #'
-#' The function `cram_positionlog()` takes a character vector of engine
+#' The `cram_positionlog()` function takes a character vector of engine
 #'   analysis for a single chess position and condenses it into a data frame for
 #'   easier access.
 #'
-#' @details The function `cram_positionlog()` parses output from a
-#'   [UCI](https://github.com/fsmosca/UCIChessEngineProtocol) compatible chess
+#' @details The `cram_positionlog()` function parses output from a
+#'   [UCI](https://github.com/fsmosca/UCIChessEngineProtocol)-compatible chess
 #'   engine.
 #'
 #' @details According to the UCI protocol, when the engine has stopped
@@ -60,6 +60,17 @@
 #'   FALSE will leave blank rows/columns intact
 #' @return A data frame summarizing the data for the position
 #' @export
+#'
+#' @seealso
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_gamelog()] for condensing analysis of one game.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'   The 'parse' functions extract specific data from analysis logs.
+#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
+#'   The 'evaluate' functions produce analysis logs.
+#'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'
 #' @examples
 #' positionlog <- c(
