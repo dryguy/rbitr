@@ -59,9 +59,20 @@
 #' @export
 #'
 #' @seealso
-#'  * [rbitr::get_pgn()] for loading games to evaluate.
-#'  * [rbitr::parse_gamelog()] for extracting data from an evaluated game.
-#'  * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'
+#'   The 'parse' functions extract specific data from analysis logs.
+#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
+#'
+#'   The 'evaluate' functions produce analysis logs.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
+#'
+#'   Functions to load and save PGN files.
+#'   * [rbitr::get_pgn()] for loading PGN files.
+#'   * [rbitr::save_pgn()] for saving PGN files.
 #'
 #' @examples
 #' movetext <- '1. e4 g5 2. Nc3 f5 3. Qh5# 1-0'

@@ -1,18 +1,23 @@
 #' Analyze each chess game in a PGN file
 #'
-#' Chess games are analyzed using a
+#' The `evaluate_pgn()` function analyzes chess games in a PGN file using a
+#'   UCI-compatible chess engine. It applies the `evaluate_game()` function from
+#'   the `rbitr` package to each game in the PGN file and returns a list of game
+#'   logs.
+#'
+#' @details Chess games are analyzed using a
 #'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
 #'   engine.
 #'
-#' @details The function `evaluate_pgn()` wrapper for rbitr's `evaluate_game()`
-#'   function that applies `evaluate_game()` to each game in the specified PGN
-#'   file. Note that this can take a very long time for PGN files with a lot of
-#'   games, and even longer when searching high numbers of principal variations
-#'   or running deep evaluations. For long runs, it is recommended to set
-#'   save_logs = TRUE. This will save the evaluation of each game to a folder
-#'   with the same name as the PGN file. If the analysis has to be stopped and
-#'   restarted, it will pick up where it left off if the save_logs option was
-#'   activated.
+#' @details The function `evaluate_pgn()` is a wrapper for rbitr's
+#'   `evaluate_game()` function that applies `evaluate_game()` to each game in
+#'   the specified PGN file. Note that this can take a very long time for PGN
+#'   files with a lot of games, and even longer when searching high numbers of
+#'   principal variations or running deep evaluations. For long runs, it is
+#'   recommended to set save_logs = TRUE. This will save the evaluation of each
+#'   game to a folder with the same name as the PGN file. If the analysis has to
+#'   be stopped and restarted, it will pick up where it left off if the
+#'   save_logs option was activated.
 #'
 #' @details Since analysis can take a long time, progress is reported as each
 #'   game is completed, along with a rough estimate of the time remaining.
@@ -20,7 +25,7 @@
 #'
 #' @details See [rbitr::evaluate_game()] for further details.
 #'
-#' @note The server analysis on lichess.org use a limit of 2250000 nodes. To
+#' @note The server analysis on lichess.org uses a limit of 2250000 nodes. To
 #'    mimic this, set limiter = 'nodes', and limit = 2250000.
 #'
 #' @param pgn_path A single-element character vector of the path to the PGN
@@ -49,10 +54,21 @@
 #' @export
 #'
 #' @seealso
-#'   * [rbitr::parse_gamelog()] for extracting data from an evaluated game.
-#'   * [rbitr::parse_pgnlog()] for extracting data from an evaluated PGN file.
-#'   * [rbitr::get_pgn()] for loading PGN files.
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'
+#'   The 'parse' functions extract specific data from analysis logs.
+#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
+#'
+#'   The 'evaluate' functions produce analysis logs.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
+#'
+#'   Functions to load and save PGN files.
+#'   * [rbitr::get_pgn()] for loading PGN files.
+#'   * [rbitr::save_pgn()] for saving PGN files.
 #'
 #' @examples
 #' # Modify engine_path as required for your engine location & operating system
