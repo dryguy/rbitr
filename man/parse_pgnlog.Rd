@@ -27,10 +27,10 @@ that iterates over all the games in a PGN file.
 }
 \details{
 The output of rbitr's \code{evaluate_pgn()} function is a list of logs
-from the \code{evaluate_game()} function, where each entry in the list is for a
-single game. The \code{parse_pgnlog()} function can extract  evaluations in
-centipawns (score), principal variations (pv), or best moves (bestmove),
-depending on the setting for the \code{target} parameter.
+from the \code{evaluate_game()} function, “with each entry in the list
+corresponding to a single game. The \code{parse_pgnlog()} function can extract
+evaluations in centipawns (\code{score}), principal variations (\code{pv}), or best
+moves (\code{bestmove}), depending on the setting for the \code{target} parameter.
 
 See \code{\link[=parse_gamelog]{parse_gamelog()}} for more details.
 }
@@ -47,8 +47,20 @@ parse_pgnlog(pgnlog, 'pv')
 parse_pgnlog(pgnlog, 'bestmove')
 }
 \seealso{
+The 'cram' functions condense analysis logs into data frames.
+\itemize{
+\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
+\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+}
+
+The 'parse' functions extract specific data from analysis logs.
 \itemize{
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+}
+
+The 'evaluate' functions produce analysis logs.
+\itemize{
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }

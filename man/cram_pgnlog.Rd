@@ -57,14 +57,14 @@ pgnlog <- list(list(c(
 cram_pgnlog(pgnlog)
 }
 \seealso{
-The 'cram' functions are for condensing analysis logs into data frames.
+The 'cram' functions condense analysis logs into data frames.
 \itemize{
 \item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
 \item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
-The 'parse' functions are for extracting specific data from analysis logs.
+The 'parse' functions extract specific data from analysis logs.
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
 \item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
-The 'evaluate' functions are for producing the analysis logs.
+The 'evaluate' functions produce analysis logs.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }

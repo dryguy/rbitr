@@ -35,6 +35,15 @@
 #' @export
 #'
 #' @seealso
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
+#'   * [rbitr::cram_gamelog()] for condensing analysis of one game.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'
+#'   The 'parse' functions extract specific data from analysis logs.
+#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
+#'
+#'   The 'evaluate' functions produce analysis logs.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'

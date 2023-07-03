@@ -1,13 +1,13 @@
-#' Extract data from rbitr's `evaluate_pgn()` output
+#' Extract data from the output of rbitr’s evaluate_pgn() function
 #'
-#' The `parse_pgnlog()` function is a wrapper for the `parse_gamelog()` function
-#'   that iterates over all the games in a PGN file.
+#' The parse_pgnlog() function is a wrapper for the parse_gamelog() function,
+#'   which iterates over all the games in a PGN file
 #'
 #' @details The output of rbitr's `evaluate_pgn()` function is a list of logs
-#'   from the `evaluate_game()` function, where each entry in the list is for a
-#'   single game. The `parse_pgnlog()` function can extract  evaluations in
-#'   centipawns (score), principal variations (pv), or best moves (bestmove),
-#'   depending on the setting for the `target` parameter.
+#'   from the `evaluate_game()` function, with each entry in the list
+#'   corresponding to a game. The `parse_pgnlog()` function can extract
+#'   evaluations in centipawns (`score`), principal variations (`pv`), or best
+#'   moves (`bestmove`), depending on the value of the `target` parameter.
 #'
 #' @details See [rbitr::parse_gamelog()] for more details.
 #'
@@ -24,7 +24,15 @@
 #' @export
 #'
 #' @seealso
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
+#'   * [rbitr::cram_gamelog()] for condensing analysis of one game.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'
+#'   The 'parse' functions extract specific data from analysis logs.
 #'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'
+#'   The 'evaluate' functions produce analysis logs.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'

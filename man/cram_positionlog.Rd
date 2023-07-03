@@ -2,7 +2,7 @@
 % Please edit documentation in R/cram_positionlog.R
 \name{cram_positionlog}
 \alias{cram_positionlog}
-\title{Create a data frame containing engine analysis of a single chess position}
+\title{Creates a data frame containing engine analysis of a single chess position}
 \usage{
 cram_positionlog(
   positionlog,
@@ -31,13 +31,13 @@ FALSE will leave blank rows/columns intact}
 A data frame summarizing the data for the position
 }
 \description{
-The function \code{cram_positionlog()} takes a character vector of engine
+The \code{cram_positionlog()} function takes a character vector of engine
 analysis for a single chess position and condenses it into a data frame for
 easier access.
 }
 \details{
-The function \code{cram_positionlog()} parses output from a
-\href{https://github.com/fsmosca/UCIChessEngineProtocol}{UCI} compatible chess
+The \code{cram_positionlog()} function parses output from a
+\href{https://github.com/fsmosca/UCIChessEngineProtocol}{UCI}-compatible chess
 engine.
 
 According to the UCI protocol, when the engine has stopped
@@ -92,4 +92,17 @@ positionlog <- c(
   "bestmove e2e4 ponder e7e5"
 )
 cram_positionlog(positionlog)
+}
+\seealso{
+The 'cram' functions condense analysis logs into data frames.
+\itemize{
+\item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
+\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+The 'parse' functions extract specific data from analysis logs.
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
+The 'evaluate' functions produce analysis logs.
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
+}
 }

@@ -58,7 +58,14 @@ parse_gamelog(gamelog, 'pv')
 parse_gamelog(gamelog, 'bestmove')
 }
 \seealso{
+The 'cram' functions condense analysis logs into data frames.
 \itemize{
+\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
+\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+The 'parse' functions extract specific data from analysis logs.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
+The 'evaluate' functions produce analysis logs.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }
