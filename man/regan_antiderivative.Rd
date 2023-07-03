@@ -10,7 +10,7 @@ regan_antiderivative(x)
 \item{x}{A numeric vector of chess evaluations, in centipawns.}
 }
 \value{
-Th real part of the antiderivative of 1 / (1 + abs(x)).
+The real part of the antiderivative of 1 / (1 + abs(x)).
 }
 \description{
 Calculate the antiderivative of 1 / (1 + abs(x)).

@@ -12,8 +12,8 @@
 #'   over each position in the game, and adds a column indicating the position
 #'   number. The `gamelog` parameter should contain output from the
 #'   `evaluate_game()` function. The remaining parameters are passed to
-#'   `cram_positionlog()`. See the documentation for [cram_positionlog()] for
-#'   details.
+#'   `cram_positionlog()`. See the documentation for [rbitr::cram_positionlog()]
+#'   for details.
 #'
 #' @param gamelog A list of vectors of engine analysis
 #' @param all (Default = FALSE) A boolean. Setting `all` = TRUE will search for

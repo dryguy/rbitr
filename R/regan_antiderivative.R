@@ -24,7 +24,7 @@
 #'
 #' @param x A numeric vector of chess evaluations, in centipawns.
 #'
-#' @return Th real part of the antiderivative of 1 / (1 + abs(x)).
+#' @return The real part of the antiderivative of 1 / (1 + abs(x)).
 #' @export
 #'
 #' @references

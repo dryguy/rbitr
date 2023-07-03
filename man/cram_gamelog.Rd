@@ -44,8 +44,8 @@ engine.
 over each position in the game, and adds a column indicating the position
 number. The \code{gamelog} parameter should contain output from the
 \code{evaluate_game()} function. The remaining parameters are passed to
-\code{cram_positionlog()}. See the documentation for \code{\link[=cram_positionlog]{cram_positionlog()}} for
-details.
+\code{cram_positionlog()}. See the documentation for \code{\link[=cram_positionlog]{cram_positionlog()}}
+for details.
 }
 \examples{
 gamelog <- list(c(
