@@ -11,12 +11,12 @@
 #' @param limiter A single-element character vector indicating the desired
 #'   mode of search termination. Allowed values are 'depth' (to search a fixed
 #'   number of plies), 'nodes' (to search a fixed number of nodes), and
-#'   'movetime' (to search a fixed number of milliseconds).
+#'   'movetime' (to search for a fixed number of milliseconds).
 #' @param limit A single-element integer vector of the desired search depth
 #'   (# of plies), search nodes (# of nodes), or search time
 #'   (# of milliseconds).
 #' @param n_cpus (Default = 1) A single-element integer vector of the number of
-#'    cpus to use.
+#'    CPUs to use.
 #' @param n_pv (Default = 1) A single-element integer vector of the desired
 #'   number of principal variations.
 #' @param hash_size (Default = NULL) A single-element integer vector of the
@@ -24,6 +24,23 @@
 #'
 #' @return A list containing a character vector of the engine's output.
 #' @export
+#'
+#' @seealso
+#'   The 'cram' functions condense analysis logs into data frames.
+#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
+#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
+#'
+#'   The 'parse' functions extract specific data from analysis logs.
+#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
+#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
+#'
+#'   The 'evaluate' functions produce analysis logs.
+#'   * [rbitr::evaluate_game()] for analyzing individual games.
+#'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
+#'
+#'   Functions to load and save PGN files.
+#'   * [rbitr::get_pgn()] for loading PGN files.
+#'   * [rbitr::save_pgn()] for saving PGN files.
 #'
 #' @examples
 #' position <- 'e2e4'
