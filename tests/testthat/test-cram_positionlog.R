@@ -8,8 +8,8 @@ test_that("cram_positionlog returns the correct result", {
   result <- cram_positionlog(positionlog)
 
   expect_type(result, "list")
-  expect_equal(nrow(result), length(positionlog))
-  expect_equal(colnames(result), c("depth", "multipv", "score", "pv", "bestmove"))
+  expect_equal(nrow(result), 2)
+  expect_equal(colnames(result), c("depth", "multipv", "score", "pv"))
 })
 
 test_that("cram_positionlog handles the all parameter correctly", {
@@ -68,4 +68,16 @@ test_that("cram_positionlog correctly extracts data using built-in regex pattern
   expect_equal(result$currline, c("e2e4", "e2e4 e7e5", NA))
   expect_equal(result$bestmove, c(NA, NA,"e2e4"))
   expect_equal(result$ponder,c(NA ,NA ,"e7e5"))
+})
+
+positionlog <- c(
+  'Stockfish 13 by the Stockfish developers (see AUTHORS file)',
+  'readyok',
+  'info string NNUE evaluation using nn-62ef826d1a6d.nnue enabled',
+  'info depth 1 seldepth 1 multipv 1 score cp 146 nodes 30 nps 30000 tbhits 0 time 1 pv d2d4',
+  'bestmove d2d4'
+)
+test_that('cram_positionlog correctly handles 1-line positions', {
+  crammed_positionlog <- cram_positionlog(positionlog)
+  expect_equal(nrow(crammed_positionlog), 1)
 })

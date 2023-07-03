@@ -1,4 +1,4 @@
-#' Parse engine analysis for a single chess position
+#' Create a data frame containing engine analysis of a single chess position
 #'
 #' The function `cram_positionlog()` takes a character vector of engine
 #'   analysis for a single chess position and condenses it into a data frame for
@@ -35,7 +35,7 @@
 #'
 #' @details `cram_positionlog()` uses regular expressions to extract data from
 #'   the engine's logs. By default, the only data extracted are `depth`,
-#'   `multipv`, `score`, `pv`, and `bestmove`. Setting the `all` parameter to
+#'   `multipv`, `score`, and `pv`. Setting the `all` parameter to
 #'   TRUE will extract all of the info tokens listed in the UCI protocol. In
 #'   cases where the engine supplies data not covered by the UCI protocol, the
 #'   user may add custom regular expressions as a character vector via the
@@ -86,9 +86,8 @@ cram_positionlog <- function(positionlog, all = FALSE, patterns = NULL,
                 '(?<=\\bdepth\\s)\\s*(\\d+)',
                 '(?<=\\bmultipv\\s)\\s*(\\d+)',
                 '(?<=\\bscore\\s)\\s*(\\w+\\s+-?\\d+)',
-                '(?<=\\bpv\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*',
-                '(?<=\\bbestmove\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*')
-  column_names <- c(column_names, 'depth', 'multipv', 'score', 'pv', 'bestmove')
+                '(?<=\\bpv\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*')
+  column_names <- c(column_names, 'depth', 'multipv', 'score', 'pv')
   if (all) {
     patterns <- c(patterns,
                   '(?<=\\bseldepth\\s)\\s*(\\d+)',
@@ -104,11 +103,12 @@ cram_positionlog <- function(positionlog, all = FALSE, patterns = NULL,
                   '(?<=\\bcurrmovenumber\\s)\\s*(\\d+)',
                   '(?<=\\brefutation\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*',
                   '(?<=\\bstring\\s)\\s*(.*)',
-                  '(?<=\\bponder\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*')
+                  '(?<=\\bponder\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*',
+                  '(?<=\\bbestmove\\s)\\s*([a-h][1-8][a-h][1-8][a-z]?\\s*)*')
     column_names <- c(column_names, 'seldepth', 'nodes', 'nps', 'tbhits',
                       'sbhits', 'cpuload', 'hashfull', 'time', 'currmove',
                       'currline', 'currmovenumber', 'refutation', 'string',
-                      'ponder')
+                      'ponder', 'bestmove')
   }
 
   # Helper function to parse individual lines
@@ -137,9 +137,11 @@ cram_positionlog <- function(positionlog, all = FALSE, patterns = NULL,
                                   patterns, column_names, pattern_indices))
 
   # Clean up the data frame.
-  result <- result[apply(result, MARGIN = 1, function(x) any(!is.na(x))), ]
-  result[, colSums(is.na(result)) != nrow(result)]
   result <- as.data.frame(apply(result, 2, trimws))
+  result <- result[apply(result, MARGIN = 1, function(x) any(!is.na(x))), ]
+  result <- result[, colSums(is.na(result)) != nrow(result)]
+  result <- as.data.frame(result)
+
   suppressWarnings(result <- convert_to_numeric(result))
   return(result)
 }

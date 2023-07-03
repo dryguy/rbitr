@@ -2,7 +2,7 @@
 % Please edit documentation in R/cram_positionlog.R
 \name{cram_positionlog}
 \alias{cram_positionlog}
-\title{Parse engine analysis for a single chess position}
+\title{Create a data frame containing engine analysis of a single chess position}
 \usage{
 cram_positionlog(
   positionlog,
@@ -71,7 +71,7 @@ provide information that is not covered by the UCI protocol.
 
 \code{cram_positionlog()} uses regular expressions to extract data from
 the engine's logs. By default, the only data extracted are \code{depth},
-\code{multipv}, \code{score}, \code{pv}, and \code{bestmove}. Setting the \code{all} parameter to
+\code{multipv}, \code{score}, and \code{pv}. Setting the \code{all} parameter to
 TRUE will extract all of the info tokens listed in the UCI protocol. In
 cases where the engine supplies data not covered by the UCI protocol, the
 user may add custom regular expressions as a character vector via the
