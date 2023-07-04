@@ -21,13 +21,17 @@
 #'   black is ahead. The final scores will be returned as an integer vector.
 #'
 #' @note The function `convert_scores()` assumes that the scores begin with a
-#'   position where white is to move.
+#'   position where white is to move. By default, the score for black will have
+#'   the sign flipped to ensure that when white is winning, the score > 0. To
+#'   override this behaviour, set `flip_signs` to FALSE.
 #'
 #' @param scores A character vector of scores from a
 #'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
 #'   engine.
 #' @param mate (Default = 5000) A single-element integer vector of the value to
 #'   use for 'mate x'.
+#' @param flip_signs (Default = TRUE) A Boolean indicating whether to flip the
+#'   sign of even numbered half-moves.
 #'
 #' @return An numeric vector of scores (in centipawns).
 #' @export
@@ -38,7 +42,7 @@
 #' scores <- c("90", "-26", "26 upperbound", "mate 1", "mate -1", "mate 0", NA)
 #' convert_scores(scores)
 
-convert_scores <- function(scores, mate = 5000) {
+convert_scores <- function(scores, mate = 5000, flip_signs = TRUE) {
   # Validate input
   assertthat::assert_that(is.character(scores))
   assertthat::assert_that(is.numeric(mate) & length(mate) == 1)
@@ -55,10 +59,14 @@ convert_scores <- function(scores, mate = 5000) {
     scores[which(bounds)] <- stringr::str_replace(scores[which(bounds)],
                                                   ' [a-z]*bound', '')
   }
+  # Remove cp markers
+  scores <- stringr::str_replace(scores, 'cp ', '')
   # Convert characters to integer
   scores <- as.integer(scores)
   # Flip signs for black scores so that if score > 0 white is winning.
-  black_index <- 1:length(scores) %% 2 == 0
-  scores[black_index] <- -scores[black_index]
+  if (flip_signs) {
+    black_index <- 1:length(scores) %% 2 == 0
+    scores[black_index] <- -scores[black_index]
+  }
   scores
 }
