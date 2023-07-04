@@ -152,8 +152,10 @@ cram_positionlog <- function(positionlog, all = FALSE, patterns = NULL,
 
   # Clean up the data frame.
   result <- as.data.frame(apply(result, 2, trimws))
-  result <- result[apply(result, MARGIN = 1, function(x) any(!is.na(x))), ]
-  result <- result[, colSums(is.na(result)) != nrow(result)]
+  if (delete_blank_lines) {
+    result <- result[apply(result, MARGIN = 1, function(x) any(!is.na(x))), ]
+    result <- result[, colSums(is.na(result)) != nrow(result)]
+  }
   result <- as.data.frame(result)
 
   suppressWarnings(result <- convert_to_numeric(result))
