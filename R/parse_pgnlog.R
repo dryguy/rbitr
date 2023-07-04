@@ -33,6 +33,7 @@
 #'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
 #'
 #'   The 'evaluate' functions produce analysis logs.
+#'   * [rbitr::evaluate_position()] for analyzing chess positions.
 #'   * [rbitr::evaluate_game()] for analyzing individual games.
 #'   * [rbitr::evaluate_pgn()] for evaluating all the games in a PGN file.
 #'
