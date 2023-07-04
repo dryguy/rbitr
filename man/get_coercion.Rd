@@ -31,8 +31,8 @@ to here as the \code{coercion} of the position.
 
 \code{get_coercion()} requires as input a \code{positionlog} of engine
 analysis. The analysis must contain at least two principal variations
-(\code{pv}'s) to allow the \code{coercion} to be determined. The highest depth of
-search available will be used by default.
+(\code{pv}'s) to allow the \code{coercion} to be determined, otherwise it will return
+\code{NULL}. The highest depth of search available will be used by default.
 }
 \examples{
 positionlog <- c(
