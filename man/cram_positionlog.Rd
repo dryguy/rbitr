@@ -98,10 +98,17 @@ The 'cram' functions condense analysis logs into data frames.
 \itemize{
 \item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
 \item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+}
+
 The 'parse' functions extract specific data from analysis logs.
+\itemize{
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
 \item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
+}
+
 The 'evaluate' functions produce analysis logs.
+\itemize{
+\item \code{\link[=evaluate_position]{evaluate_position()}} for analyzing chess positions.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }

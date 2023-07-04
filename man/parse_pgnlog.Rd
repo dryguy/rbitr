@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_pgnlog.R
 \name{parse_pgnlog}
 \alias{parse_pgnlog}
-\title{Extract data from rbitr's \code{evaluate_pgn()} output}
+\title{Extract data from the output of rbitr’s evaluate_pgn() function}
 \usage{
 parse_pgnlog(pgnlog, target, depth = NULL)
 }
@@ -22,15 +22,15 @@ returns data for the maximum depth.}
 A list of vectors of the extracted data.
 }
 \description{
-The \code{parse_pgnlog()} function is a wrapper for the \code{parse_gamelog()} function
-that iterates over all the games in a PGN file.
+The parse_pgnlog() function is a wrapper for the parse_gamelog() function,
+which iterates over all the games in a PGN file
 }
 \details{
 The output of rbitr's \code{evaluate_pgn()} function is a list of logs
-from the \code{evaluate_game()} function, “with each entry in the list
-corresponding to a single game. The \code{parse_pgnlog()} function can extract
+from the \code{evaluate_game()} function, with each entry in the list
+corresponding to a game. The \code{parse_pgnlog()} function can extract
 evaluations in centipawns (\code{score}), principal variations (\code{pv}), or best
-moves (\code{bestmove}), depending on the setting for the \code{target} parameter.
+moves (\code{bestmove}), depending on the value of the \code{target} parameter.
 
 See \code{\link[=parse_gamelog]{parse_gamelog()}} for more details.
 }
@@ -61,6 +61,7 @@ The 'parse' functions extract specific data from analysis logs.
 
 The 'evaluate' functions produce analysis logs.
 \itemize{
+\item \code{\link[=evaluate_position]{evaluate_position()}} for analyzing chess positions.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
 }

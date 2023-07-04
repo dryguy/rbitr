@@ -4,7 +4,7 @@
 \alias{convert_scores}
 \title{Convert mates and bounds to numeric values}
 \usage{
-convert_scores(scores, mate = 5000)
+convert_scores(scores, mate = 5000, flip_signs = TRUE)
 }
 \arguments{
 \item{scores}{A character vector of scores from a
@@ -13,6 +13,9 @@ engine.}
 
 \item{mate}{(Default = 5000) A single-element integer vector of the value to
 use for 'mate x'.}
+
+\item{flip_signs}{(Default = TRUE) A Boolean indicating whether to flip the
+sign of even numbered half-moves.}
 }
 \value{
 An numeric vector of scores (in centipawns).
@@ -41,7 +44,9 @@ black is ahead. The final scores will be returned as an integer vector.
 }
 \note{
 The function \code{convert_scores()} assumes that the scores begin with a
-position where white is to move.
+position where white is to move. By default, the score for black will have
+the sign flipped to ensure that when white is winning, the score > 0. To
+override this behaviour, set \code{flip_signs} to FALSE.
 }
 \examples{
 scores <- c("90", "-26", "26 upperbound", "mate 1", "mate -1", "mate 0", NA)

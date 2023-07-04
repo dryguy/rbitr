@@ -53,20 +53,25 @@ where the game logs should be saved.}
 A list of gamelogs (see \code{evaluate_game()} for details).
 }
 \description{
+The \code{evaluate_pgn()} function analyzes chess games in a PGN file using a
+UCI-compatible chess engine. It applies the \code{evaluate_game()} function from
+the \code{rbitr} package to each game in the PGN file and returns a list of game
+logs.
+}
+\details{
 Chess games are analyzed using a
 \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
 engine.
-}
-\details{
-The function \code{evaluate_pgn()} wrapper for rbitr's \code{evaluate_game()}
-function that applies \code{evaluate_game()} to each game in the specified PGN
-file. Note that this can take a very long time for PGN files with a lot of
-games, and even longer when searching high numbers of principal variations
-or running deep evaluations. For long runs, it is recommended to set
-save_logs = TRUE. This will save the evaluation of each game to a folder
-with the same name as the PGN file. If the analysis has to be stopped and
-restarted, it will pick up where it left off if the save_logs option was
-activated.
+
+The function \code{evaluate_pgn()} is a wrapper for rbitr's
+\code{evaluate_game()} function that applies \code{evaluate_game()} to each game in
+the specified PGN file. Note that this can take a very long time for PGN
+files with a lot of games, and even longer when searching high numbers of
+principal variations or running deep evaluations. For long runs, it is
+recommended to set save_logs = TRUE. This will save the evaluation of each
+game to a folder with the same name as the PGN file. If the analysis has to
+be stopped and restarted, it will pick up where it left off if the
+save_logs option was activated.
 
 Since analysis can take a long time, progress is reported as each
 game is completed, along with a rough estimate of the time remaining.
@@ -75,7 +80,7 @@ Progress reports may be turned off by setting mute = TRUE.
 See \code{\link[=evaluate_game]{evaluate_game()}} for further details.
 }
 \note{
-The server analysis on lichess.org use a limit of 2250000 nodes. To
+The server analysis on lichess.org uses a limit of 2250000 nodes. To
 mimic this, set limiter = 'nodes', and limit = 2250000.
 }
 \examples{
@@ -89,10 +94,27 @@ pgn_path <- file.path(
 evaluate_pgn(pgn_path, engine_path, limiter = 'depth', limit = 1)
 }
 \seealso{
+The 'cram' functions condense analysis logs into data frames.
 \itemize{
-\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from an evaluated game.
-\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from an evaluated PGN file.
-\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
+\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+}
+
+The 'parse' functions extract specific data from analysis logs.
+\itemize{
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
+}
+
+The 'evaluate' functions produce analysis logs.
+\itemize{
+\item \code{\link[=evaluate_position]{evaluate_position()}} for analyzing chess positions.
 \item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+}
+
+Functions to load and save PGN files.
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
+\item \code{\link[=save_pgn]{save_pgn()}} for saving PGN files.
 }
 }

@@ -24,14 +24,14 @@ compatible chess engine.}
 \item{limiter}{A single-element character vector indicating the desired
 mode of search termination. Allowed values are 'depth' (to search a fixed
 number of plies), 'nodes' (to search a fixed number of nodes), and
-'movetime' (to search a fixed number of milliseconds).}
+'movetime' (to search for a fixed number of milliseconds).}
 
 \item{limit}{A single-element integer vector of the desired search depth
 (# of plies), search nodes (# of nodes), or search time
 (# of milliseconds).}
 
 \item{n_cpus}{(Default = 1) A single-element integer vector of the number of
-cpus to use.}
+CPUs to use.}
 
 \item{n_pv}{(Default = 1) A single-element integer vector of the desired
 number of principal variations.}
@@ -53,4 +53,29 @@ position <- 'e2e4'
 engine_path <- '//stockfish.exe'
 evaluate_position(position, engine_path, n_pv = 1, n_cpus = 1,
                   limiter = 'depth', limit = 1)
+}
+\seealso{
+The 'cram' functions condense analysis logs into data frames.
+\itemize{
+\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+}
+
+The 'parse' functions extract specific data from analysis logs.
+\itemize{
+\item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
+}
+
+The 'evaluate' functions produce analysis logs.
+\itemize{
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
+\item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
+}
+
+Functions to load and save PGN files.
+\itemize{
+\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
+\item \code{\link[=save_pgn]{save_pgn()}} for saving PGN files.
+}
 }
