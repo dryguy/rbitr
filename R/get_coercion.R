@@ -19,7 +19,7 @@
 #'   analysis. The analysis must contain at least two principal variations
 #'   (`pv`'s) to allow the `coercion` to be determined. If only one PV exists,
 #'   a value of Inf is returned, or if no move is possible (i.e., in positions
-#'   of mate or stalemate) it will return `NULL`. The highest depth of search
+#'   of mate or stalemate) it will return `NA`. The highest depth of search
 #'   available will be used by default.
 #'
 #' @param positionlog A character vector of engine analysis
@@ -55,7 +55,7 @@ get_coercion <- function(positionlog) {
   # Extract data from the positionlog
   crammed_positionlog <- cram_positionlog(positionlog)
   # Check for at least 2 pvs
-  if(is.null(crammed_positionlog$multipv)) {return(NULL)}
+  if(is.null(crammed_positionlog$multipv)) {return(NA)}
   if (max(crammed_positionlog$multipv, na.rm=TRUE) < 2) {return(Inf)}
   # What is the maximum depth?
   max_depth <- max(crammed_positionlog$depth, na.rm=TRUE)
