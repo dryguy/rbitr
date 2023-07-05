@@ -65,12 +65,19 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   } else {
    black_ply <- seq.int(from = 2L, to = n_ply, by = 2L)
   }
-  white_match <- sum(moves[white_ply] == bestmoves[white_ply])
-  black_match <- sum(moves[black_ply] == bestmoves[black_ply])
+  white_bestmoves <- bestmoves[white_ply]
+  black_bestmoves <- bestmoves[black_ply]
+  white_moves <- moves[white_ply]
+  black_moves <- moves[black_ply]
+  white_matches <- white_moves == white_bestmoves
+  black_matches <- black_moves == black_bestmoves
+  n_white_match <- sum(white_matches)
+  n_black_match <- sum(black_matches)
   n_white_ply <- length(white_ply)
   n_black_ply <- length(black_ply)
   # Return the ratios.
-  white_ratio <- white_match / n_white_ply
-  black_ratio <- black_match / n_black_ply
-  return(list(white_ratio = white_ratio, black_ratio = black_ratio))
+  white_ratio <- n_white_match / n_white_ply
+  black_ratio <- n_black_match / n_black_ply
+  return(list(white_ratio = white_ratio, black_ratio = black_ratio,
+              white_matches = white_matches, black_matches = black_matches))
 }

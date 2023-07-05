@@ -57,7 +57,6 @@ get_coercion <- function(positionlog) {
   # Check for at least 2 pvs
   if(is.null(crammed_positionlog$multipv)) {return(NULL)}
   if (max(crammed_positionlog$multipv, na.rm=TRUE) < 2) {return(Inf)}
-  assertthat::assert_that(max(crammed_positionlog$multipv, na.rm=TRUE) >= 2)
   # What is the maximum depth?
   max_depth <- max(crammed_positionlog$depth, na.rm=TRUE)
   # Extract top 2 scores at max_depth

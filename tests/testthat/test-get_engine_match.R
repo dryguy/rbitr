@@ -4,7 +4,7 @@ test_that("get_engine_match() correctly counts engine matches", {
                            limit = 1)
   match_ratios <- get_engine_match(gamelog, movetext)
   expect_identical(is.list(match_ratios), TRUE)
-  expect_identical(length(match_ratios), 2L)
+  expect_identical(length(match_ratios), 4L)
 })
 
 test_that("get_engine_match() correctly handles single move", {
@@ -13,5 +13,5 @@ test_that("get_engine_match() correctly handles single move", {
                            limit = 1)
   match_ratios <- get_engine_match(gamelog, movetext)
   expect_identical(is.list(match_ratios), TRUE)
-  expect_identical(length(match_ratios), 2L)
+  expect_identical(length(match_ratios), 4L)
 })
