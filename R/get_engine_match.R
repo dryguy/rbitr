@@ -59,6 +59,7 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   moves <- get_moves(movetext)[[1]]
   n_ply <- length(moves)
   bestmoves <- bestmoves[1:n_ply]
+  matches <- moves == bestmoves
   white_ply <- seq.int(from = 1L, to = n_ply, by = 2L)
   if (n_ply < 2) {
     black_ply <- NA
@@ -79,5 +80,6 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   white_ratio <- n_white_match / n_white_ply
   black_ratio <- n_black_match / n_black_ply
   return(list(white_ratio = white_ratio, black_ratio = black_ratio,
-              white_matches = white_matches, black_matches = black_matches))
+              white_matches = white_matches, black_matches = black_matches,
+              matches = matches))
 }
