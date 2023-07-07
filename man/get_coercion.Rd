@@ -33,7 +33,7 @@ to here as the \code{coercion} of the position.
 analysis. The analysis must contain at least two principal variations
 (\code{pv}'s) to allow the \code{coercion} to be determined. If only one PV exists,
 a value of Inf is returned, or if no move is possible (i.e., in positions
-of mate or stalemate) it will return \code{NULL}. The highest depth of search
+of mate or stalemate) it will return \code{NA}. The highest depth of search
 available will be used by default.
 }
 \examples{

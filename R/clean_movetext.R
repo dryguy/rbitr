@@ -3,13 +3,22 @@
 #' Removes comments, annotations, and other formatting that would interfere with
 #'   engine analysis.
 #'
-#' The [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2)
-#'   allows comments, annotations, game termination markers, and other
-#'   formatting oddities that may not play well with all software. The
-#'   `clean_movetext()` function removes everything but the moves and move
-#'   numbers.
+#' @details The [PGN specification](http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2)
+#'   allows comments, annotations, game termination markers, and formatting
+#'   oddities that may not play well with all software. The `clean_movetext()`
+#'   function removes everything but the moves and move numbers, unless the
+#'   `cut_gtm` parameter is set to `FALSE`.
+#'
+#' @note Game termination markers ('1-0', '0-1', '1/2-1/2', '*') are removed by
+#'   default. This causes the movetext to no longer comply with the PGN
+#'   specification. PGN files saved without game termination markers will not
+#'   function properly. If you intend to save the clean movetext to a PGN file,
+#'   set the `cut_gtm` parameter to `FALSE` to preserve the game termination
+#'   markers.
 #'
 #' @param movetext A character vector of PGN movetext data
+#' @param cut_gtm (Default = TRUE) A boolean indicating if game termination
+#'   markers should be deleted
 #'
 #' @return A character vector of clean movetext.
 #' @export
@@ -20,8 +29,9 @@
 #' @examples
 #' clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
 
-clean_movetext <- function(movetext) {
+clean_movetext <- function(movetext, cut_gtm = TRUE) {
   assertthat::assert_that(is.character(movetext))
+  assertthat::assert_that(assertthat::is.flag(cut_gtm))
   # Remove semicolon format comments
   movetext <- stringr::str_replace_all(movetext, ';[^\\\\]*[\n|\r]', ' ')
   # Remove line breaks
@@ -50,7 +60,9 @@ clean_movetext <- function(movetext) {
   # Remove extra spaces
   movetext <- stringr::str_replace_all(movetext, '\\s+', ' ')
   # Remove game termination markers
-  movetext <- stringr::str_replace_all(movetext, '1-0|0-1|1\\/2-1\\/2|\\*', '')
+  if (cut_gtm) {
+   movetext <- stringr::str_replace_all(movetext, '1-0|0-1|1\\/2-1\\/2|\\*', '')
+  }
   # Trim white space
   trimws(movetext)
 }

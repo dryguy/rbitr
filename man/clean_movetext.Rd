@@ -4,10 +4,13 @@
 \alias{clean_movetext}
 \title{Remove comments and annotations from movetext}
 \usage{
-clean_movetext(movetext)
+clean_movetext(movetext, cut_gtm = TRUE)
 }
 \arguments{
 \item{movetext}{A character vector of PGN movetext data}
+
+\item{cut_gtm}{(Default = TRUE) A boolean indicating if game termination
+markers should be deleted}
 }
 \value{
 A character vector of clean movetext.
@@ -18,10 +21,18 @@ engine analysis.
 }
 \details{
 The \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.2}{PGN specification}
-allows comments, annotations, game termination markers, and other
-formatting oddities that may not play well with all software. The
-\code{clean_movetext()} function removes everything but the moves and move
-numbers.
+allows comments, annotations, game termination markers, and formatting
+oddities that may not play well with all software. The \code{clean_movetext()}
+function removes everything but the moves and move numbers, unless the
+\code{cut_gtm} parameter is set to \code{FALSE}.
+}
+\note{
+Game termination markers ('1-0', '0-1', '1/2-1/2', '*') are removed by
+default. This causes the movetext to no longer comply with the PGN
+specification. PGN files saved without game termination markers will not
+function properly. If you intend to save the clean movetext to a PGN file,
+set the \code{cut_gtm} parameter to \code{FALSE} to preserve the game termination
+markers.
 }
 \examples{
 clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
