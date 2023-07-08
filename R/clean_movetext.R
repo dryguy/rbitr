@@ -32,12 +32,12 @@
 clean_movetext <- function(movetext, cut_gtm = TRUE) {
   assertthat::assert_that(is.character(movetext))
   assertthat::assert_that(assertthat::is.flag(cut_gtm))
+  # Remove brace format comments
+  movetext <- stringr::str_replace_all(movetext, '\\{[^}]*\\}', ' ')
   # Remove semicolon format comments
   movetext <- stringr::str_replace_all(movetext, ';[^\\\\]*[\n|\r]', ' ')
   # Remove line breaks
   movetext <- stringr::str_replace_all(movetext, '[\n|\r]', ' ')
-  # Remove brace format comments
-  movetext <- stringr::str_replace_all(movetext, '\\{[^}]*\\}', ' ')
   # Remove 1... style numbering
   movetext <- stringr::str_replace_all(movetext, '[0-9]+\\.\\.\\.', ' ')
   # Remove traditional annotations (!, !!, ?, ??, !?, ?!) and literal glyphs
