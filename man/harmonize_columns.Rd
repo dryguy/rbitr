@@ -15,6 +15,17 @@ A list of data frames with harmonized columns
 \description{
 This function takes a list of data frames and adds missing columns to each
 data frame so that all data frames have the same columns in the same order.
-Any added columns will be populated with NAs. The function can be used to
-prepare data frames for an rbind when the columns are not identical.
+}
+\details{
+Any added columns will be populated with NAs. The function can be
+used to prepare data frames for an rbind when the columns are not identical.
+}
+\examples{
+# Create some example data frames
+df1 <- data.frame(a = 1:3, b = letters[1:3])
+df2 <- data.frame(b = letters[4:6], c = 4:6)
+df3 <- data.frame(a = 7:9, c = letters[7:9])
+
+# Harmonize columns
+harmonize_columns(list(df1, df2, df3))
 }
