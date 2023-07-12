@@ -98,7 +98,9 @@ evaluate_game <- function(movetext, engine_path, limiter, limit,
                           is.null(hash_size))
   # Convert the game to a machine readable format
   moves <- clean_movetext(movetext)
-  moves <- bigchess::san2lan(moves)
+  if (moves != '') {
+    moves <- bigchess::san2lan(moves)
+  }
   moves <- unlist(strsplit(moves, split = ' '), use.names = FALSE)
   moves <- c('', moves)
   n_moves <- length(moves)

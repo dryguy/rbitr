@@ -59,3 +59,16 @@ for (engine_path in engine_paths) {
     ))
   })
 }
+
+# Movetext contains no moves, only game termination markers
+test_that('evaluate_pgn can handle movetext with only termination markers', {
+  pgn_path <- file.path(
+    system.file(package = 'rbitr'),
+    'extdata',
+    'test',
+    'no_moves_only_game_termination_marker.pgn'
+  )
+  pgnlog <- evaluate_pgn(pgn_path, '\\Stockfish.exe', limiter = 'depth',
+                         limit = 1, mute = TRUE)
+  expect_identical(class(pgnlog[[5]][[1]][1]), 'character')
+})
