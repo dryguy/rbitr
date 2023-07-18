@@ -6,23 +6,19 @@
 \usage{
 cram_positionlog(
   positionlog,
-  all = FALSE,
-  patterns = NULL,
-  column_names = NULL,
+  all_tags = FALSE,
+  custom_tags = NULL,
   delete_blank_lines = TRUE
 )
 }
 \arguments{
 \item{positionlog}{A character vector of engine analysis}
 
-\item{all}{(Default = FALSE) A boolean. Setting \code{all} = TRUE will search for
-all of the info tokens listed in the UCI protocol}
+\item{all_tags}{(Default = FALSE) A boolean. Setting \code{all_tags} = TRUE will
+search for all of the info tags listed in the UCI protocol}
 
-\item{patterns}{(Default = NULL) An optional character vector of one or more
-user-supplied regular expressions}
-
-\item{column_names}{(Default = NULL) An optional character vector of column
-names for data extracted by the user-supplied regular expressions}
+\item{custom_tags}{(Default = NULL) An optional character vector of custom
+tag names for tags not in the UCI protocol}
 
 \item{delete_blank_lines}{(Default = TRUE) A boolean. Setting this value to
 FALSE will leave blank rows/columns intact}
@@ -69,17 +65,23 @@ For a list of data that can appear, refer to the
 types of data may be present in every info line. Some engines may also
 provide information that is not covered by the UCI protocol.
 
-\code{cram_positionlog()} uses regular expressions to extract data from
-the engine's logs. By default, the only data extracted are \code{depth},
-\code{multipv}, \code{score}, and \code{pv}. Setting the \code{all} parameter to
-TRUE will extract all of the info tokens listed in the UCI protocol. In
-cases where the engine supplies data not covered by the UCI protocol, the
-user may add custom regular expressions as a character vector via the
-\code{patterns} parameter. The names for these additional columns may be
-specified with the \code{column_names} parameter, which should be a character
-vector of equal length to \code{patterns}.
+By default, the only data extracted are \code{depth}, \code{multipv}, \code{score},
+and \code{pv}. Setting the \code{all_tags} parameter to \code{TRUE} will extract all of
+the info tags listed in the UCI protocol. In cases where the engine
+supplies data not covered by the UCI protocol, the user may add custom tag
+names as a character vector via the \code{custom_tags} parameter, but \emph{only} if
+the engine's custom tags conform to one of the following formats:
 
-If any of the requested data does not appear in search, NA will
+\if{html}{\out{<tag name>}} \if{html}{\out{<tag value>}}
+\if{html}{\out{<tag name>}} <move 1> <move 2> ... \if{html}{\out{<move i>}}
+
+where \if{html}{\out{<tag name>}}, \if{html}{\out{<tag value>}}, and \if{html}{\out{<move i>}} must not contain spaces. Tag
+names, tag values and moves must of course be separated from each other by
+spaces. Additionally, moves must be in the UCI format. Each \if{html}{\out{<move i>}} should
+consist of two chessboard squares followed by an optional promotion piece,
+e.g. e2e4 or e7e8q.
+
+If any of the requested data does not appear in the search, NA will
 appear in the data frame in the place of missing values. If entire rows or
 columns are missing values, they will be deleted by default. To leave
 missing rows/columns in place, set the \code{delete_blank_lines} parameter to

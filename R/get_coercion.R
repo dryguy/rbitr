@@ -55,7 +55,7 @@ get_coercion <- function(positionlog) {
   # Extract data from the positionlog
   crammed_positionlog <- cram_positionlog(positionlog)
   # Check for at least 2 pvs
-  if(is.null(crammed_positionlog$multipv)) {return(NA)}
+  if (is.null(crammed_positionlog$multipv)) {return(NA)}
   if (max(crammed_positionlog$multipv, na.rm=TRUE) < 2) {return(Inf)}
   # What is the maximum depth?
   max_depth <- max(crammed_positionlog$depth, na.rm=TRUE)
@@ -67,3 +67,4 @@ get_coercion <- function(positionlog) {
   # Return coercion at max depth
   return(-diff(scores))
 }
+

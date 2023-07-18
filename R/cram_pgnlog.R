@@ -15,12 +15,10 @@
 #'   [rbitr::cram_gamelog()] for details.
 #'
 #' @param pgnlog A list of gamelogs from rbitr's `evaluate_pgn()` function.
-#' @param all (Default = FALSE) A boolean. Setting `all` = TRUE will search for
-#'   all of the info tokens listed in the UCI protocol
-#' @param patterns (Default = NULL) An optional character vector of one or more
-#'   user-supplied regular expressions
-#' @param column_names (Default = NULL) An optional character vector of column
-#'   names for data extracted by the user-supplied regular expressions
+#' @param all_tags (Default = FALSE) A boolean. Setting `all_tags` = TRUE will
+#'   search for all of the info tags listed in the UCI protocol
+#' @param custom_tags (Default = NULL) An optional character vector of custom
+#'   tag names for tags not in the UCI protocol
 #' @param delete_blank_lines (Default = TRUE) A boolean. Setting this value to
 #'   FALSE will leave blank rows/columns intact
 #'
@@ -50,11 +48,14 @@
 #' "bestmove d2d4"
 #' )))
 #' cram_pgnlog(pgnlog)
-cram_pgnlog <- function(pgnlog, all = FALSE, patterns = NULL,
-                        column_names = NULL, delete_blank_lines = TRUE) {
+cram_pgnlog <- function(pgnlog, all_tags = FALSE, custom_tags = NULL,
+                        delete_blank_lines = TRUE) {
   # Validate input
   assertthat::assert_that(is.list(pgnlog))
+  assertthat::assert_that(assertthat::is.flag(all_tags))
+  assertthat::assert_that(is.character(custom_tags) | is.null(custom_tags))
+  assertthat::assert_that(assertthat::is.flag(delete_blank_lines))
 
   # Condense the data into a list of data frames.
-  lapply(pgnlog, cram_gamelog, all, patterns, column_names, delete_blank_lines)
+  lapply(pgnlog, cram_gamelog, all_tags, custom_tags, delete_blank_lines)
 }

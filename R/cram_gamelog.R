@@ -16,12 +16,10 @@
 #'   for details.
 #'
 #' @param gamelog A list of vectors of engine analysis
-#' @param all (Default = FALSE) A boolean. Setting `all` = TRUE will search for
-#'   all of the info tokens listed in the UCI protocol
-#' @param patterns (Default = NULL) An optional character vector of one or more
-#'   user-supplied regular expressions
-#' @param column_names (Default = NULL) An optional character vector of column
-#'   names for data extracted by the user-supplied regular expressions
+#' @param all_tags (Default = FALSE) A boolean. Setting `all_tags` = TRUE will
+#'   search for all of the info tags listed in the UCI protocol
+#' @param custom_tags (Default = NULL) An optional character vector of custom
+#'   tag names for tags not in the UCI protocol
 #' @param delete_blank_lines (Default = TRUE) A boolean. Setting this value to
 #'   FALSE will leave blank rows/columns intact
 #' @return A data frame summarizing the data for the game
@@ -50,28 +48,26 @@
 #'   "bestmove d2d4"
 #' ))
 #' cram_gamelog(gamelog)
-cram_gamelog <- function(gamelog, all = FALSE, patterns = NULL,
-                         column_names = NULL, delete_blank_lines = TRUE) {
+cram_gamelog <- function(gamelog, all_tags = FALSE, custom_tags = NULL,
+                         delete_blank_lines = TRUE) {
   # Validate input
   assertthat::assert_that(is.list(gamelog))
-  assertthat::assert_that(assertthat::is.flag(all))
-  assertthat::assert_that(is.character(patterns) | is.null(patterns))
-  assertthat::assert_that(is.character(column_names) | is.null(column_names))
-  assertthat::assert_that(length(column_names) == length(patterns))
+  assertthat::assert_that(assertthat::is.flag(all_tags))
+  assertthat::assert_that(is.character(custom_tags) | is.null(custom_tags))
   assertthat::assert_that(assertthat::is.flag(delete_blank_lines))
 
   # Cram the gamelog
   position_indices <- 1:length(gamelog)
-  cram_positionlogs <- function(position_index, gamelog, all, patterns,
-                                column_names, delete_blank_lines) {
+  cram_positionlogs <- function(position_index, gamelog, all_tags,custom_tags,
+                                delete_blank_lines) {
     positionlog <- gamelog[[position_index]]
-    crammed_positionlog <- cram_positionlog(positionlog, all, patterns,
-                                            column_names, delete_blank_lines)
+    crammed_positionlog <- cram_positionlog(positionlog, all_tags, custom_tags,
+                                            delete_blank_lines)
     position <- rep(position_index, nrow(crammed_positionlog))
     crammed_positionlog <- cbind(position, crammed_positionlog)
   }
-  crammed_gamelog <- lapply(position_indices, cram_positionlogs, gamelog, all,
-                            patterns, column_names, delete_blank_lines)
+  crammed_gamelog <- lapply(position_indices, cram_positionlogs, gamelog,
+                            all_tags, custom_tags, delete_blank_lines)
   crammed_gamelog <- do.call(rbind, crammed_gamelog)
   return(crammed_gamelog)
 }

@@ -6,23 +6,19 @@
 \usage{
 cram_gamelog(
   gamelog,
-  all = FALSE,
-  patterns = NULL,
-  column_names = NULL,
+  all_tags = FALSE,
+  custom_tags = NULL,
   delete_blank_lines = TRUE
 )
 }
 \arguments{
 \item{gamelog}{A list of vectors of engine analysis}
 
-\item{all}{(Default = FALSE) A boolean. Setting \code{all} = TRUE will search for
-all of the info tokens listed in the UCI protocol}
+\item{all_tags}{(Default = FALSE) A boolean. Setting \code{all_tags} = TRUE will
+search for all of the info tags listed in the UCI protocol}
 
-\item{patterns}{(Default = NULL) An optional character vector of one or more
-user-supplied regular expressions}
-
-\item{column_names}{(Default = NULL) An optional character vector of column
-names for data extracted by the user-supplied regular expressions}
+\item{custom_tags}{(Default = NULL) An optional character vector of custom
+tag names for tags not in the UCI protocol}
 
 \item{delete_blank_lines}{(Default = TRUE) A boolean. Setting this value to
 FALSE will leave blank rows/columns intact}
