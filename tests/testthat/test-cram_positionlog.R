@@ -57,6 +57,11 @@ test_that("parse_engine_line_cpp correctly handles currline tags", {
                '1 d2d4 d7d5 c2c4 e7e6')
 })
 
+test_that("parse_engine_line_cpp correctly handles promotions", {
+  engine_line <- 'bestmove a7a8q ponder g8f6'
+  expect_equal(parse_engine_line_cpp(engine_line, 'bestmove'), 'a7a8q')
+})
+
 test_that("remove_na_rows_cols removes rows and columns that are all NAs", {
   # Create a matrix with character data
   my_matrix <- matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, ncol = 3, byrow = TRUE)
@@ -102,7 +107,6 @@ test_that("cram_positionlog handles the all_tags parameter correctly", {
     "info depth 2 seldepth 2 multipv 1 score cp 14 nodes 40 nps 40000 tbhits 0 time 1 pv e2e4 e7e5",
     "bestmove e2e4 ponder e7e5"
   )
-
   result_all_false <- cram_positionlog(positionlog, all_tags = FALSE)
   result_all_true <- cram_positionlog(positionlog, all_tags = TRUE)
 

@@ -11,3 +11,21 @@ test_that("get_coercion correctly calculates coercion", {
   )
   expect_equal(get_coercion(positionlog), 25)
 })
+
+positionlog <- c(
+  "info depth 1 seldepth 1 score cp 13 nodes 20 nps 20000 tbhits 0 time 1 pv e2e4",
+  "info depth 2 seldepth 2 score cp 14 nodes 40 nps 40000 tbhits 0 time 1 pv e2e4 e7e5",
+  "bestmove e2e4 ponder e7e5"
+)
+test_that('get_coercion handles NULL multipv', {
+  expect_identical(get_coercion(positionlog), NA)
+})
+
+positionlog <- c(
+  "info depth 1 seldepth 1 multipv 1 score cp 13 nodes 20 nps 20000 tbhits 0 time 1 pv e2e4",
+  "info depth 2 seldepth 2 multipv 1 score cp 14 nodes 40 nps 40000 tbhits 0 time 1 pv e2e4 e7e5",
+  "bestmove e2e4 ponder e7e5"
+)
+test_that('get_coercion handles multipv < 2', {
+  expect_identical(get_coercion(positionlog), Inf)
+})

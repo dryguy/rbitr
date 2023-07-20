@@ -31,10 +31,17 @@ to here as the \code{coercion} of the position.
 
 \code{get_coercion()} requires as input a \code{positionlog} of engine
 analysis. The analysis must contain at least two principal variations
-(\code{pv}'s) to allow the \code{coercion} to be determined. If only one PV exists,
-a value of Inf is returned, or if no move is possible (i.e., in positions
-of mate or stalemate) it will return \code{NA}. The highest depth of search
-available will be used by default.
+(\code{pv}'s) to allow the \code{coercion} to be determined. If only one PV is
+provided, or if no move is possible (i.e., in positions of mate or
+stalemate) it will return \code{Inf}. The highest depth of search available will
+be used by default.
+}
+\note{
+When only one PV is available, this may be because there is only one
+legal move, or the engine only analyzed one PV. When more than one legal
+move exists, but the engine only analyzed one PV, it might make more sense
+to consider the coercion to be NA. However, at present, \code{get_coercion()}
+can't distinguish between these two cases and returns \code{Inf} for either.
 }
 \examples{
 positionlog <- c(
