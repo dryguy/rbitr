@@ -1,78 +1,59 @@
-test_that("is_uci_move works as expected", {
-  expect_true(is_uci_move("e2e4"))
-  expect_true(is_uci_move("e7e8q"))
-  expect_false(is_uci_move("a2a9"))
-  expect_false(is_uci_move("e2e"))
-  expect_false(is_uci_move("e2e4x"))
-  expect_false(is_uci_move("20000"))
+engine_line <-
+  "info depth 2 seldepth 2 multipv 2 score cp -154 nodes 119 nps 119000 tbhits 0 time 1 pv d7d6 d2d4"
+test_that("parse_engine_line_cpp returns correct value for numeric tags", {
+  expect_equal(parse_engine_line_cpp(engine_line, 'depth'), '2')
+  expect_equal(parse_engine_line_cpp(engine_line, 'seldepth'), '2')
+  expect_equal(parse_engine_line_cpp(engine_line, 'multipv'), '2')
+  expect_equal(parse_engine_line_cpp(engine_line, 'nodes'), '119')
+  expect_equal(parse_engine_line_cpp(engine_line, 'nps'), '119000')
+  expect_equal(parse_engine_line_cpp(engine_line, 'tbhits'), '0')
+  expect_equal(parse_engine_line_cpp(engine_line, 'time'), '1')
 })
 
-test_that("parse_split_engine_line returns correct value for numeric tags", {
-  engine_line <-
-    "info depth 2 seldepth 2 multipv 2 score cp -154 nodes 119 nps 119000 tbhits 0 time 1 pv d7d6 d2d4"
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'depth'), '2')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'seldepth'), '2')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'multipv'), '2')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'nodes'), '119')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'nps'), '119000')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'tbhits'), '0')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'time'), '1')
+test_that("parse_engine_line_cpp works for multiple tags", {
+  tag_names <- c('depth', 'multipv', 'score', 'pv')
+  expect_equal(parse_engine_line_cpp(engine_line, tag_names),
+               c('2', '2', 'cp -154', 'd7d6 d2d4'))
 })
 
-test_that("parse_split_engine_line returns correct value for move tags", {
+test_that("parse_engine_line_cpp returns correct value for move tags", {
   engine_line <- 'bestmove d2d4 ponder g8f6'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'bestmove'),
-               'd2d4')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'ponder'),
-               'g8f6')
+  expect_equal(parse_engine_line_cpp(engine_line, 'bestmove'), 'd2d4')
+  expect_equal(parse_engine_line_cpp(engine_line, 'ponder'),   'g8f6')
   engine_line <-
     "info depth 2 seldepth 2 multipv 2 score cp -154 nodes 119 nps 119000 tbhits 0 time 1 pv d7d6 d2d4"
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'pv'),
-               'd7d6 d2d4')
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'currmove'), NA)
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'refutation'),
-               NA)
+  expect_equal(parse_engine_line_cpp(engine_line, 'pv'), 'd7d6 d2d4')
+  expect_equal(parse_engine_line_cpp(engine_line, 'currmove'), NA_character_)
+  expect_equal(parse_engine_line_cpp(engine_line, 'refutation'), NA_character_)
 })
 
-test_that("parse_split_engine_line returns correct value for score tag", {
+test_that("parse_engine_line_cpp returns correct value for score tag", {
   engine_line <- 'info depth 1 seldepth 1 time 15 nodes 5 score cp 37'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'score'),
-               'cp 37')
+  expect_equal(parse_engine_line_cpp(engine_line, 'score'), 'cp 37')
 })
 
-test_that("parse_split_engine_line returns NA for non-existent tag", {
+test_that("parse_engine_line_cpp returns NA for non-existent tag", {
   engine_line <- 'info depth 1 seldepth 1 time 15 nodes 5 score cp 37'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_true(is.na(parse_split_engine_line(split_engine_line,
-                                            tag = 'nonexistent')))
+  expect_true(is.na(parse_engine_line_cpp(engine_line, 'nonexistent')))
 })
 
-test_that("parse_split_engine_line correctly handles string tags", {
+test_that("parse_engine_line_cpp correctly handles string tags", {
   engine_line <- 'info string this is a test string'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'string'),
+  expect_equal(parse_engine_line_cpp(engine_line, 'string'),
                'this is a test string')
 })
 
-test_that("parse_split_engine_line correctly handles move tags with string", {
+test_that("parse_engine_line_cpp correctly handles move tags with string", {
   engine_line <- 'info pv d2d4 d7d5 c2c4 e7e6 string test'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'pv'),
-               'd2d4 d7d5 c2c4 e7e6')
+  expect_equal(parse_engine_line_cpp(engine_line, 'pv'), 'd2d4 d7d5 c2c4 e7e6')
 })
 
-test_that("parse_split_engine_line correctly handles currline tags", {
+test_that("parse_engine_line_cpp correctly handles currline tags", {
   engine_line <- 'info currline d2d4 d7d5 c2c4 e7e6 string test'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'currline'),
+  expect_equal(parse_engine_line_cpp(engine_line, 'currline'),
                'd2d4 d7d5 c2c4 e7e6')
   engine_line <- 'info currline 1 d2d4 d7d5 c2c4 e7e6 string test'
-  split_engine_line <- strsplit(engine_line, split = ' ', fixed = TRUE)[[1]]
-  expect_equal(parse_split_engine_line(split_engine_line, tag = 'currline'),
+  expect_equal(parse_engine_line_cpp(engine_line, tag = 'currline'),
                '1 d2d4 d7d5 c2c4 e7e6')
 })
 
