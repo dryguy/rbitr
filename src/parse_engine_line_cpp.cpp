@@ -42,8 +42,8 @@ using namespace Rcpp;
 //'   The `string` tag can have any value, and it runs to the end of the line.
 //'
 //'   The `currline` tag has a slightly different format than the other move tags.
-//'   The moves may be preceded by a number indicating which cpu generated the
-//'   moves. In the case of only 1 cpu, the number may be omitted.
+//'   The moves may be preceded by a number indicating which CPU generated the
+//'   moves. In the case of only 1 CPU, the number may be omitted.
 //'
 //'   Some engines may use tags not listed in the UCI protocol. The
 //'   `parse_engine_line_cpp()` function may be able to deal with such tags if
@@ -59,11 +59,14 @@ using namespace Rcpp;
 CharacterVector parse_engine_line_cpp(std::string engine_line, CharacterVector tag_names) {
   // Split the input string by space and store the tokens in a vector
   std::vector<std::string> split_engine_line;
-  std::stringstream ss(engine_line);
-  std::string token;
-  while (getline(ss, token, ' ')) {
-    split_engine_line.push_back(token);
+  size_t start = 0;
+  size_t end = engine_line.find(' ');
+  while (end != std::string::npos) {
+    split_engine_line.push_back(engine_line.substr(start, end - start));
+    start = end + 1;
+    end = engine_line.find(' ', start);
   }
+  split_engine_line.push_back(engine_line.substr(start));
 
   // Initialize the output character vector with the same size as tag_names
   CharacterVector tag_values(tag_names.size(), NA_STRING);
