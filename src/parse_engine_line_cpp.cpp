@@ -5,6 +5,56 @@
 
 using namespace Rcpp;
 
+//' Parse a line of UCI chess engine output
+//'
+//' @details The `parse_engine_line_cpp()` function is optimized for speed for
+//'   large data sets. Input validation should therefore be handled by a parent
+//'   function. The function is written in C++ via the `Rcpp` package.
+//'
+//' @details The `parse_engine_line_cpp()` function takes two arguments: a
+//'   character vector of length one representing a single line of UCI engine
+//'   output, and a character vector containing the tag names to extract from
+//'   the engine line. It will return a character vector of tag values
+//'   corresponding to the input tag names. Anywhere a tag is not present, it
+//'   will return NA.
+//'
+//' @details The [UCI](https://github.com/fsmosca/UCIChessEngineProtocol)
+//'   protocol lists a number of tags that may appear in engine output. Most tags
+//'   have values that are either numeric, or that are a series of chess moves in
+//'   long algebraic notation (LAN):<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;Numeric tags: depth, seldepth, multipv, time, nodes, currmovenumber,
+//'     hashfull, nps, tbhits, sbhits, cpuload<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;Move tags: bestmove, ponder, pv, currmove, refutation<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;Special tags: score, string, currline
+//'
+//'   In the case of move tags, `parse_engine_line_cpp()` will check for the
+//'   next move until it reaches the end of the series, and return the moves as a
+//'   string separated by spaces.
+//'
+//'   The tags `score`, `string`, and `currline` differ from the rest.
+//'
+//'   The `score` tag has 4 different types of value (`<x>` indicates numeric):<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;cp: A score (centipawns), 'cp `<x>`'<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;mate: Moves until mate, 'mate `<x>`'<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;lowerbound: A lower bound for the score (centipawns), '`<x>` lowerbound'<br>
+//'   &nbsp;&nbsp;&nbsp;&nbsp;upperbound: An upper bound for the score (centipawns), '`<x>` upperbound'<br>
+//'
+//'   The `string` tag can have any value, and it runs to the end of the line.
+//'
+//'   The `currline` tag has a slightly different format than the other move tags.
+//'   The moves may be preceded by a number indicating which cpu generated the
+//'   moves. In the case of only 1 cpu, the number may be omitted.
+//'
+//'   Some engines may use tags not listed in the UCI protocol. The
+//'   `parse_engine_line_cpp()` function may be able to deal with such tags if
+//'   they conform to the general format of other UCI tags.
+//'
+//' @param engine_line A single-element character vector of the engine line to be parsed.
+//' @param tag_names A character vector of tag names to extract from the engine line.
+//'
+//' @return A character vector of tag values corresponding to the input tag names.
+//'
+//' @export
 // [[Rcpp::export]]
 CharacterVector parse_engine_line_cpp(std::string engine_line, CharacterVector tag_names) {
   // Split the input string by space and store the tokens in a vector
