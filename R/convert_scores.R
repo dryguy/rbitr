@@ -23,7 +23,7 @@
 #' @note The function `convert_scores()` assumes that the scores begin with a
 #'   position where white is to move. By default, the score for black will have
 #'   the sign flipped to ensure that when white is winning, the score > 0. To
-#'   override this behaviour, set `flip_signs` to FALSE.
+#'   override this behavior, set `flip_signs` to FALSE.
 #'
 #' @param scores A character vector of scores from a
 #'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
@@ -44,29 +44,31 @@
 
 convert_scores <- function(scores, mate = 5000, flip_signs = TRUE) {
   # Validate input
-  assertthat::assert_that(is.character(scores))
-  assertthat::assert_that(is.numeric(mate) & length(mate) == 1)
+  stopifnot(is.character(scores))
+  stopifnot(is.numeric(mate) & length(mate) == 1)
   # Convert 'mate x' to numeric value
-  mate0 <- which(stringr::str_detect(scores, 'mate 0'))
+  mate0 <- which(scores == 'mate 0')
   if (length(mate0) > 0) {
     scores[mate0] <- -mate
   }
-  scores[stringr::str_detect(scores, 'mate [0-9]+')] <- mate
-  scores[stringr::str_detect(scores, 'mate -[0-9]+')] <- -mate
+  scores[startsWith(scores, 'mate ') & !startsWith(scores, 'mate -')] <- mate
+  scores[startsWith(scores, 'mate -')] <- -mate
   # Convert upperbound & lowerbound to numeric
-  bounds <- stringr::str_detect(scores, 'bound')
+  bounds <- grepl('bound', scores)
   if (any(bounds, na.rm = TRUE)) {
-    scores[which(bounds)] <- stringr::str_replace(scores[which(bounds)],
-                                                  ' [a-z]*bound', '')
+    scores[bounds] <- sub(' [a-z]*bound', '', scores[bounds])
   }
   # Remove cp markers
-  scores <- stringr::str_replace(scores, 'cp ', '')
+  scores <- sub('cp ', '', scores)
   # Convert characters to integer
   scores <- as.integer(scores)
   # Flip signs for black scores so that if score > 0 white is winning.
   if (flip_signs) {
-    black_index <- 1:length(scores) %% 2 == 0
+    black_index <- seq_along(scores) %% 2 == 0
     scores[black_index] <- -scores[black_index]
   }
   scores
 }
+
+
+

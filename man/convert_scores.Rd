@@ -46,7 +46,7 @@ black is ahead. The final scores will be returned as an integer vector.
 The function \code{convert_scores()} assumes that the scores begin with a
 position where white is to move. By default, the score for black will have
 the sign flipped to ensure that when white is winning, the score > 0. To
-override this behaviour, set \code{flip_signs} to FALSE.
+override this behavior, set \code{flip_signs} to FALSE.
 }
 \examples{
 scores <- c("90", "-26", "26 upperbound", "mate 1", "mate -1", "mate 0", NA)
