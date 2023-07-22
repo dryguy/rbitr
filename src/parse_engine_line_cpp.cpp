@@ -1,8 +1,4 @@
 #include <Rcpp.h>
-#include <string>
-#include <vector>
-#include <sstream>
-
 using namespace Rcpp;
 
 //' Parse a line of UCI chess engine output
