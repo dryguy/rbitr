@@ -4,12 +4,12 @@
 #'   each containing moves in long algebraic notation (LAN).
 #'
 #' @details The movetext field of a PGN file contains chess moves in standard
-#'   algebraic notation, along with optional annotations and comments. The
+#'   algebraic notation (SAN), along with optional annotations and comments. The
 #'   `get_moves()` function extracts the individual moves and converts them to
 #'   long algebraic notation (LAN). The movetext vectors are typically obtained
 #'   from a PGN file using the `get_pgn()` function.
 #'
-#' @param movetext A character vector of movetext.
+#' @param movetext A character vector of movetext in SAN format.
 #'
 #' @return A list of character vectors, where each vector contains the LAN
 #'   format moves of the corresponding movetext.
@@ -27,7 +27,25 @@
 get_moves <- function(movetext) {
   assertthat::assert_that(is.character(movetext))
   movetext <- clean_movetext(movetext)
-  moves <- lapply(movetext, bigchess::san2lan)
+  moves <- lapply(movetext, convert_to_san)
   moves <- unlist(lapply(moves, tolower), use.names = FALSE)
   strsplit(moves, ' ', fixed = TRUE)
+}
+
+#' convert_to_san
+#'
+#' Internal helper function for `get_moves()`. This is a wrapper around
+#'   `bigchess::san2lan()` to deal with empty movetext. When movetext == '', it
+#'   returns ' ', which in `get_moves()` gets passed to `strsplit()` that will
+#'   convert it to ''.
+#'
+#' @param movetext A character vector of movetext in SAN format.
+#'
+#' @return A character vector of movetext in LAN format.
+convert_to_san <- function(movetext) {
+  if(movetext == '') {
+    return(' ')
+  } else {
+    return(bigchess::san2lan(movetext))
+  }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_engine_match.R
 \name{get_engine_match}
 \alias{get_engine_match}
-\title{Determine the ratio of a player's moves that match an engine's moves}
+\title{Determine the fraction of a player's moves that match an engine's moves}
 \usage{
 get_engine_match(gamelog, movetext, depth = NULL)
 }

@@ -1,4 +1,4 @@
-#' Determine the ratio of a player's moves that match an engine's moves
+#' Determine the fraction of a player's moves that match an engine's moves
 #'
 #' The `get_engine_match()` function calculates the fraction of moves played
 #'   that correspond to the 'best' move as determined by a chess engine.

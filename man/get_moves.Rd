@@ -7,7 +7,7 @@
 get_moves(movetext)
 }
 \arguments{
-\item{movetext}{A character vector of movetext.}
+\item{movetext}{A character vector of movetext in SAN format.}
 }
 \value{
 A list of character vectors, where each vector contains the LAN
@@ -19,7 +19,7 @@ each containing moves in long algebraic notation (LAN).
 }
 \details{
 The movetext field of a PGN file contains chess moves in standard
-algebraic notation, along with optional annotations and comments. The
+algebraic notation (SAN), along with optional annotations and comments. The
 \code{get_moves()} function extracts the individual moves and converts them to
 long algebraic notation (LAN). The movetext vectors are typically obtained
 from a PGN file using the \code{get_pgn()} function.
