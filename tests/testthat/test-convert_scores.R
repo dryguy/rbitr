@@ -8,6 +8,8 @@ test_that('convert_scores converts scores', {
     c(90, 26, 26, 5000, 5000, 5000, -5000, NA, 26, -10, 20)
   )
   expect_equal(
-    convert_scores(c('20', '-20'), flip_signs = FALSE), c(20, -20)
+    convert_scores(
+      c('20', '-20', 'mate 2', 'mate -2'), flip_signs = FALSE),
+    c(20, -20, 5000, -5000)
   )
 })

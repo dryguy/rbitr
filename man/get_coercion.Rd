@@ -14,20 +14,18 @@ A single-element numeric vector of the \code{coercion} for the position.
 }
 \description{
 The \code{get_coercion()} function calculates the difference in evaluation between
-the best and second best moves in a chess position, referred to as the
+the best and second best moves in a chess position, referred to here as the
 \code{coercion} of the position.
 }
 \details{
-In chess, forcing moves are those moves in which the opponent has
-only a small number of choices that don't result in an unacceptable loss of
-material or positional advantage. Guid and Bratko (see references) used the
-difference in engine evaluation between the best and second best moves in a
-position as a measure of how forcing a position is.
+In chess, \emph{forcing} moves are moves that give the opponent only a
+small number of ways to avoid an unfavorable position. Guid and Bratko (see
+references) used the difference in engine evaluation between the best and
+second best moves in a position as a measure of how forcing a position is.
 
 Given a log of engine analysis of a chess position produced by one
 of \code{rbitr}'s evaluation functions, \code{get_coercion()} will compute the
-difference in evaluation between the best and second best moves, referred
-to here as the \code{coercion} of the position.
+difference in evaluation between the best and second best moves.
 
 \code{get_coercion()} requires as input a \code{positionlog} of engine
 analysis. The analysis must contain at least two principal variations
@@ -38,10 +36,11 @@ be used by default.
 }
 \note{
 When only one PV is available, this may be because there is only one
-legal move, or the engine only analyzed one PV. When more than one legal
-move exists, but the engine only analyzed one PV, it might make more sense
-to consider the coercion to be NA. However, at present, \code{get_coercion()}
-can't distinguish between these two cases and returns \code{Inf} for either.
+legal move, or because the engine only analyzed one PV. When more than one
+legal move exists, but the engine only analyzed one PV, it might make more
+sense to consider the coercion to be NA. However, at present,
+\code{get_coercion()} can't distinguish between these two cases and returns
+\code{Inf} for either.
 }
 \examples{
 positionlog <- c(

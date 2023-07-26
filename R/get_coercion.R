@@ -1,19 +1,17 @@
 #' Gets the coercion of a chess position
 #'
 #' The `get_coercion()` function calculates the difference in evaluation between
-#'   the best and second best moves in a chess position, referred to as the
+#'   the best and second best moves in a chess position, referred to here as the
 #'   `coercion` of the position.
 #'
-#' @details In chess, forcing moves are those moves in which the opponent has
-#'   only a small number of choices that don't result in an unacceptable loss of
-#'   material or positional advantage. Guid and Bratko (see references) used the
-#'   difference in engine evaluation between the best and second best moves in a
-#'   position as a measure of how forcing a position is.
+#' @details In chess, *forcing* moves are moves that give the opponent only a
+#'   small number of ways to avoid an unfavorable position. Guid and Bratko (see
+#'   references) used the difference in engine evaluation between the best and
+#'   second best moves in a position as a measure of how forcing a position is.
 #'
 #' @details Given a log of engine analysis of a chess position produced by one
 #'   of `rbitr`'s evaluation functions, `get_coercion()` will compute the
-#'   difference in evaluation between the best and second best moves, referred
-#'   to here as the `coercion` of the position.
+#'   difference in evaluation between the best and second best moves.
 #'
 #' @details `get_coercion()` requires as input a `positionlog` of engine
 #'   analysis. The analysis must contain at least two principal variations
@@ -23,10 +21,11 @@
 #'   be used by default.
 #'
 #' @note When only one PV is available, this may be because there is only one
-#'   legal move, or the engine only analyzed one PV. When more than one legal
-#'   move exists, but the engine only analyzed one PV, it might make more sense
-#'   to consider the coercion to be NA. However, at present, `get_coercion()`
-#'   can't distinguish between these two cases and returns `Inf` for either.
+#'   legal move, or because the engine only analyzed one PV. When more than one
+#'   legal move exists, but the engine only analyzed one PV, it might make more
+#'   sense to consider the coercion to be NA. However, at present,
+#'   `get_coercion()` can't distinguish between these two cases and returns
+#'   `Inf` for either.
 #'
 #' @param positionlog A character vector of engine analysis
 #'
@@ -60,8 +59,12 @@ get_coercion <- function(positionlog) {
   assertthat::assert_that(is.character(positionlog))
   # Extract data from the positionlog
   crammed_positionlog <- cram_positionlog(positionlog)
-  # Check for at least 2 pvs
+  # Check that multipv is present
   if (is.null(crammed_positionlog$multipv)) {return(NA)}
+  # Convert numeric columns
+  crammed_positionlog$depth   <- as.numeric(crammed_positionlog$depth)
+  crammed_positionlog$multipv <- as.numeric(crammed_positionlog$multipv)
+  # Check for at least 2 pvs
   if (max(crammed_positionlog$multipv, na.rm=TRUE) < 2) {return(Inf)}
   # What is the maximum depth?
   max_depth <- max(crammed_positionlog$depth, na.rm=TRUE)
@@ -69,8 +72,11 @@ get_coercion <- function(positionlog) {
   scores <- crammed_positionlog$score[crammed_positionlog$depth == max_depth &
                                       crammed_positionlog$multipv %in% c(1, 2)]
   # Convert evaluations to numeric
-  scores <- convert_scores(scores, flip_signs = FALSE)
+  scores <- convert_scores(scores, mate = Inf, flip_signs = FALSE)
   # Return coercion at max depth
-  return(-diff(scores))
+  if(all(scores == Inf) || all(scores == -Inf)) {
+    return(0)
+  }
+  return(scores[1] - scores[2])
 }
 
