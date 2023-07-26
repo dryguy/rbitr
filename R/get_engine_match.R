@@ -54,6 +54,11 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   # Validate input
   assertthat::assert_that(is.list(gamelog))
   assertthat::assert_that(assertthat::is.count(depth) | is.null(depth))
+  # If there are no moves, exit early
+  if(movetext == '') {
+    return(list(white_ratio = NA, black_ratio = NA, white_matches = NA,
+                black_matches = NA, matches = NA))
+  }
   # Count the matches
   bestmoves <- unlist(parse_gamelog(gamelog, 'bestmove'))
   moves <- get_moves(movetext)[[1]]
