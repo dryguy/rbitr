@@ -57,6 +57,11 @@ get_engine_match <- function(gamelog, movetext, depth = NULL) {
   # Count the matches
   bestmoves <- unlist(parse_gamelog(gamelog, 'bestmove'))
   moves <- get_moves(movetext)[[1]]
+  # If there are no moves, exit early
+  if(all(moves == '')) {
+    return(list(white_ratio = NA, black_ratio = NA, white_matches = NA,
+                black_matches = NA, matches = NA))
+  }
   n_ply <- length(moves)
   bestmoves <- bestmoves[1:n_ply]
   matches <- moves == bestmoves
