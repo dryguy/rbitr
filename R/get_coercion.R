@@ -28,6 +28,8 @@
 #'   `Inf` for either.
 #'
 #' @param positionlog A character vector of engine analysis
+#' @param depth A single-element integer vector of the desired search depth
+#'   (# of plies)
 #'
 #' @return A single-element numeric vector of the `coercion` for the position.
 #' @export
@@ -54,9 +56,10 @@
 #'   0 time 2 pv h2h4 g8f6 h4g5",
 #'   "bestmove d2d4 ponder g8f6"
 #' )
-get_coercion <- function(positionlog) {
+get_coercion <- function(positionlog, depth = NULL) {
   # Validate input
   assertthat::assert_that(is.character(positionlog))
+  assertthat::assert_that(assertthat::is.count(depth) | is.null(depth))
   # Extract data from the positionlog
   crammed_positionlog <- cram_positionlog(positionlog)
   # Check that multipv is present
@@ -66,10 +69,12 @@ get_coercion <- function(positionlog) {
   crammed_positionlog$multipv <- as.numeric(crammed_positionlog$multipv)
   # Check for at least 2 pvs
   if (max(crammed_positionlog$multipv, na.rm=TRUE) < 2) {return(Inf)}
-  # What is the maximum depth?
-  max_depth <- max(crammed_positionlog$depth, na.rm=TRUE)
+  # Use maximum depth?
+  if(is.null(depth)) {
+    depth <- max(crammed_positionlog$depth, na.rm=TRUE)
+  }
   # Extract top 2 scores at max_depth
-  scores <- crammed_positionlog$score[crammed_positionlog$depth == max_depth &
+  scores <- crammed_positionlog$score[crammed_positionlog$depth == depth &
                                       crammed_positionlog$multipv %in% c(1, 2)]
   # Convert evaluations to numeric
   scores <- convert_scores(scores, mate = Inf, flip_signs = FALSE)

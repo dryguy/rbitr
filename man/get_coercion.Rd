@@ -4,10 +4,13 @@
 \alias{get_coercion}
 \title{Gets the coercion of a chess position}
 \usage{
-get_coercion(positionlog)
+get_coercion(positionlog, depth = NULL)
 }
 \arguments{
 \item{positionlog}{A character vector of engine analysis}
+
+\item{depth}{A single-element integer vector of the desired search depth
+(# of plies)}
 }
 \value{
 A single-element numeric vector of the \code{coercion} for the position.

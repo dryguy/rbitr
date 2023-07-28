@@ -10,6 +10,7 @@ test_that("get_coercion correctly calculates coercion", {
     "bestmove d2d4 ponder g8f6"
   )
   expect_equal(get_coercion(positionlog), 25)
+  expect_equal(get_coercion(positionlog, depth = 1), 15)
 })
 
 positionlog <- c(
