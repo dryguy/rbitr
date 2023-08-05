@@ -7,3 +7,9 @@ test_that('regan_antiderivative returns the antideriv. of 1 / (1 + abs(x))', {
   y <- c(-log(11), -log(4) / 2, 0, log(4) / 2, log(11))
   expect_equal(regan_antiderivative(x), y)
 })
+
+test_that('regan_antiderivative returns an error for non-numeric inputs', {
+  expect_error(regan_antiderivative('a'))
+  expect_error(regan_antiderivative(TRUE))
+  expect_error(regan_antiderivative(c(1, 'a')))
+})
