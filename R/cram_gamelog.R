@@ -68,6 +68,7 @@ cram_gamelog <- function(gamelog, all_tags = FALSE, custom_tags = NULL,
   }
   crammed_gamelog <- lapply(position_indices, cram_positionlogs, gamelog,
                             all_tags, custom_tags, delete_blank_lines)
+  crammed_gamelog <- harmonize_columns(crammed_gamelog)
   crammed_gamelog <- do.call(rbind, crammed_gamelog)
   return(crammed_gamelog)
 }
