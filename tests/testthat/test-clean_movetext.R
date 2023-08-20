@@ -44,5 +44,9 @@ test_that('clean_movetext trims whitespace' ,{
 test_that('clean_movetext replaces zeros in castling symbols', {
   expect_identical(
     clean_movetext("1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. 0-0"),
-    "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O")
+                   "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O")
+})
+test_that('clean_movetext replaces en and em dashes with regular dashes', {
+  expect_identical(clean_movetext("1. e4 e5 0–1"),
+                                  "1. e4 e5 0-1")
 })

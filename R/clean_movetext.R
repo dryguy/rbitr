@@ -16,9 +16,11 @@
 #'   set the `cut_gtm` parameter to `FALSE` to preserve the game termination
 #'   markers.
 #'
-#' @note Contrary to the pgn specification, some sources may use zero for
-#'   castling ('0-0' or '0-0-0')  in stead of capital letter O. Clean movetext
-#'   will convert these to the accepted forms.
+#' @note As a human-readable (and writable) format, pgn files may sometimes
+#'   contain non-standard characters. Some sources may use zero for castling
+#'   ('0-0' or '0-0-0') instead of capital letter O. Clean movetext will convert
+#'   these to the accepted forms. Em (—) or en (–) dashes are replaced with
+#'   ordinary dashes (-).
 #'
 #' @param movetext A character vector of PGN movetext data
 #' @param cut_gtm (Default = TRUE) A boolean indicating if game termination
@@ -70,6 +72,9 @@ clean_movetext <- function(movetext, cut_gtm = TRUE) {
   # Replace zeros in castling symbols
   movetext <- gsub("0-0-0", "O-O-O", movetext)
   movetext <- gsub("0-0", "O-O", movetext)
+  # Replace en or em dashes with regular dashes
+  movetext <- gsub("\u2013", "-", movetext)
+  movetext <- gsub("\u2014", "-", movetext)
   # Trim white space
   trimws(movetext)
 }
