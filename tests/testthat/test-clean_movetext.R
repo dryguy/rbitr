@@ -41,3 +41,8 @@ test_that('clean_movetext leaves termination markers when cut_gtm is FALSE', {
 test_that('clean_movetext trims whitespace' ,{
   expect_identical(clean_movetext(' 1. e4 e5 '), '1. e4 e5')
 })
+test_that('clean_movetext replaces zeros in castling symbols', {
+  expect_identical(
+    clean_movetext("1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. 0-0"),
+    "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O")
+})

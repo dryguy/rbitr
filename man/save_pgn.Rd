@@ -39,7 +39,7 @@ If any tags in the
 \href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1.1}{Seven Tag Roster}
 are missing, \code{save_pgn()} will add the missing tags and assign them values
 of "?" to indicate that the values are unknown. Any forbidden characters in
-the tag names will be replaced with  underscores. If this causes duplicate
+the tag names will be replaced with underscores. If this causes duplicate
 tags, the duplicates will be numbered. Tag names beginning with lowercase
 letters will be capitalized, and those beginning with non-letters will be
 prepended with a capital X.

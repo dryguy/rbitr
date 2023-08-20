@@ -33,6 +33,10 @@ specification. PGN files saved without game termination markers will not
 function properly. If you intend to save the clean movetext to a PGN file,
 set the \code{cut_gtm} parameter to \code{FALSE} to preserve the game termination
 markers.
+
+Contrary to the pgn specification, some sources may use zero for
+castling ('0-0' or '0-0-0')  in stead of capital letter O. Clean movetext
+will convert these to the accepted forms.
 }
 \examples{
 clean_movetext('1. e4! {Best by test.} e5 (d5 leads to the Scandinavian.) *')
