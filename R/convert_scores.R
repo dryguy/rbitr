@@ -46,6 +46,7 @@ convert_scores <- function(scores, mate = 5000, flip_signs = TRUE) {
   # Validate input
   stopifnot(is.character(scores))
   stopifnot(is.numeric(mate) & length(mate) == 1)
+  stopifnot(is.logical(flip_signs))
   # Convert 'mate x' to numeric value
   mate0 <- which(scores == 'mate 0')
   if (length(mate0) > 0) {
