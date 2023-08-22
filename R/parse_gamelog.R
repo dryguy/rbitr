@@ -126,20 +126,23 @@ parse_gamelog_score <- function(gamelog, target, depth) {
   }
 
   # Use max depth(s) if no depth is specified
-  desired_depths <- if (is.null(depth)) max_depths
-                    else rep(depth, length(gamelog))
+  desired_depths <- if (is.null(depth)) {
+    max_depths
+  } else {
+    rep(depth, length(gamelog))
+  }
 
   # Remove lines not containing desired depth(s)
   desired_depth_regexes <- paste0('info depth ', desired_depths)
-  delete_unused_lines <- function(gamelog_indices, gamelog,
+  delete_unused_lines <- function(gamelog_index, gamelog,
                                   desired_depth_regexes) {
     depth_line_index <-
-      stringr::str_detect(gamelog[[gamelog_indices]],
-                          desired_depth_regexes[[gamelog_indices]])
-    gamelog[[gamelog_indices]] <- gamelog[[gamelog_indices]][depth_line_index]
+      stringr::str_detect(gamelog[[gamelog_index]],
+                          desired_depth_regexes[[gamelog_index]])
+    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][depth_line_index]
     # Remove lines with no analyses
-    multipv_index <- stringr::str_detect(gamelog[[gamelog_indices]], 'multipv')
-    gamelog[[gamelog_indices]] <- gamelog[[gamelog_indices]][multipv_index]
+    multipv_index <- stringr::str_detect(gamelog[[gamelog_index]], 'multipv')
+    gamelog[[gamelog_index]] <- gamelog[[gamelog_index]][multipv_index]
   }
   gamelog <- lapply(gamelog_indices, delete_unused_lines, gamelog,
                     desired_depth_regexes)
