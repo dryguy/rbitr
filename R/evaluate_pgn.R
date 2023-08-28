@@ -126,7 +126,7 @@ evaluate_pgn <- function(pgn_path, engine_path, limiter, limit,
     save_path <- file.path(
       progress_path,
       paste0(pgn_basename, '_', limiter, limit, 'pv', n_pv, '_', row_number,
-             '.Rdata')
+             '.RData')
     )
     if (dir.exists(progress_path)) {
       if (file.exists(save_path)) {
