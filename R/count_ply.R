@@ -16,9 +16,9 @@ count_ply <- function(movetext) {
   movetext <- rbitr::clean_movetext(movetext)
 
   # Remove move numbers
-  movetext <- gsub("\\d+\\.*", "", movetext)
+  movetext <- gsub("\\d+\\.+", "", movetext)
 
-  # Split the into individual moves
+  # Split the movetext into individual moves
   moves <- unlist(strsplit(movetext, " "))
 
   # Remove empty elements

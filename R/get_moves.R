@@ -27,7 +27,7 @@
 get_moves <- function(movetext) {
   assertthat::assert_that(is.character(movetext))
   movetext <- clean_movetext(movetext)
-  moves <- lapply(movetext, convert_to_san)
+  moves <- lapply(movetext, convert_to_lan)
   moves <- unlist(lapply(moves, tolower), use.names = FALSE)
   strsplit(moves, ' ', fixed = TRUE)
 }
@@ -42,7 +42,7 @@ get_moves <- function(movetext) {
 #' @param movetext A character vector of movetext in SAN format.
 #'
 #' @return A character vector of movetext in LAN format.
-convert_to_san <- function(movetext) {
+convert_to_lan <- function(movetext) {
   if(movetext == '') {
     return(' ')
   } else {
