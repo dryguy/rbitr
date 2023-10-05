@@ -32,7 +32,7 @@ get_moves <- function(movetext) {
   strsplit(moves, ' ', fixed = TRUE)
 }
 
-#' convert_to_san
+#' convert_to_lan
 #'
 #' Internal helper function for `get_moves()`. This is a wrapper around
 #'   `bigchess::san2lan()` to deal with empty movetext. When movetext == '', it
