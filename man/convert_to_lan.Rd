@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_moves.R
 \name{convert_to_lan}
 \alias{convert_to_lan}
-\title{convert_to_san}
+\title{convert_to_lan}
 \usage{
 convert_to_lan(movetext)
 }
