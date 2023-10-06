@@ -28,6 +28,10 @@ export(get_pgn)
 export(get_positions)
 export(harmonize_columns)
 export(is_check)
+<<<<<<< HEAD
+=======
+export(is_insufficient)
+>>>>>>> d1be7659ae95c62803c4c3c1952f324910ab9576
 export(lan_to_coordinates)
 export(make_table)
 export(parse_engine_line_cpp)
@@ -38,6 +42,7 @@ export(regan_antiderivative)
 export(save_pgn)
 export(scale_move_times)
 export(time_plot)
+export(update_board)
 importFrom(Rcpp,sourceCpp)
 importFrom(rlang,.data)
 useDynLib(rbitr)
