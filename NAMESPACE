@@ -28,10 +28,6 @@ export(get_pgn)
 export(get_positions)
 export(harmonize_columns)
 export(is_check)
-<<<<<<< HEAD
-=======
-export(is_insufficient)
->>>>>>> d1be7659ae95c62803c4c3c1952f324910ab9576
 export(lan_to_coordinates)
 export(make_table)
 export(parse_engine_line_cpp)
