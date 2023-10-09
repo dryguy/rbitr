@@ -4,8 +4,8 @@ test_that("fen_to_board works", {
   expect_equal(result$to_move, "w")
   expect_equal(result$castling_rights, "KQkq")
   expect_equal(result$ep_target, "-")
-  expect_equal(result$halfmove_clock, "0")
-  expect_equal(result$fullmove_number, "1")
+  expect_equal(result$halfmove_clock, 0L)
+  expect_equal(result$fullmove_number, 1L)
   starting_position <- matrix(c("R", "N", "B", "Q", "K", "B", "N", "R",
                                 rep('P', 8), rep('', 32), rep('p', 8),
                                 "r", "n", "b", "q", "k", "b", "n", "r"),

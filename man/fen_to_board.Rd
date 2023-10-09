@@ -14,14 +14,21 @@ A named list containing data from the FEN string, including an 8x8
 matrix of the board.
 }
 \description{
-The function \code{fen_to_board()} creates an 8x8 matrix of a chessboard from
-Forsyth-Edwards Notation (FEN). The board is stored in a named list along
-with the other fields of the FEN: to_move, castling_rights, ep_target,
-halfmove_clock, and fullmove_number. See
-\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c16.1}{section 16.1 of the PGN specification}
-for detailed information about each field.
+Forsyth-Edwards Notation (FEN) is a compact way to represent the complete
+state of a chess game as a single line of ASCII text. In addition to showing
+the position of the pieces on the board, it stores information about whose
+turn it is, castling rights, en passant availability, the 50 move rule, and
+the move number. A FEN string contains six fields separated by spaces.
 }
 \details{
+The function \code{fen_to_board()} makes the information in a FEN string more
+accessible for use in R. The board representation in converted into an 8x8
+matrix and is stored in a named list along with the other fields. The names
+are $board, $to_move, $castling_rights, $ep_target, $halfmove_clock, and
+$fullmove_number. See
+\href{http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c16.1}{section 16.1 of the PGN specification}
+for detailed information about each field.
+
 In FEN, the pieces are represented as letters, with lowercase for
 black and uppercase for white.
 
@@ -38,11 +45,10 @@ For example, the FEN string of the starting position is:
 
 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
-Valid FEN strings may be supplied using the \code{fen} argument. Currently, the
-function does not check the validity of the FEN string, so it is up to the
-user to ensure that only valid FEN strings are passed to the function. If no
-argument is supplied, the starting position will be used as the default
-argument.
+Valid FEN strings may be supplied to the \code{fen_to_board} function using the
+\code{fen} argument. Currently, the function does not check the validity of the
+FEN string, so it is up to the user to ensure that only valid FEN strings are
+used. If no argument is supplied, the starting position is the default.
 
 The FEN piece notation is preserved for matrix representation, but empty
 squares are represented as empty strings rather than digits. Files a-h have

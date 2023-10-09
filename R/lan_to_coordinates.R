@@ -38,5 +38,7 @@ lan_to_coordinates <- function(lan) {
   }
 
   # Return list
-  return(list(original_coordinates, destination_coordinates, promoted_piece))
+  return(list(origin    = original_coordinates,
+              target    = destination_coordinates,
+              promotion = promoted_piece))
 }
