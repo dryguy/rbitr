@@ -2,15 +2,15 @@
 #'
 #' This function updates a chessboard to show the position after a move is
 #' made. It returns a list containing the updated board and the status of the
-#' game.
+#' game. See [rbitr::fen_to_board()] for details of the board format.
 #'
 #' @param move A single-element character vector consisting of a legal chess
 #' move in UCI long algebraic notation.
 #' @param board A list where the first element is a matrix representing the
 #' chessboard, and the remaining 5 elements are the same as in a FEN string.
 #' @return A list containing the updated board and status. The list names should
-#' be board, to_move, castling_rights, ep_target, halfmove_clock,
-#' and fullmove_number.
+#' be board, to_move, castling_rights, ep_target, halfmove_clock, and
+#' fullmove_number.
 #' @export
 #'
 #' @examples
@@ -65,7 +65,12 @@ update_board <- function(move, board) {
                          "Q" = grepl("Q", board[[3]]),
                          "k" = grepl("k", board[[3]]),
                          "q" = grepl("q", board[[3]]))
-    board[[3]] <- paste(names(castling_rights)[castling_rights], collapse = "")
+    if (all(!castling_rights)) {
+      board[[3]] <- "-"
+    } else {
+      board[[3]] <- paste(names(castling_rights)[castling_rights], collapse = "")
+    }
+
   }
 
   # Check for pawn moving two squares from initial position

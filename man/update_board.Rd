@@ -15,13 +15,13 @@ chessboard, and the remaining 5 elements are the same as in a FEN string.}
 }
 \value{
 A list containing the updated board and status. The list names should
-be board, to_move, castling_rights, ep_target, halfmove_clock,
-and fullmove_number.
+be board, to_move, castling_rights, ep_target, halfmove_clock, and
+fullmove_number.
 }
 \description{
 This function updates a chessboard to show the position after a move is
 made. It returns a list containing the updated board and the status of the
-game.
+game. See \code{\link[=fen_to_board]{fen_to_board()}} for details of the board format.
 }
 \examples{
 board <- fen_to_board()
