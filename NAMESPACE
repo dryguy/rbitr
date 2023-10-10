@@ -2,6 +2,7 @@
 
 export(add_spaces)
 export(advantage_plot)
+export(autoplay_game)
 export(board_to_fen)
 export(clean_movetext)
 export(convert_scores)
