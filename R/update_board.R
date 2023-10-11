@@ -21,8 +21,9 @@ update_board <- function(move, board) {
   # Convert LAN move to coordinates
   coords <- lan_to_coordinates(move)
 
-  # Check for a piece in the target square
-  capture <- board[[1]][coords$target[2], coords$target[1]] != ""
+  # Check if the target contains a piece or is an ep target
+  capture <- board[[1]][coords$target[2], coords$target[1]] != "" |
+    paste0(letters[coords$target[1]], coords$target[2]) == board[[4]]
 
   # Store the piece to move
   piece_to_move <- board[[1]][coords$origin[2], coords$origin[1]]
@@ -32,6 +33,12 @@ update_board <- function(move, board) {
   board[[1]][coords$target[2], coords$target[1]] <- ifelse(is.null(coords$promotion),
                                                            piece_to_move,
                                                            coords$promotion)
+
+  # Check for en passant capture
+  if (grepl("[pP]", piece_to_move) & paste0(letters[coords$target[1]], coords$target[2]) == board[[4]]) {
+    # Pawn moved diagonally to an empty square, so it's an en passant capture
+    board[[1]][coords$origin[2], coords$target[1]] <- ""
+  }
 
   # Check for castling
   if (abs(coords$origin[1] - coords$target[1]) == 2 && grepl("[kK]", piece_to_move)) {

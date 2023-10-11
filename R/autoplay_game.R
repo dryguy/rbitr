@@ -50,12 +50,14 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
   assertthat::assert_that(is.null(ply_limit) | assertthat::is.count(ply_limit))
 
   # Convert position to LAN
-  ply <- 1L
+  ply <- count_ply(position) + 1
   boards <- list()
+  moves <- position
   if (position != '') {
-   position <- bigchess::san2lan(position)
+  #  Fill in boards so far
+    boards <- lan_to_boards(moves)
   }
-  boards[[ply]] <- fen_to_board()
+  boards[[ply]] <- fen_to_board(lan_to_fen(position))
   if (!mute) {
     print_board(boards[[ply]]$board)
   }
