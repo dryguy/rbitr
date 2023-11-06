@@ -42,6 +42,8 @@ get_moves <- function(movetext) {
 #' @param movetext A character vector of movetext in SAN format.
 #'
 #' @return A character vector of movetext in LAN format.
+#'
+#' @export
 convert_to_lan <- function(movetext) {
   if(movetext == '') {
     return(' ')

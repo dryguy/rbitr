@@ -25,10 +25,6 @@ lan_to_boards <- function(lan) {
   for (move in moves) {
     i <- i + 1
 
-    # Print the move number and the current board for debugging purposes
-    print(i)
-    print(boards[[i - 1]])
-
     # Update the board with the current move
     boards[[i]] <- update_board(move, boards[[i - 1]])
   }

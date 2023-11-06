@@ -35,8 +35,16 @@ get_position <- function(movetext, ply) {
     return('')
   }
 
-  # Covert to LAN and truncate
-  moves <- unlist(rbitr::get_moves(movetext))
+  # Clean movetext & remove numbering
+  movetext <- trimws(gsub("\\d+\\.", "", movetext))
+  movetext <- rbitr::clean_movetext(movetext)
+
+  # Split movetext into moves & truncate
+  moves <- strsplit(movetext, " ")[[1]]
   assertthat::assert_that(ply <= length(moves))
-  return(paste(moves[1:ply], collapse = " "))
+  moves <- moves[1:ply]
+
+  # Covert to LAN and return
+  moves <- paste(moves, collapse = " ")
+  return(rbitr::convert_to_lan(moves))
 }
