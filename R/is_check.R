@@ -29,7 +29,11 @@ is_check <- function(board, color) {
 
   # Check for attacking enemy pawns
   enemy_pawn <- if(color == "white") "p" else "P"
-  pawn_directions <- if(color == "white") list(c(1, -1), c(1, 1)) else list(c(-1, -1), c(-1, 1))
+  pawn_directions <- if(color == "white") {
+    list(c(1, -1), c(1, 1))
+  } else {
+    list(c(-1, -1), c(-1, 1))
+  }
   for (direction in pawn_directions) {
     x <- king_location[1] + direction[1]
     y <- king_location[2] + direction[2]
@@ -40,7 +44,8 @@ is_check <- function(board, color) {
 
   # Check for attacking enemy knights
   enemy_knight <- if(color == "white") "n" else "N"
-  knight_moves <- list(c(-2, -1), c(-2, 1), c(-1, -2), c(-1, 2), c(1, -2),  c(1, 2),  c(2, -1),  c(2, 1))
+  knight_moves <- list(c(-2, -1), c(-2, 1), c(-1, -2), c(-1, 2),
+                       c(1, -2),  c(1, 2),  c(2, -1),  c(2, 1))
   for (move in knight_moves) {
     x <- king_location[1] + move[1]
     y <- king_location[2] + move[2]

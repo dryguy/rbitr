@@ -15,7 +15,9 @@
 #' will be removed from the output.
 #'
 #' @param movetext A string containing chess moves in SAN.
+#'
 #' @return A character vector of chess positions.
+#'
 #' @examples
 #' movetext <- "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6"
 #' positions <- get_positions(movetext)

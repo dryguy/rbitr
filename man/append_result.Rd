@@ -19,6 +19,3 @@ argument. If the last character is # it checks to see which side won, and
 appends the appropriate result ("1-0" or "0-1").  If the last character is
 not #, it assumes stalemate and adds "1/2-1/2 {stalemate}".
 }
-\examples{
-#' append_result('1. f3 e6 2. g4 Qh4#')
-}

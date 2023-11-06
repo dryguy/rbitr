@@ -125,10 +125,8 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
 #' not #, it assumes stalemate and adds "1/2-1/2 {stalemate}".
 #'
 #' @param movetext A string of chess moves in standard algebraic notation (SAN).
-#' @return A string of chess moves with the game result appended.
 #'
-#' @examples
-#' #' append_result('1. f3 e6 2. g4 Qh4#')
+#' @return A string of chess moves with the game result appended.
 append_result <- function(movetext) {
   # Split the string into moves
   moves <- strsplit(movetext, "\\. ")[[1]]
