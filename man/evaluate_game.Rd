@@ -91,10 +91,11 @@ engine_path <- '//stockfish.exe'
 evaluate_game(movetext, engine_path, n_pv = 1, limiter = 'depth', limit = 1)
 }
 \seealso{
-The 'cram' functions condense analysis logs into data frames.
+The 'tabulate' functions tabulate analysis logs into data frames.
 \itemize{
-\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
-\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+\item \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=tabulate_gamelog]{tabulate_gamelog()}} for condensing analysis of one game.
+\item \code{\link[=tabulate_pgnlog]{tabulate_pgnlog()}} for condensing analysis of an entire pgn file.
 }
 
 The 'parse' functions extract specific data from analysis logs.
@@ -106,12 +107,7 @@ The 'parse' functions extract specific data from analysis logs.
 The 'evaluate' functions produce analysis logs.
 \itemize{
 \item \code{\link[=evaluate_position]{evaluate_position()}} for analyzing chess positions.
+\item \code{\link[=evaluate_game]{evaluate_game()}} for analyzing individual games.
 \item \code{\link[=evaluate_pgn]{evaluate_pgn()}} for evaluating all the games in a PGN file.
-}
-
-Functions to load and save PGN files.
-\itemize{
-\item \code{\link[=get_pgn]{get_pgn()}} for loading PGN files.
-\item \code{\link[=save_pgn]{save_pgn()}} for saving PGN files.
 }
 }

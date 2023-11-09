@@ -53,22 +53,7 @@
 #' @return A list of gamelogs (see `evaluate_game()` for details).
 #' @export
 #'
-#' @seealso
-#'   The 'cram' functions condense analysis logs into data frames.
-#'   * [rbitr::cram_positionlog()] for condensing analysis of one position.
-#'   * [rbitr::cram_pgnlog()] for condensing analysis of an entire pgn file.
-#'
-#'   The 'parse' functions extract specific data from analysis logs.
-#'   * [rbitr::parse_gamelog()] for extracting data from one evaluated game.
-#'   * [rbitr::parse_pgnlog()] for extracting data from games in a pgn.
-#'
-#'   The 'evaluate' functions produce analysis logs.
-#'   * [rbitr::evaluate_position()] for analyzing chess positions.
-#'   * [rbitr::evaluate_game()] for analyzing individual games.
-#'
-#'   Functions to load and save PGN files.
-#'   * [rbitr::get_pgn()] for loading PGN files.
-#'   * [rbitr::save_pgn()] for saving PGN files.
+#' @inherit tabulate_positionlog seealso
 #'
 #' @examples
 #' # Modify engine_path as required for your engine location & operating system

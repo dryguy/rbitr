@@ -87,28 +87,28 @@ test_that("remove_na_rows_cols removes rows and columns that are all NAs", {
   expect_equal(new_matrix[2, ], c("D", "E", NA))
 })
 
-test_that("cram_positionlog returns the correct result", {
+test_that("tabulate_positionlog returns the correct result", {
   positionlog <- c(
     "info depth 1 seldepth 1 multipv 1 score cp 13 nodes 20 nps 20000 tbhits 0 time 1 pv e2e4",
     "info depth 2 seldepth 2 multipv 1 score cp 14 nodes 40 nps 40000 tbhits 0 time 1 pv e2e4 e7e5",
     "bestmove e2e4 ponder e7e5"
   )
 
-  result <- cram_positionlog(positionlog)
+  result <- tabulate_positionlog(positionlog)
 
   expect_type(result, "list")
   expect_equal(nrow(result), 2)
   expect_equal(colnames(result), c("depth", "multipv", "score", "pv"))
 })
 
-test_that("cram_positionlog handles the all_tags parameter correctly", {
+test_that("tabulate_positionlog handles the all_tags parameter correctly", {
   positionlog <- c(
     "info depth 1 seldepth 1 multipv 1 score cp 13 nodes 20 nps 20000 tbhits 0 time 1 pv e2e4",
     "info depth 2 seldepth 2 multipv 1 score cp 14 nodes 40 nps 40000 tbhits 0 time 1 pv e2e4 e7e5",
     "bestmove e2e4 ponder e7e5"
   )
-  result_all_false <- cram_positionlog(positionlog, all_tags = FALSE)
-  result_all_true <- cram_positionlog(positionlog, all_tags = TRUE)
+  result_all_false <- tabulate_positionlog(positionlog, all_tags = FALSE)
+  result_all_true <- tabulate_positionlog(positionlog, all_tags = TRUE)
 
   expect_true(ncol(result_all_true) > ncol(result_all_false))
 })
@@ -120,7 +120,7 @@ positionlog <- c(
   'info depth 1 seldepth 1 multipv 1 score cp 146 nodes 30 nps 30000 tbhits 0 time 1 pv d2d4',
   'bestmove d2d4'
 )
-test_that('cram_positionlog correctly handles 1-line positions', {
-  crammed_positionlog <- cram_positionlog(positionlog)
-  expect_equal(nrow(crammed_positionlog), 1)
+test_that('tabulate_positionlog correctly handles 1-line positions', {
+  positionlog_table <- tabulate_positionlog(positionlog)
+  expect_equal(nrow(positionlog_table), 1)
 })

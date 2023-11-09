@@ -47,16 +47,17 @@ parse_pgnlog(pgnlog, 'pv')
 parse_pgnlog(pgnlog, 'bestmove')
 }
 \seealso{
-The 'cram' functions condense analysis logs into data frames.
+The 'tabulate' functions tabulate analysis logs into data frames.
 \itemize{
-\item \code{\link[=cram_positionlog]{cram_positionlog()}} for condensing analysis of one position.
-\item \code{\link[=cram_gamelog]{cram_gamelog()}} for condensing analysis of one game.
-\item \code{\link[=cram_pgnlog]{cram_pgnlog()}} for condensing analysis of an entire pgn file.
+\item \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} for condensing analysis of one position.
+\item \code{\link[=tabulate_gamelog]{tabulate_gamelog()}} for condensing analysis of one game.
+\item \code{\link[=tabulate_pgnlog]{tabulate_pgnlog()}} for condensing analysis of an entire pgn file.
 }
 
 The 'parse' functions extract specific data from analysis logs.
 \itemize{
 \item \code{\link[=parse_gamelog]{parse_gamelog()}} for extracting data from one evaluated game.
+\item \code{\link[=parse_pgnlog]{parse_pgnlog()}} for extracting data from games in a pgn.
 }
 
 The 'evaluate' functions produce analysis logs.

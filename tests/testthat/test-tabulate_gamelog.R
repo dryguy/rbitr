@@ -20,12 +20,12 @@ gamelog <- list(
     "bestmove f8g7 ponder d2d4"
   )
 )
-test_that("cram_gamelog can process a gamelog", {
-  crammed_gamelog <- cram_gamelog(gamelog)
-  expect_equal(nrow(crammed_gamelog), 8)
-  expect_identical(names(crammed_gamelog), c('position', 'depth', 'multipv',
+test_that("tabulate_gamelog can process a gamelog", {
+  gamelog_table <- tabulate_gamelog(gamelog)
+  expect_equal(nrow(gamelog_table), 8)
+  expect_identical(names(gamelog_table), c('position', 'depth', 'multipv',
                                              'score', 'pv'))
-  expect_identical(crammed_gamelog[8, 5], 'd7d6 d2d4')
+  expect_identical(gamelog_table[8, 5], 'd7d6 d2d4')
 })
 gamelog <- list(c(
   'Stockfish 13 by the Stockfish developers (see AUTHORS file)',
@@ -34,7 +34,7 @@ gamelog <- list(c(
   'info depth 1 seldepth 1 multipv 1 score cp 146 nodes 30 nps 30000 tbhits 0 time 1 pv d2d4',
   'bestmove d2d4'
 ))
-test_that("cram_gamelog can process a single-element gamelog", {
-  crammed_gamelog <- cram_gamelog(gamelog)
-  expect_equal(nrow(crammed_gamelog), 1)
+test_that("tabulate_gamelog can process a single-element gamelog", {
+  gamelog_table <- tabulate_gamelog(gamelog)
+  expect_equal(nrow(gamelog_table), 1)
 })

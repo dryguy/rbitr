@@ -28,7 +28,7 @@ algebraic notation (LAN).}
 \itemize{
 \item \code{count_ply()} and \code{count_halfmoves()} return an integer of the number of half-moves in the game.
 \item \code{count_nodes()} and \code{count_positions()} return an integer of the number of positions in the game.
-\item \code{count_moves()} returns an the number of moves in the game, which can take on integer or half-integer values.
+\item \code{count_moves()} returns the number of moves in the game, which can take on integer or half-integer values.
 }
 }
 \description{
@@ -50,8 +50,7 @@ integer or half-integer value. The number of moves is given by the function
 
 Half-Move or Ply: A half-move is a single turn taken by one player. The
 number of half-moves is given by the function \code{count_halfmoves()} or its
-alias \code{count_ply()}. Repeated repeated half-moves are included in the
-count.
+alias \code{count_ply()}. Repeated half-moves are included in the count.
 
 Position or Node: A chess position is the arrangement of the pieces on the
 board along with the information about castling rights, \emph{en passant}
