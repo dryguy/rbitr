@@ -1,8 +1,8 @@
 #' Create a data frame containing engine analysis of a single chess position
 #'
-#' The `tabulate_positionlog()` function takes a character vector of engine analysis
-#' for a single chess position and condenses it into a data frame for easier
-#' access.
+#' The `tabulate_positionlog()` function takes a character vector of engine
+#' analysis for a single chess position and condenses it into a data frame for
+#' easier access.
 #'
 #' @details The `tabulate_positionlog()` function tabulates data from a
 #'   [UCI-compatible](https://github.com/fsmosca/UCIChessEngineProtocol) chess
@@ -39,6 +39,10 @@
 #'   leave missing rows/columns in place, set the `delete_blank_lines` parameter
 #'   to `FALSE.`
 #'
+#' @note `tabulate_positionlog()` does not change the class of the data it
+#'   returns. Since the `positionlog` parameter is a character vector, the
+#'   function will return a data frame with character columns.
+#'
 #' @param positionlog A character vector that contains engine analysis.
 #' @param all_tags (Default = `FALSE`) A Boolean. Setting `all_tags` = TRUE will
 #'   search for all of the tags listed in the UCI protocol.
@@ -47,7 +51,8 @@
 #' @param delete_blank_lines (Default = `TRUE`) A Boolean. Setting this value to
 #'   FALSE will leave blank rows/columns intact.
 #'
-#' @return A data frame summarizing the data for the position.
+#' @return A data frame with character columns summarizing the data for the
+#'   position.
 #'
 #' @export
 #'

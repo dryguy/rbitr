@@ -24,12 +24,13 @@ tag names.}
 FALSE will leave blank rows/columns intact.}
 }
 \value{
-A data frame summarizing the data for the position.
+A data frame with character columns summarizing the data for the
+position.
 }
 \description{
-The \code{tabulate_positionlog()} function takes a character vector of engine analysis
-for a single chess position and condenses it into a data frame for easier
-access.
+The \code{tabulate_positionlog()} function takes a character vector of engine
+analysis for a single chess position and condenses it into a data frame for
+easier access.
 }
 \details{
 The \code{tabulate_positionlog()} function tabulates data from a
@@ -67,6 +68,11 @@ When requested data is not found, \code{NA} will appear to indicate missing
 values. If entire rows or columns are missing, they will be deleted. To
 leave missing rows/columns in place, set the \code{delete_blank_lines} parameter
 to \code{FALSE.}
+}
+\note{
+\code{tabulate_positionlog()} does not change the class of the data it
+returns. Since the \code{positionlog} parameter is a character vector, the
+function will return a data frame with character columns.
 }
 \examples{
 positionlog <- c(

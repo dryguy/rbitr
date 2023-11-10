@@ -39,16 +39,23 @@ The function \code{tabulate_gamelog()} parses output from a
 \href{https://github.com/fsmosca/UCIChessEngineProtocol}{UCI-compatible} chess
 engine.
 
-\code{tabulate_gamelog()} is a wrapper for \code{tabulate_positionlog()} that
-loops over each position in the game, and adds a column indicating the
-position number. The \code{gamelog} parameter should contain output from the
+\code{tabulate_gamelog()} is a wrapper for \code{tabulate_positionlog()} that loops
+over each position in the game, and adds a column indicating the position
+number. The \code{gamelog} parameter should contain output from the
 \code{evaluate_game()} function. The remaining parameters are passed to
 \code{tabulate_positionlog()}. See the documentation for
 \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} for details.
 
-The optional \code{game_number} parameter may be used to add a column
-indicating the game number. This is useful for keeping track of games when
-analyzing multiple games at once.
+The optional \code{game_number} parameter may be used to add a column indicating
+the game number. This is useful for keeping track of games when analyzing
+multiple games at once.
+}
+\note{
+\code{tabulate_gamelog()} does not change the class of the data it returns.
+Since the \code{gamelog} contains character data, columns originating from the
+gamelog will have class character. However, numeric indices added by
+\code{tabulate_gamelog()} (e.g., position and game_number) will have class
+integer.
 }
 \examples{
 gamelog <- list(c(

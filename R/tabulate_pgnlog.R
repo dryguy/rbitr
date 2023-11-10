@@ -17,6 +17,12 @@
 #'   [rbitr::tabulate_positionlog()] and [rbitr::tabulate_gamelog()] for
 #'   details.
 #'
+#' @note `tabulate_pgnlog()` does not change the class of the data it returns.
+#'   Since the `pgnlog` contains character data, columns originating from the
+#'   pgnlog will have class character. However, numeric indices added by
+#'   `tabulate_pgnlog()` (e.g., position and game_number) will have class
+#'   integer.
+#'
 #' @param pgnlog A list of gamelogs from rbitr's `evaluate_pgn()` function.
 #' @inheritParams tabulate_positionlog
 #'

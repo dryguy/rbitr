@@ -7,16 +7,22 @@
 #'   [UCI-compatible](https://github.com/fsmosca/UCIChessEngineProtocol) chess
 #'   engine.
 #'
-#' @details `tabulate_gamelog()` is a wrapper for `tabulate_positionlog()` that
-#'   loops over each position in the game, and adds a column indicating the
-#'   position number. The `gamelog` parameter should contain output from the
+#'   `tabulate_gamelog()` is a wrapper for `tabulate_positionlog()` that loops
+#'   over each position in the game, and adds a column indicating the position
+#'   number. The `gamelog` parameter should contain output from the
 #'   `evaluate_game()` function. The remaining parameters are passed to
 #'   `tabulate_positionlog()`. See the documentation for
 #'   [rbitr::tabulate_positionlog()] for details.
 #'
-#' @details The optional `game_number` parameter may be used to add a column
-#'   indicating the game number. This is useful for keeping track of games when
-#'   analyzing multiple games at once.
+#'   The optional `game_number` parameter may be used to add a column indicating
+#'   the game number. This is useful for keeping track of games when analyzing
+#'   multiple games at once.
+#'
+#' @note `tabulate_gamelog()` does not change the class of the data it returns.
+#'   Since the `gamelog` contains character data, columns originating from the
+#'   gamelog will have class character. However, numeric indices added by
+#'   `tabulate_gamelog()` (e.g., position and game_number) will have class
+#'   integer.
 #'
 #' @param gamelog A list that contains vectors of engine analysis.
 #' @param game_number (Default = `NULL`) An optional integer indicating the game

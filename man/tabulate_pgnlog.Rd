@@ -45,6 +45,13 @@ from. The \code{pgnlog} parameter should contain output from the
 \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} and \code{\link[=tabulate_gamelog]{tabulate_gamelog()}} for
 details.
 }
+\note{
+\code{tabulate_pgnlog()} does not change the class of the data it returns.
+Since the \code{pgnlog} contains character data, columns originating from the
+pgnlog will have class character. However, numeric indices added by
+\code{tabulate_pgnlog()} (e.g., position and game_number) will have class
+integer.
+}
 \examples{
 pgnlog <- list(list(c(
 "Stockfish 13 by the Stockfish developers (see AUTHORS file)",
