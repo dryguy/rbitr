@@ -14,7 +14,13 @@
 #'   `tabulate_positionlog()`. See the documentation for
 #'   [rbitr::tabulate_positionlog()] for details.
 #'
+#' @details The optional `game_number` parameter may be used to add a column
+#'   indicating the game number. This is useful for keeping track of games when
+#'   analyzing multiple games at once.
+#'
 #' @param gamelog A list that contains vectors of engine analysis.
+#' @param game_number (Default = `NULL`) An optional integer indicating the game
+#'   number.
 #' @inheritParams tabulate_positionlog
 #'
 #' @return A data frame summarizing the data for the game.
@@ -33,7 +39,7 @@
 #' ))
 #' tabulate_gamelog(gamelog)
 tabulate_gamelog <- function(gamelog, all_tags = FALSE, custom_tags = NULL,
-                         delete_blank_lines = TRUE) {
+                             delete_blank_lines = TRUE, game_number = NULL) {
   # Validate input
   assertthat::assert_that(is.list(gamelog))
   assertthat::assert_that(assertthat::is.flag(all_tags))
@@ -54,6 +60,9 @@ tabulate_gamelog <- function(gamelog, all_tags = FALSE, custom_tags = NULL,
                             all_tags, custom_tags, delete_blank_lines)
   gamelog_table <- harmonize_columns(gamelog_table)
   gamelog_table <- do.call(rbind, gamelog_table)
+  if (!is.null(game_number)) {
+    gamelog_table$game_number <- rep(game_number, nrow(gamelog_table))
+  }
   return(gamelog_table)
 }
 

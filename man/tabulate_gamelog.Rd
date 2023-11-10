@@ -8,7 +8,8 @@ tabulate_gamelog(
   gamelog,
   all_tags = FALSE,
   custom_tags = NULL,
-  delete_blank_lines = TRUE
+  delete_blank_lines = TRUE,
+  game_number = NULL
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ tag names.}
 
 \item{delete_blank_lines}{(Default = \code{TRUE}) A Boolean. Setting this value to
 FALSE will leave blank rows/columns intact.}
+
+\item{game_number}{(Default = \code{NULL}) An optional integer indicating the game
+number.}
 }
 \value{
 A data frame summarizing the data for the game.
@@ -41,6 +45,10 @@ position number. The \code{gamelog} parameter should contain output from the
 \code{evaluate_game()} function. The remaining parameters are passed to
 \code{tabulate_positionlog()}. See the documentation for
 \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} for details.
+
+The optional \code{game_number} parameter may be used to add a column
+indicating the game number. This is useful for keeping track of games when
+analyzing multiple games at once.
 }
 \examples{
 gamelog <- list(c(

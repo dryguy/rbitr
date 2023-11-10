@@ -1,18 +1,21 @@
 #' Creates a list of data frames containing analyses of chess games
 #'
-#' The function `tabulate_pgnlog()`  takes a list of engine analyses for chess games
-#'   and condenses them into data frames for easier access.
+#' The function `tabulate_pgnlog()`  takes a list of engine analyses for chess
+#' games and condenses them into data frames for easier access.
 #'
 #' @details `tabulate_pgnlog()` condenses analyses from a
 #'   [UCI-compatible](https://github.com/fsmosca/UCIChessEngineProtocol) chess
 #'   engine that have been produced using the `evaluate_pgn()` function.
 #'
 #' @details `tabulate_pgnlog()` is a wrapper for `tabulate_gamelog()` that loops
-#'   over each game analysis in the pgnlog and creates a data frame containing
-#'   the condensed analysis data. The `pgnlog` parameter should contain output
-#'   from the `evaluate_pgn()` function. The remaining parameters are passed to
-#'   `tabulate_gamelog()`. See the documentation for [rbitr::tabulate_positionlog()] and
-#'   [rbitr::tabulate_gamelog()] for details.
+#'   over each game analysis in the pgnlog and for each game creates a data
+#'   frame containing the condensed analysis data. Each data frame will have a
+#'   column named game_number showing which game in the pgnlog the data came
+#'   from. The `pgnlog` parameter should contain output from the
+#'   `evaluate_pgn()` function. The remaining parameters are passed to
+#'   `tabulate_gamelog()`. See the documentation for
+#'   [rbitr::tabulate_positionlog()] and [rbitr::tabulate_gamelog()] for
+#'   details.
 #'
 #' @param pgnlog A list of gamelogs from rbitr's `evaluate_pgn()` function.
 #' @inheritParams tabulate_positionlog
@@ -33,15 +36,22 @@
 #' )))
 #' tabulate_pgnlog(pgnlog)
 tabulate_pgnlog <- function(pgnlog, all_tags = FALSE, custom_tags = NULL,
-                        delete_blank_lines = TRUE) {
+                            delete_blank_lines = TRUE) {
   # Validate input
   assertthat::assert_that(is.list(pgnlog))
   assertthat::assert_that(assertthat::is.flag(all_tags))
   assertthat::assert_that(is.character(custom_tags) | is.null(custom_tags))
   assertthat::assert_that(assertthat::is.flag(delete_blank_lines))
 
-  # Condense the data into a list of data frames.
-  lapply(pgnlog, tabulate_gamelog, all_tags, custom_tags, delete_blank_lines)
+  # Tabulate the pgnlog data into a list of data frames.
+  pgnlog_table <- vector("list", length(pgnlog))
+  for (game_number in 1:length(pgnlog)) {
+    pgnlog_table[[game_number]] <- tabulate_gamelog(pgnlog[[game_number]], all_tags,
+                                              custom_tags, delete_blank_lines,
+                                              game_number)
+  }
+  #lapply(pgnlog, tabulate_gamelog, all_tags, custom_tags, delete_blank_lines)
+  return(pgnlog_table)
 }
 
 #' Deprecated alias for [rbitr::tabulate_pgnlog()]

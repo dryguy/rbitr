@@ -41,6 +41,10 @@ position number. The \code{gamelog} parameter should contain output from the
 \code{evaluate_game()} function. The remaining parameters are passed to
 \code{tabulate_positionlog()}. See the documentation for
 \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} for details.
+
+The optional \code{game_number} parameter may be used to add a column
+indicating the game number. This is useful for keeping track of games when
+analyzing multiple games at once.
 }
 \examples{
 gamelog <- list(c(

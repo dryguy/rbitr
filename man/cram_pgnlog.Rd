@@ -27,8 +27,8 @@ FALSE will leave blank rows/columns intact.}
 A list of data frames containing condensed analyses of chess games.
 }
 \description{
-The function \code{tabulate_pgnlog()}  takes a list of engine analyses for chess games
-and condenses them into data frames for easier access.
+The function \code{tabulate_pgnlog()}  takes a list of engine analyses for chess
+games and condenses them into data frames for easier access.
 }
 \details{
 \code{tabulate_pgnlog()} condenses analyses from a
@@ -36,11 +36,14 @@ and condenses them into data frames for easier access.
 engine that have been produced using the \code{evaluate_pgn()} function.
 
 \code{tabulate_pgnlog()} is a wrapper for \code{tabulate_gamelog()} that loops
-over each game analysis in the pgnlog and creates a data frame containing
-the condensed analysis data. The \code{pgnlog} parameter should contain output
-from the \code{evaluate_pgn()} function. The remaining parameters are passed to
-\code{tabulate_gamelog()}. See the documentation for \code{\link[=tabulate_positionlog]{tabulate_positionlog()}} and
-\code{\link[=tabulate_gamelog]{tabulate_gamelog()}} for details.
+over each game analysis in the pgnlog and for each game creates a data
+frame containing the condensed analysis data. Each data frame will have a
+column named game_number showing which game in the pgnlog the data came
+from. The \code{pgnlog} parameter should contain output from the
+\code{evaluate_pgn()} function. The remaining parameters are passed to
+\code{tabulate_gamelog()}. See the documentation for
+\code{\link[=tabulate_positionlog]{tabulate_positionlog()}} and \code{\link[=tabulate_gamelog]{tabulate_gamelog()}} for
+details.
 }
 \examples{
 pgnlog <- list(list(c(

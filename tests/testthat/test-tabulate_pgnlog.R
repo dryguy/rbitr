@@ -8,6 +8,6 @@ pgnlog <- list(list(c(
 test_that("tabulate_pgnlog condenses a pgnlog", {
   pgnlog_table <- tabulate_pgnlog(pgnlog)
   expect_true(is.list(pgnlog_table))
-  expect_equal(dim(pgnlog_table[[1]]), c(1, 5))
+  expect_equal(dim(pgnlog_table[[1]]), c(1, 6))
   expect_equal(pgnlog_table[[1]]$pv, 'd2d4')
 })
