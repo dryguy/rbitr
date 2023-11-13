@@ -61,14 +61,15 @@ convert_scores <- function(scores, mate = 5000, flip_signs = TRUE) {
   }
   # Remove cp markers
   scores <- sub('cp ', '', scores)
-  # Convert characters to numeric
+  # Convert characters to numeric. Note: as.integer(Inf) returns NA, so use
+  # as.numeric() to preserve Inf values when mate == Inf.
   scores <- as.numeric(scores)
   # Flip signs for black scores so that if score > 0 white is winning.
   if (flip_signs) {
     black_index <- seq_along(scores) %% 2 == 0
     scores[black_index] <- -scores[black_index]
   }
-  scores
+  return(scores)
 }
 
 
