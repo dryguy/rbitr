@@ -12,7 +12,8 @@
 lan_to_coordinates <- function(lan) {
   # Validate input
   if (!grepl("^[a-h][1-8][a-h][1-8][qrbnQRBN]?$", lan)) {
-    stop("lan_to_coordinates: `lan` must be a valid chess move in UCI long algebraic notation.")
+    rlang::abort(glue::glue("`lan` must be a valid chess move in UCI long algebraic notation. Invalid input was: {lan}"),
+          .subclass = "lan_to_coordinates_error")
   }
 
   # Extract original and destination coordinates

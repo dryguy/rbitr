@@ -49,7 +49,7 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
   assertthat::assert_that(assertthat::is.flag(mute))
   assertthat::assert_that(is.null(ply_limit) | assertthat::is.count(ply_limit))
 
-  # Convert position to LAN
+  # Convert LAN to boards
   ply <- count_ply(position) + 1
   boards <- list()
   moves <- position

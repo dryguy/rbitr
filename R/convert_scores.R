@@ -1,33 +1,31 @@
 #' Convert mates and bounds to numeric values
 #'
 #' A function to convert "mate x", "x upperbound", and "x lowerbound" into
-#'   numeric values (in centipawns).
+#' numeric values (in centipawns).
 #'
 #' @details [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html)
 #'   chess engines return positional evaluations in centipawns. The UCI protocol
 #'   also allows for evaluations to be expressed as upper or lower bounds. In
 #'   positions where the engine finds a mate in some number of moves, the
-#'   evaluation is given as "mate x" instead of a centipawn value. In addition,
-#'   the UCI convention is that scores for white are given with the opposite
-#'   sign from the scores for black (*i.e.*, a positive score for black means
-#'   black is ahead, while a positive score for white means white is ahead.)
+#'   evaluation is given as "mate x" instead of a centipawn value.
 #'
-#' @details The function `convert_scores()` will convert bounds or mates into
-#'   numeric values. Values of "x upperbound" or "x lowerbound" will simply be
-#'   converted to the numeric value of x. Values of "mate x" will be converted
-#'   to the value specified by the mate parameter, in centipawns. The sign of
-#'   black's scores will be reversed from the UCI convention, so that positive
-#'   evaluations will always mean white is ahead, and negative will always mean
-#'   black is ahead. The final scores will be returned as an integer vector.
+#'   The function `convert_scores()` will convert bounds or mates into numeric
+#'   values. Values of "x upperbound" or "x lowerbound" will simply be converted
+#'   to the numeric value of x. Values of "mate x" will be converted to the
+#'   value specified by the `mate` parameter, in centipawns. The final scores
+#'   will be returned as an integer vector.
 #'
-#' @note The function `convert_scores()` assumes that the scores begin with a
-#'   position where white is to move. By default, the score for black will have
-#'   the sign flipped to ensure that when white is winning, the score > 0. To
-#'   override this behavior, set `flip_signs` to FALSE.
+#' @note  The UCI convention is that scores for white are given with the
+#'   opposite sign from the scores for black (*i.e.*, a positive score on
+#'   black's turn means black is ahead, while a positive score on white's turn
+#'   means white is ahead.) The function `convert_scores()` uses a different
+#'   convention by default: the score for black will have the sign flipped to
+#'   ensure that any time white is winning, score > 0, and any time black is
+#'   winning score < 0. To override this behavior and use the UCI convention,
+#'   set `flip_signs` to FALSE.
 #'
-#' @param scores A character vector of scores from a
-#'   [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
-#'   engine.
+#' @param scores A character vector of scores from a [UCI
+#'   compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess engine.
 #' @param mate (Default = 5000) A single-element integer vector of the value to
 #'   use for 'mate x'.
 #' @param flip_signs (Default = TRUE) A Boolean indicating whether to flip the
