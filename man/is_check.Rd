@@ -20,11 +20,10 @@ This function returns TRUE if there are checks from enemy pieces, and FALSE
 otherwise.
 }
 \examples{
-board <- matrix(rep('', 64), nrow = 8)
-board[5, 5] <- 'k'
-print(board)
-is_check(board, 'black')
-board[4, 4] <- 'P'
-print(board)
-is_check(board, 'black')
+board <- fen_to_board('8/8/8/8/4k3/8/8/8 b - - 0 1')
+print(board$board)
+is_check(board$board, 'black')
+board$board[3, 4] <- 'P'
+print(board$board)
+is_check(board$board, 'black')
 }

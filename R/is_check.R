@@ -11,13 +11,12 @@
 #' @export
 #'
 #' @examples
-#' board <- matrix(rep('', 64), nrow = 8)
-#' board[5, 5] <- 'k'
-#' print(board)
-#' is_check(board, 'black')
-#' board[4, 4] <- 'P'
-#' print(board)
-#' is_check(board, 'black')
+#' board <- fen_to_board('8/8/8/8/4k3/8/8/8 b - - 0 1')
+#' print(board$board)
+#' is_check(board$board, 'black')
+#' board$board[3, 4] <- 'P'
+#' print(board$board)
+#' is_check(board$board, 'black')
 is_check <- function(board, color) {
   #Validate input
   assertthat::assert_that(identical(dim(board), c(8L, 8L)))
@@ -26,6 +25,11 @@ is_check <- function(board, color) {
   # Locate the king
   king  <- if(color == "white") "K" else "k"
   king_location <- which(board == king, arr.ind = TRUE)
+
+  # Check if the king was found
+  if (nrow(king_location) != 1) {
+    stop("In is_check(): No king found.")
+  }
 
   # Check for attacking enemy pawns
   enemy_pawn <- if(color == "white") "p" else "P"
