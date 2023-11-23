@@ -28,6 +28,17 @@ update_board <- function(move, board) {
   # Store the piece to move
   piece_to_move <- board[[1]][coords$origin[2], coords$origin[1]]
 
+  # If there is a promotion piece, make sure it has the same case as the pawn
+  # being promoted
+  if (!is.null(coords$promotion)) {
+    if (piece_to_move == 'p') {
+      coords$promotion <- tolower(coords$promotion)
+    }
+    if (piece_to_move == 'P') {
+      coords$promotion <- toupper(coords$promotion)
+    }
+  }
+
   # Update the board
   board[[1]][coords$origin[2], coords$origin[1]] <- ""
   board[[1]][coords$target[2], coords$target[1]] <- ifelse(is.null(coords$promotion),
@@ -53,10 +64,10 @@ update_board <- function(move, board) {
   }
 
   # Check for non-castling king or rook move
-  if (grepl("[kK]", move)) {
+  if (grepl("[kK]", piece_to_move)) {
     # King moved, so remove castling rights for that color
     board[[3]] <- gsub(ifelse(coords$origin[2] == 1, "KQ", "kq"), "", board[[3]])
-  } else if (grepl("[rR]", move) & (coords$origin[1] == 1 | coords$origin[1] == 8)) {
+  } else if (grepl("[rR]", piece_to_move) & (coords$origin[1] == 1 | coords$origin[1] == 8)) {
     # Rook moved from original position, so remove corresponding castling right
     board[[3]] <- gsub(ifelse(coords$origin[2] == 1 & coords$origin[1] == 1, "Q",
                               ifelse(coords$origin[2] == 1 & coords$origin[1] == 8, "K",
