@@ -122,7 +122,7 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
 #' takes a string of chess moves in standard algebraic notation (SAN) as the
 #' argument. If the last character is # it checks to see which side won, and
 #' appends the appropriate result ("1-0" or "0-1").  If the last character is
-#' not #, it assumes stalemate and adds "1/2-1/2 {stalemate}".
+#' not #, it tests for stalemate or checkmate.
 #'
 #' @param movetext A string of chess moves in standard algebraic notation (SAN).
 #'
@@ -146,10 +146,24 @@ append_result <- function(movetext) {
       movetext <- paste(movetext, "0-1")
     }
   } else {
-    # If the last character is not #, the game was a draw.
-    movetext <- paste(movetext, "1/2-1/2 {stalemate}")
+    # If the last character is not #, test for stalemate.
+    lan <- bigchess::san2lan(movetext)
+    fen <- rbitr::lan_to_fen(lan)
+    board <- rbitr::fen_to_board(fen)
+    if (rbitr::is_stalemate(board)) {
+      return(paste(movetext, "1/2-1/2 {stalemate}"))
+    } else {
+      if (rbitr::is_checkmate(board)) {
+        if (is_white_move) {
+          return(paste(movetext, "1-0"))
+        } else {
+          return(paste(movetext, "0-1"))
+        }
+      } else {
+        warning("Unknown outcome")
+        return(paste(movetext, " {unknown outcome}"))
+      }
+    }
   }
-
-  return(movetext)
 }
 
