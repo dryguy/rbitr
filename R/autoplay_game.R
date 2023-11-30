@@ -1,33 +1,35 @@
-#' Have a chess engine play against itself
+#' Have a chess engine play a game against itself
 #'
-#' The function `autoplay_game()` is used to make a
-#' [UCI compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess
-#' engine play a game against itself. Since engines typically do not handle
-#' draws by repetition, insufficient material, or the fifty-move rule, the
-#' function checks for those conditions and declares a draw if any are detected.
+#' The function `autoplay_game()` is used to make a [UCI
+#' compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess engine
+#' play a game against itself.
+#'
+#' @details Since engines typically do not handle draws by repetition,
+#'   insufficient material, or the fifty-move rule, the function checks for
+#'   those conditions and declares a draw if any are detected.
 #'
 #' @param engine_path A single-element character vector of the path to a UCI
-#' compatible chess engine.
+#'   compatible chess engine.
 #' @param position A single-element character vector containing a series of
-#' legal chess moves in long algebraic notation (LAN).
-#' @param limiter A single-element character vector indicating the desired
-#' mode of search termination. Allowed values are 'depth' (to search a fixed
-#' number of plies), 'nodes' (to search a fixed number of nodes), and
-#' 'movetime' (to search for a fixed number of milliseconds).
-#' @param limit A single-element integer vector of the desired search depth
-#' (# of plies), search nodes (# of nodes), or search time (# of milliseconds).
+#'   legal chess moves in long algebraic notation (LAN).
+#' @param limiter A single-element character vector indicating the desired mode
+#'   of search termination. Allowed values are 'depth' (to search a fixed number
+#'   of plies), 'nodes' (to search a fixed number of nodes), and 'movetime' (to
+#'   search for a fixed number of milliseconds).
+#' @param limit A single-element integer vector of the desired search depth (#
+#'   of plies), search nodes (# of nodes), or search time (# of milliseconds).
 #' @param n_cpus (Default = 1) A single-element integer vector of the number of
-#' CPUs to use.
+#'   CPUs to use.
 #' @param hash_size (Default = NULL) A single-element integer vector of the
-#' desired hash size, in MB.
+#'   desired hash size, in MB.
 #' @param mute (Default = TRUE) A boolean indicating if the board should be
-#' printed after each turn.
-#' @param ply_limit (Default = NULL) An integer indicating the maximum number
-#' of ply before the game is stopped. Used to limit execution time for unit
-#' tests and examples.
+#'   printed after each turn.
+#' @param ply_limit (Default = NULL) An integer indicating the maximum number of
+#'   ply before the game is stopped. Used to limit execution time for unit tests
+#'   and examples.
 #'
 #' @return A single-element character vector of the game in standard algebraic
-#' notation (SAN).
+#'   notation (SAN).
 #' @export
 #'
 #' @examples

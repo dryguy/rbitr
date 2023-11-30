@@ -17,10 +17,11 @@ The function first detects the operating system using the
 \code{Sys.info()} function in R. Depending on the operating system, it uses
 OS-specific system commands to retrieve the CPU name:
 \itemize{
-\item Windows - \code{Get-WmiObject Win32_Processor}.Name in PowerShell
-\item Linux   - \code{lscpu | grep "Model name:"}
-\item macOS   - \code{sysctl -n machdep.cpu.brand_string}
+\item Windows (PowerShell): \verb{(Get-WmiObject Win32_Processor).Name}
+\item Linux: \verb{lscpu | grep "Model name:"}
+\item macOS: \verb{sysctl -n machdep.cpu.brand_string}
 }
+
 For operating systems other than the above, it returns "Unknown CPU."
 }
 \note{

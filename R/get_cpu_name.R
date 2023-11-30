@@ -3,13 +3,12 @@
 #' This function attempts to return the name of the CPU model. See Note.
 #'
 #' @details The function first detects the operating system using the
-#'   \code{Sys.info()} function in R. Depending on the operating system, it uses
+#'   `Sys.info()` function in R. Depending on the operating system, it uses
 #'   OS-specific system commands to retrieve the CPU name:
-#' \itemize{
-#'   \item Windows - \code{Get-WmiObject Win32_Processor}.Name in PowerShell
-#'   \item Linux   - \code{lscpu | grep "Model name:"}
-#'   \item macOS   - \code{sysctl -n machdep.cpu.brand_string}
-#' }
+#' * Windows (PowerShell): `(Get-WmiObject Win32_Processor).Name`
+#' * Linux: `lscpu | grep "Model name:"`
+#' * macOS: `sysctl -n machdep.cpu.brand_string`
+#'
 #' For operating systems other than the above, it returns "Unknown CPU."
 #'
 #' @return A character string representing the name of the CPU.
