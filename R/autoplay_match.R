@@ -51,7 +51,7 @@
 #' # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
 #' # a full game, delete the ply_limit.
 #' autoplay_match('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1,
-#' mute = FALSE, ply_limit = 3, n_games = 10, save_path = 'games.pgn')
+#' mute = FALSE, ply_limit = 3, n_games = 2)
 autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
                            hash_size = NULL, mute = TRUE, ply_limit = NULL,
                            n_games, event = NULL, site = NULL, date = NULL,

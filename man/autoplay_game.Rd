@@ -2,7 +2,7 @@
 % Please edit documentation in R/autoplay_game.R
 \name{autoplay_game}
 \alias{autoplay_game}
-\title{Have a chess engine play against itself}
+\title{Have a chess engine play a game against itself}
 \usage{
 autoplay_game(
   engine_path,
@@ -22,13 +22,13 @@ compatible chess engine.}
 \item{position}{A single-element character vector containing a series of
 legal chess moves in long algebraic notation (LAN).}
 
-\item{limiter}{A single-element character vector indicating the desired
-mode of search termination. Allowed values are 'depth' (to search a fixed
-number of plies), 'nodes' (to search a fixed number of nodes), and
-'movetime' (to search for a fixed number of milliseconds).}
+\item{limiter}{A single-element character vector indicating the desired mode
+of search termination. Allowed values are 'depth' (to search a fixed number
+of plies), 'nodes' (to search a fixed number of nodes), and 'movetime' (to
+search for a fixed number of milliseconds).}
 
-\item{limit}{A single-element integer vector of the desired search depth
-(# of plies), search nodes (# of nodes), or search time (# of milliseconds).}
+\item{limit}{A single-element integer vector of the desired search depth (#
+of plies), search nodes (# of nodes), or search time (# of milliseconds).}
 
 \item{n_cpus}{(Default = 1) A single-element integer vector of the number of
 CPUs to use.}
@@ -39,20 +39,22 @@ desired hash size, in MB.}
 \item{mute}{(Default = TRUE) A boolean indicating if the board should be
 printed after each turn.}
 
-\item{ply_limit}{(Default = NULL) An integer indicating the maximum number
-of ply before the game is stopped. Used to limit execution time for unit
-tests and examples.}
+\item{ply_limit}{(Default = NULL) An integer indicating the maximum number of
+ply before the game is stopped. Used to limit execution time for unit tests
+and examples.}
 }
 \value{
 A single-element character vector of the game in standard algebraic
 notation (SAN).
 }
 \description{
-The function \code{autoplay_game()} is used to make a
-\href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess
-engine play a game against itself. Since engines typically do not handle
-draws by repetition, insufficient material, or the fifty-move rule, the
-function checks for those conditions and declares a draw if any are detected.
+The function \code{autoplay_game()} is used to make a \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess engine
+play a game against itself.
+}
+\details{
+Since engines typically do not handle draws by repetition,
+insufficient material, or the fifty-move rule, the function checks for
+those conditions and declares a draw if any are detected.
 }
 \examples{
 # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
