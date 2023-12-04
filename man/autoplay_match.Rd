@@ -19,8 +19,7 @@ autoplay_match(
   date = NULL,
   white = NULL,
   black = NULL,
-  save_path = NULL,
-  append = FALSE
+  save_path = NULL
 )
 }
 \arguments{
@@ -71,9 +70,6 @@ of the player playing black.}
 
 \item{save_path}{(Default = NULL) A single-element character vector of the
 path where the PGN file should be saved.}
-
-\item{append}{(Default = FALSE) A single-element boolean vector indicating
-whether to overwrite or append data to an already existing file.}
 }
 \value{
 A tibble where each row corresponds to a game played by the chess

@@ -38,8 +38,6 @@
 #'   of the player playing black.
 #' @param save_path (Default = NULL) A single-element character vector of the
 #'   path where the PGN file should be saved.
-#' @param append (Default = FALSE) A single-element boolean vector indicating
-#'   whether to overwrite or append data to an already existing file.
 #'
 #' @return A tibble where each row corresponds to a game played by the chess
 #'   engine against itself. The columns of the tibble are `Event`, `Site`,
@@ -55,10 +53,23 @@
 autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
                            hash_size = NULL, mute = TRUE, ply_limit = NULL,
                            n_games, event = NULL, site = NULL, date = NULL,
-                           white = NULL, black = NULL, save_path = NULL,
-                           append = FALSE) {
+                           white = NULL, black = NULL, save_path = NULL) {
   # Validate the input
-  assertthat::assert_that(assertthat::is.count(n_games))
+  assertthat::assert_that(is.character(engine_path), length(engine_path) == 1)
+  assertthat::assert_that(is.character(position))
+  assertthat::assert_that(is.character(limiter), length(limiter) == 1)
+  assertthat::assert_that(is.numeric(limit), length(limit) == 1)
+  assertthat::assert_that(is.numeric(n_cpus), length(n_cpus) == 1)
+  assertthat::assert_that(is.null(hash_size) || (is.numeric(hash_size) && length(hash_size) == 1))
+  assertthat::assert_that(is.logical(mute), length(mute) == 1)
+  assertthat::assert_that(is.null(ply_limit) || (is.numeric(ply_limit) && length(ply_limit) == 1))
+  assertthat::assert_that(is.numeric(n_games), length(n_games) == 1)
+  assertthat::assert_that(is.null(event) || (is.character(event) && length(event) == 1))
+  assertthat::assert_that(is.null(site) || (is.character(site) && length(site) == 1))
+  assertthat::assert_that(is.null(date) || (is.character(date) && length(date) == 1))
+  assertthat::assert_that(is.null(white) || (is.character(white) && length(white) == 1))
+  assertthat::assert_that(is.null(black) || (is.character(black) && length(black) == 1))
+  assertthat::assert_that(is.null(save_path) || (is.character(save_path) && length(save_path) == 1))
 
   # Initialize a tibble to store the results of the games
   results <- tibble::tibble(Event    = character(n_games),
@@ -69,6 +80,16 @@ autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
                             Black    = character(n_games),
                             Result   = character(n_games),
                             Movetext = character(n_games))
+
+  # Check if there is a partially completed PGN file at save_path
+  if (!is.null(save_path) && file.exists(save_path)) {
+    existing_pgn <- rbitr::get_pgn(save_path)
+    existing_pgn$Round <- as.integer(existing_pgn$Round)
+    n_existing_games <- nrow(existing_pgn)
+    results[seq_len(n_existing_games), ] <- existing_pgn
+  } else {
+    n_existing_games <- 0
+  }
 
   # Get the engine name
   engine_name <- tools::file_path_sans_ext(basename(engine_path))
@@ -90,17 +111,17 @@ autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
     black <- paste0(engine_name, " Black")
   }
 
-  # Have the chess engine play n_games games against itself
-  for (i in seq_len(n_games)) {
+  # Have the chess engine play the remaining games against itself
+  for (i in (n_existing_games + 1):n_games) {
     movetext <- autoplay_game(engine_path, position, limiter, limit, n_cpus,
                               hash_size, mute, ply_limit)
     result <- get_result(movetext)
     results[i, ] <- list(event, site, date, i, white, black, result, movetext)
-  }
 
-  # Save the games as a PGN file
-  if (!is.null(save_path)) {
-    save_pgn(results, pgn_path = save_path, append = append)
+    # Append the game to the PGN file after each game is completed
+    if (!is.null(save_path)) {
+      save_pgn(results[i, ], pgn_path = save_path, append = TRUE)
+    }
   }
 
   # Return the results of the games
