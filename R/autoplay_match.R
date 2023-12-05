@@ -48,7 +48,7 @@
 #' @examples
 #' # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
 #' # a full game, delete the ply_limit.
-#' autoplay_match('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1,
+#' autoplay_match('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1L,
 #' mute = FALSE, ply_limit = 3, n_games = 2)
 autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
                            hash_size = NULL, mute = TRUE, ply_limit = NULL,
@@ -113,8 +113,10 @@ autoplay_match <- function(engine_path, position = '', limiter, limit, n_cpus,
 
   # Have the chess engine play the remaining games against itself
   for (i in (n_existing_games + 1):n_games) {
-    movetext <- autoplay_game(engine_path, position, limiter, limit, n_cpus,
-                              hash_size, mute, ply_limit)
+    movetext <- autoplay_game(engine_path, position = position,
+                              limiter = limiter, limit = limit, n_cpus = n_cpus,
+                              hash_size = hash_size, mute = mute,
+                              ply_limit = ply_limit)
     result <- get_result(movetext)
     results[i, ] <- list(event, site, date, i, white, black, result, movetext)
 

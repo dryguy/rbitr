@@ -1,6 +1,6 @@
 test_that("autoplay_game works", {
   test <- autoplay_game('/stockfish.exe', limiter = 'depth', limit = 1,
-                        n_cpus = 1, mute = TRUE, ply_limit = 3)
+                        n_cpus = 1L, mute = TRUE, ply_limit = 3)
   expect_true(is.character(test))
   expect_equal(length(test), 1)
 })

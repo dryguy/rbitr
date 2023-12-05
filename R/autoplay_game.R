@@ -1,15 +1,17 @@
-#' Have a chess engine play a game against itself
+#' Have two chess engines play a game against each other
 #'
-#' The function `autoplay_game()` is used to make a [UCI
-#' compatible](http://wbec-ridderkerk.nl/html/UCIProtocol.html) chess engine
-#' play a game against itself.
+#' The function `autoplay_game()` is used to make two UCI
+#' compatible chess engines
+#' play a game against each other. If only one engine is provided, it will play against itself.
 #'
 #' @details Since engines typically do not handle draws by repetition,
 #'   insufficient material, or the fifty-move rule, the function checks for
 #'   those conditions and declares a draw if any are detected.
 #'
-#' @param engine_path A single-element character vector of the path to a UCI
-#'   compatible chess engine.
+#' @param white_engine_path A single-element character vector of the path to the UCI
+#'   compatible chess engine for the white player.
+#' @param black_engine_path (Default = white_engine_path) A single-element character vector of the path to the UCI
+#'   compatible chess engine for the black player.
 #' @param position A single-element character vector containing a series of
 #'   legal chess moves in long algebraic notation (LAN).
 #' @param limiter A single-element character vector indicating the desired mode
@@ -35,13 +37,17 @@
 #' @examples
 #' # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
 #' # a full game, delete the ply_limit.
-#' autoplay_game('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1,
+#' autoplay_game('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1L,
 #' mute = FALSE, ply_limit = 3)
-autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
+
+autoplay_game <- function(white_engine_path,
+                          black_engine_path = white_engine_path,
+                          position = '', limiter, limit, n_cpus,
                           hash_size = NULL, mute = TRUE, ply_limit = NULL) {
   # Validate the input
   assertthat::assert_that(assertthat::is.string(position))
-  assertthat::assert_that(assertthat::is.string(engine_path))
+  assertthat::assert_that(assertthat::is.string(white_engine_path))
+  assertthat::assert_that(assertthat::is.string(black_engine_path))
   assertthat::assert_that(assertthat::is.count(n_cpus))
   assertthat::assert_that(assertthat::is.string(limiter))
   assertthat::assert_that(limiter %in% c('depth', 'nodes', 'movetime'))
@@ -56,7 +62,7 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
   boards <- list()
   moves <- position
   if (position != '') {
-  #  Fill in boards so far
+    #  Fill in boards so far
     boards <- lan_to_boards(moves)
   }
   boards[[ply]] <- fen_to_board(lan_to_fen(position))
@@ -65,17 +71,10 @@ autoplay_game <- function(engine_path, position = '', limiter, limit, n_cpus,
   }
 
   # Play the game
-  positionlog <- rbitr::evaluate_position(position, engine_path, limiter, limit,
-                                          n_cpus, n_pv = 1, hash_size)
-  bestmove <- sub(".*bestmove (\\w+).*", "\\1", utils::tail(positionlog[[1]], 1))
-  ply <- ply + 1L
-  boards[[ply]] <- update_board(bestmove, boards[[ply - 1L]])
-  if (!mute) {
-    print(bestmove)
-    print_board(boards[[ply]]$board)
-  }
-  moves <- trimws(paste0(position, ' ', bestmove))
   while(TRUE) {
+    # Choose the engine for this turn
+    engine_path <- ifelse(ply %% 2 == 1, white_engine_path, black_engine_path)
+
     positionlog <- rbitr::evaluate_position(moves, engine_path, limiter,
                                             limit, n_cpus, n_pv = 1, hash_size)
     bestmove <- sub(".*bestmove (\\w+).*", "\\1", utils::tail(positionlog[[1]], 1))

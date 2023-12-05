@@ -85,6 +85,6 @@ a PGN file.
 \examples{
 # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
 # a full game, delete the ply_limit.
-autoplay_match('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1,
+autoplay_match('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1L,
 mute = FALSE, ply_limit = 3, n_games = 2)
 }

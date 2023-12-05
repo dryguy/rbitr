@@ -2,10 +2,11 @@
 % Please edit documentation in R/autoplay_game.R
 \name{autoplay_game}
 \alias{autoplay_game}
-\title{Have a chess engine play a game against itself}
+\title{Have two chess engines play a game against each other}
 \usage{
 autoplay_game(
-  engine_path,
+  white_engine_path,
+  black_engine_path = white_engine_path,
   position = "",
   limiter,
   limit,
@@ -16,8 +17,11 @@ autoplay_game(
 )
 }
 \arguments{
-\item{engine_path}{A single-element character vector of the path to a UCI
-compatible chess engine.}
+\item{white_engine_path}{A single-element character vector of the path to the UCI
+compatible chess engine for the white player.}
+
+\item{black_engine_path}{(Default = white_engine_path) A single-element character vector of the path to the UCI
+compatible chess engine for the black player.}
 
 \item{position}{A single-element character vector containing a series of
 legal chess moves in long algebraic notation (LAN).}
@@ -48,8 +52,9 @@ A single-element character vector of the game in standard algebraic
 notation (SAN).
 }
 \description{
-The function \code{autoplay_game()} is used to make a \href{http://wbec-ridderkerk.nl/html/UCIProtocol.html}{UCI compatible} chess engine
-play a game against itself.
+The function \code{autoplay_game()} is used to make two UCI
+compatible chess engines
+play a game against each other. If only one engine is provided, it will play against itself.
 }
 \details{
 Since engines typically do not handle draws by repetition,
@@ -59,6 +64,6 @@ those conditions and declares a draw if any are detected.
 \examples{
 # Replace '/stockfish.exe' with a path to your UCI-compatible engine. To play
 # a full game, delete the ply_limit.
-autoplay_game('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1,
+autoplay_game('/stockfish.exe', limiter = 'depth', limit = 1, n_cpus = 1L,
 mute = FALSE, ply_limit = 3)
 }
