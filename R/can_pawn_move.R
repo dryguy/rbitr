@@ -1,7 +1,8 @@
 #' Check if a pawn has any legal moves
 #'
 #' This function checks if a pawn at a given position on a chess board can move
-#' forward one square, capture an enemy piece diagonally, or perform an en passant capture.
+#' forward one square, capture an enemy piece diagonally, or perform an en
+#' passant capture.
 #'
 #' @param board A list containing the current state of the chess board.
 #' @param coordinates A vector of length 2 representing the coordinates of the
@@ -11,7 +12,8 @@
 #'   Defaults to the color of the player whose turn it is to move.
 #'
 #' @return A logical value indicating whether the pawn can move forward one
-#'   square, capture an enemy piece diagonally, or perform an en passant capture (TRUE) or not (FALSE).
+#'   square, capture an enemy piece diagonally, or perform an en passant capture
+#'   (TRUE) or not (FALSE).
 #' @examples
 #' board <- fen_to_board() # Starting position
 #' coordinates <- c(2, 1)  # Coordinates of the white pawn in the starting position
@@ -43,7 +45,9 @@ can_pawn_move <- function(board, coordinates, color = board$to_move) {
   if (new_coordinates[1] >= 1 && new_coordinates[1] <= 8 &&
       new_coordinates[2] >= 1 && new_coordinates[2] <= 8 &&
       board$board[new_coordinates[1], new_coordinates[2]] == "") {
-    return(TRUE)
+    if(!move_exposes_king(board, coordinates, new_coordinates, color)) {
+      return(TRUE)
+    }
   }
 
   # Loop through each capture
@@ -54,7 +58,9 @@ can_pawn_move <- function(board, coordinates, color = board$to_move) {
     if (new_coordinates[1] >= 1 && new_coordinates[1] <= 8 &&
         new_coordinates[2] >= 1 && new_coordinates[2] <= 8 &&
         board$board[new_coordinates[1], new_coordinates[2]] %in% enemy_pieces) {
-      return(TRUE)
+      if(!move_exposes_king(board, coordinates, new_coordinates, color)) {
+        return(TRUE)
+      }
     }
   }
 
@@ -63,7 +69,9 @@ can_pawn_move <- function(board, coordinates, color = board$to_move) {
     ep_coordinates <- algebraic_to_coordinates(board$ep_target)
     if (abs(coordinates[1] - ep_coordinates[1]) == 1 &&
         abs(coordinates[2] - ep_coordinates[2]) == 1) {
-      return(TRUE)
+      if(!move_exposes_king(board, coordinates, new_coordinates, color)) {
+        return(TRUE)
+      }
     }
   }
 

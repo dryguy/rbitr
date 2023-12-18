@@ -18,11 +18,13 @@ Defaults to the color of the player whose turn it is to move.}
 }
 \value{
 A logical value indicating whether the pawn can move forward one
-square, capture an enemy piece diagonally, or perform an en passant capture (TRUE) or not (FALSE).
+square, capture an enemy piece diagonally, or perform an en passant capture
+(TRUE) or not (FALSE).
 }
 \description{
 This function checks if a pawn at a given position on a chess board can move
-forward one square, capture an enemy piece diagonally, or perform an en passant capture.
+forward one square, capture an enemy piece diagonally, or perform an en
+passant capture.
 }
 \examples{
 board <- fen_to_board() # Starting position

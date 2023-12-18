@@ -34,4 +34,9 @@ test_that("can_pawn_move returns correct values", {
   fen <- "8/3k4/4p3/4Pp2/8/2K5/8/8 w - - 2 31"
   board <- fen_to_board(fen)
   expect_false(can_pawn_move(board, coordinates))
+
+  # Moving pawn exposes king
+  board <- fen_to_board("8/R7/4Q1pk/7p/5P1P/6P1/7K/8 b - - 0 63")
+  coordinates <- c(6, 7)
+  expect_false(can_pawn_move(board, coordinates))
 })
