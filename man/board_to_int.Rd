@@ -19,6 +19,7 @@ letter representations of pieces into integers, with black pieces indicated
 using a - sign.
 }
 \details{
+The board is converted to the same format used by \code{\link[bigchess:is_check_cpp]{bigchess::is_check_cpp()}}.
 1 = pawn
 2 = bishop
 3 = knight

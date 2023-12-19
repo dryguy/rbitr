@@ -162,7 +162,7 @@ append_result <- function(movetext) {
         }
       } else {
         warning("Unknown outcome")
-        return(paste(movetext, " {unknown outcome}"))
+        return(paste(movetext, "* {unknown outcome}"))
       }
     }
   }
