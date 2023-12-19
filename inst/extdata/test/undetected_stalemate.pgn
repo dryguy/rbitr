@@ -1,9 +1,0 @@
-[Event "stockfish_v_stockfish"]
-[Site "13th Gen Intel(R) Core(TM) i5-13600KF"]
-[Date "2023.12.12"]
-[Round "520"]
-[White "stockfish White"]
-[Black "stockfish Black"]
-[Result "?"]
-
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5 Be7 7. Bf1 Nxe5 8. Rxe5 O-O 9. d4 Ne8 10. d5 Bc5 11. Re1 d6 12. Nc3 Bf5 13. Bd3 Qf6 14. Ne4 Bxe4 15. Rxe4 g6 16. Qe1 Qh8 17. Re2 Nf6 18. Bg5 Nxd5 19. Bh6 Bb4 20. Qf1 Rfd8 21. h4 Nf6 22. c3 Bc5 23. Rae1 c6 24. g3 d5 25. Qh3 Bf8 26. Be3 Qg7 27. Qh1 h5 28. Bd4 c5 29. Be3 Ng4 30. Bg5 c4 31. Bc2 f6 32. Bf4 d4 33. cxd4 Rxd4 34. Bd2 Qf7 35. Bc3 Rd7 36. Ba4 Rdd8 37. Qg2 Bc5 38. Kh1 Ne5 39. Bxe5 fxe5 40. Rf1 Bd4 41. f4 Rf8 42. Bc2 Qe6 43. Qf3 Rf6 44. Kh2 Qf7 45. Qe4 Kf8 46. Ba4 Rd8 47. Rd1 Rd5 48. b3 Rc5 49. Be8 Qxe8 50. Rxd4 cxb3 51. Qxb7 Rc2 52. Re4 Qf7 53. Qb8+ Kg7 54. Qxe5 Rxa2 55. Rxa2 bxa2 56. Ra4 Kh7 57. Qe2 Re6 58. Qxa2 Qe8 59. Rxa7+ Kh6 60. Kh3 Re2 61. Qd5 Qe6+ 62. Qxe6 Rh2+ 63. Kxh2  {unknown outcome}
