@@ -26,12 +26,12 @@
 #'   not covered by the UCI protocol, but *only* if the engine's custom tags
 #'   conform to one of the following formats:
 #'
-#'   * <tag name> <tag value>
-#'   * <tag name> <move 1> <move 2> ... <move i>
+#'   * (tag name) (tag value)
+#'   * (tag name) (move 1) (move 2) ... (move i)
 #'
-#'   where <tag name>, <tag value>, and <move i> are space delimited, and must
+#'   where (tag name), (tag value), and (move i) are space delimited, and must
 #'   not contain spaces themselves. Additionally, moves must be in the UCI LAN
-#'   format. Each <move i> should consist of two chessboard squares followed by
+#'   format. Each (move i) should consist of two chessboard squares followed by
 #'   an optional promotion piece, e.g. e2e4 or e7e8q.
 #'
 #'   When requested data is not found, `NA` will appear to indicate missing

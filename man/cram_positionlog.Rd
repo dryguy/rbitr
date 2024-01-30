@@ -55,13 +55,13 @@ The \code{custom_tags} parameter may also be used for engines that supply data
 not covered by the UCI protocol, but \emph{only} if the engine's custom tags
 conform to one of the following formats:
 \itemize{
-\item \if{html}{\out{<tag name>}} \if{html}{\out{<tag value>}}
-\item \if{html}{\out{<tag name>}} <move 1> <move 2> ... \if{html}{\out{<move i>}}
+\item (tag name) (tag value)
+\item (tag name) (move 1) (move 2) ... (move i)
 }
 
-where \if{html}{\out{<tag name>}}, \if{html}{\out{<tag value>}}, and \if{html}{\out{<move i>}} are space delimited, and must
+where (tag name), (tag value), and (move i) are space delimited, and must
 not contain spaces themselves. Additionally, moves must be in the UCI LAN
-format. Each \if{html}{\out{<move i>}} should consist of two chessboard squares followed by
+format. Each (move i) should consist of two chessboard squares followed by
 an optional promotion piece, e.g. e2e4 or e7e8q.
 
 When requested data is not found, \code{NA} will appear to indicate missing

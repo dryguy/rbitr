@@ -1,17 +1,18 @@
 #' Have two chess engines play a game against each other
 #'
-#' The function `autoplay_game()` is used to make two UCI
-#' compatible chess engines
-#' play a game against each other. If only one engine is provided, it will play against itself.
+#' The function `autoplay_game()` is used to make two UCI compatible chess
+#' engines play a game against each other. If only one engine is provided, it
+#' will play against itself.
 #'
 #' @details Since engines typically do not handle draws by repetition,
 #'   insufficient material, or the fifty-move rule, the function checks for
 #'   those conditions and declares a draw if any are detected.
 #'
-#' @param white_engine_path A single-element character vector of the path to the UCI
-#'   compatible chess engine for the white player.
-#' @param black_engine_path (Default = white_engine_path) A single-element character vector of the path to the UCI
-#'   compatible chess engine for the black player.
+#' @param white_engine_path A single-element character vector of the path to the
+#'   UCI compatible chess engine for the white player.
+#' @param black_engine_path (Default = white_engine_path) A single-element
+#'   character vector of the path to the UCI compatible chess engine for the
+#'   black player.
 #' @param position A single-element character vector containing a series of
 #'   legal chess moves in long algebraic notation (LAN).
 #' @param limiter A single-element character vector indicating the desired mode

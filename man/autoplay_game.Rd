@@ -17,11 +17,12 @@ autoplay_game(
 )
 }
 \arguments{
-\item{white_engine_path}{A single-element character vector of the path to the UCI
-compatible chess engine for the white player.}
+\item{white_engine_path}{A single-element character vector of the path to the
+UCI compatible chess engine for the white player.}
 
-\item{black_engine_path}{(Default = white_engine_path) A single-element character vector of the path to the UCI
-compatible chess engine for the black player.}
+\item{black_engine_path}{(Default = white_engine_path) A single-element
+character vector of the path to the UCI compatible chess engine for the
+black player.}
 
 \item{position}{A single-element character vector containing a series of
 legal chess moves in long algebraic notation (LAN).}
@@ -52,9 +53,9 @@ A single-element character vector of the game in standard algebraic
 notation (SAN).
 }
 \description{
-The function \code{autoplay_game()} is used to make two UCI
-compatible chess engines
-play a game against each other. If only one engine is provided, it will play against itself.
+The function \code{autoplay_game()} is used to make two UCI compatible chess
+engines play a game against each other. If only one engine is provided, it
+will play against itself.
 }
 \details{
 Since engines typically do not handle draws by repetition,
