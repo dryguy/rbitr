@@ -10,6 +10,18 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// is_check_cpp
+bool is_check_cpp(NumericMatrix position, int p);
+RcppExport SEXP _rbitr_is_check_cpp(SEXP positionSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type position(positionSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_check_cpp(position, p));
+    return rcpp_result_gen;
+END_RCPP
+}
 // parse_engine_line_cpp
 CharacterVector parse_engine_line_cpp(std::string engine_line, CharacterVector tag_names);
 RcppExport SEXP _rbitr_parse_engine_line_cpp(SEXP engine_lineSEXP, SEXP tag_namesSEXP) {
@@ -24,6 +36,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_rbitr_is_check_cpp", (DL_FUNC) &_rbitr_is_check_cpp, 2},
     {"_rbitr_parse_engine_line_cpp", (DL_FUNC) &_rbitr_parse_engine_line_cpp, 2},
     {NULL, NULL, 0}
 };

@@ -5,7 +5,7 @@
 #' using a - sign.
 #'
 #' @details
-#' The board is converted to the same format used by [bigchess::is_check_cpp()].
+#' The board is converted to the same format used by [rbitr::is_check_cpp()].
 #' 1 = pawn
 #' 2 = bishop
 #' 3 = knight

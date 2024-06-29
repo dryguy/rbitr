@@ -34,5 +34,5 @@ move_exposes_king <- function(board, coordinates, new_coordinates, color) {
 
   # Check if the king is in check after the move
   enemy_color <- ifelse(color == "white", -1L, 1L)
-  return(bigchess::is_check_cpp(board_to_int(test_board$board), enemy_color))
+  return(rbitr::is_check_cpp(board_to_int(test_board$board), enemy_color))
 }

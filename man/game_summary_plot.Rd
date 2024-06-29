@@ -74,7 +74,7 @@ pgn_path <- file.path(
 )
 # Modify engine_path as required for your engine location & operating system
 engine_path <- '//stockfish.exe'
-game_summary_plot(pgn_path, game_number = 1, engine_path)
+p1 <- game_summary_plot(pgn_path, game_number = 1, engine_path)
 }
 \seealso{
 \itemize{
