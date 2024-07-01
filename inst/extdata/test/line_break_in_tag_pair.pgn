@@ -1,10 +1,10 @@
 [Event "Casual Game"]
-[Site "Arctic Ocean"]
-[Date "17-"]
+[Site "221B Baker Street"]
+[Date "1887.04.01"]
 [Round "?"]
-[White 
-"Victor Frankenstein"]
-[Black "'Adam'"]
-[Result "0-1"]
+[White "Sherlock Holmes"]
+[Black
+"John H. Watson"]
+[Result "1-0"]
 
-1. f3 e6 2. g4 Qh4#
+1. e4 g5 2. Nc3 f5 3. Qh5# 1-0

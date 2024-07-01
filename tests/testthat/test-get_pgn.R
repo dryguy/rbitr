@@ -33,3 +33,8 @@ test_that('get_pgn handles missing movetext', {
   pgn <- get_pgn(pgn_path)
   expect_identical(pgn$Movetext, NA)
 })
+test_that('get_pgn handles line breaks in tag pairs', {
+  pgn_path <- file.path(pgn_path, 'line_break_in_tag_pair.pgn')
+  pgn <- get_pgn(pgn_path)
+  expect_identical(pgn, fools_mate)
+})

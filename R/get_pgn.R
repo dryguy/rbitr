@@ -73,6 +73,17 @@ get_pgn <- function(pgn_path) {
         return()
       }
     }
+    # Check for multi-line tags
+    is_tag <- stringr::str_detect(newline, '\\[')
+    end_of_tag <- stringr::str_detect(newline, '\\]')
+    while (is_tag & !end_of_tag) {
+      if (length(newline) == 0) {
+        end_of_file <<- TRUE
+        return()
+      }
+      newline <<- paste(newline, readLines(con, 1, warn = FALSE, encoding = 'UTF-8'))
+      end_of_tag <- stringr::str_detect(newline, ']')
+    }
   }
   # Define the regex pattern for PGN tags: [TagName "TagValue"]
   tag_regex <- r'(\[\s*([A-Z][\w]*)\s*"([^"]*)"\s*\])'
