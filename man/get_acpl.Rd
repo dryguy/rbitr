@@ -47,9 +47,9 @@ The function \code{get_acpl()} calculates the average centipawn loss
 (ACPL) for the side indicated by the \code{color} parameter. The \code{scores}
 parameter is assumed to begin with a score for the initial position, prior
 to the first move. Note that PGN files containing engine evaluations often
-omit an evaluation of the initial position. When using data from a PGN
-file that is missing this data, it is up to the user to supply a score for
-the initial position before calling \code{get_acpl()}.
+omit an evaluation of the initial position. When using data from a PGN file
+that is missing this data, it is up to the user to supply a score for the
+initial position before calling \code{get_acpl()}.
 
 In some definitions of ACPL, evaluations may be capped to avoid
 having blunders or missed mates result in excessively large ACPL. If the
@@ -57,27 +57,27 @@ having blunders or missed mates result in excessively large ACPL. If the
 will be handled as indicated by the \code{cap_action} parameter.
 
 For positions evaluated as 'mate in x', it is up to the user to
-convert these to numeric scores before calling \code{get_acpl()}. In general,
-if a cap will be applied to evaluations, it is only necessary to convert
-'mate x' or 'mate -x' to values outside the range [-cap, cap]. The rbitr
+convert these to numeric scores before calling \code{get_acpl()}. In general, if
+a cap will be applied to evaluations, it is only necessary to convert 'mate
+x' or 'mate -x' to values outside the range [-cap, cap]. The rbitr
 function \code{convert_scores()} may be used for this conversion.
 
 The method for calculating average centipawn loss varies. The
 concept of average centipawn loss was introduced by Guid & Bratko (which
-they called mean loss). It was calculated only after excluding the first
-11 moves, and also after excluding moves where both the best move and the
+they called mean loss). It was calculated only after excluding the first 11
+moves, and also after excluding moves where both the best move and the
 played move result in evaluations outside the range [-200, 200]. To
 replicate Guid & Bratko's MeanLoss, set \code{cap} to 200, \code{cap_action} to
 'exclude' and, \code{first_ply} to 23. (The ply count starts at 1 for the
 initial position, just before the first move, so the position before
 white's nth move always occurs at ply 2n - 1.)
 
-The website \url{lichess.org} uses a different method, in which
-evaluations outside the range [-1000, 1000] are replaced with +-1000, and
-the initial position is always given a score of 15. To replicate the
-lichess ACPL, set \code{cap} to 1000, \code{cap_action} to 'replace', and make sure
-that the first element of the \code{scores} parameter is an evaluation of the
-initial position and is equal to 15.
+The website \url{lichess.org} uses a different method, in
+which evaluations outside the range [-1000, 1000] are replaced with
++-1000, and the initial position is always given a score of 15. To
+replicate the lichess ACPL, set \code{cap} to 1000, \code{cap_action} to 'replace',
+and make sure that the first element of the \code{scores} parameter is an
+evaluation of the initial position and is equal to 15.
 
 Regan, \emph{et} \emph{al.}, use yet another method to calculate ACPL, which
 they refer to as average error (AE). They exclude evaluations outside the
@@ -100,8 +100,8 @@ get_acpl(scores, 'white')
 \item Guid, M., & Bratko, I. (2006). Computer Analysis of World Chess
 Champions. ICGA Journal, 29(2), 65-73.
 \item Regan, K. W., Macieja, B., & Haworth, G. M. C. (2012). Understanding
-distributions of chess performances. Lecture Notes in Computer Science,
-7168, 230-243. https://doi.org/10.1007/978-3-642-31866-5_20
+distributions of chess performances. Lecture Notes in Computer Science, 7168,
+230-243. https://doi.org/10.1007/978-3-642-31866-5_20
 }
 }
 \seealso{

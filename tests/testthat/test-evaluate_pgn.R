@@ -20,7 +20,8 @@ for (engine_path in engine_paths) {
                                 limit = 2, mute = TRUE)
     expect_identical(class(pgnlog), 'list')
     expect_identical(pgnlog[[3]][[62]][2], 'readyok')
-    expect_identical(pgnlog[[2]][[78]][5], 'bestmove (none)')
+    last_move_index <- length(pgnlog[[2]][[78]])
+    expect_identical(pgnlog[[2]][[78]][last_move_index], 'bestmove (none)')
   })
   # save_logs = F & dir.exists(progress_path) = T
   test_that('evaluate_pgn warns when save_logs may be forgotten', {

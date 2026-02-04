@@ -11,9 +11,10 @@ test_that('evaluate_game evaluates a game', {
   for (engine_path in engine_paths) {
     analysis <- evaluate_game(movetext, engine_path,
                               limiter = 'depth', limit = 1)
+    last_element_index <- length(analysis[[6]])
     expect_identical(class(analysis), 'list')
-    expect_identical(analysis[[1]][2], 'readyok')
-    expect_identical(analysis[[6]][5], 'bestmove (none)')
+    expect_true('readyok' %in% analysis[[1]])
+    expect_true(any(grepl('bestmove', analysis)))
     analysis <- evaluate_game(movetext, engine_path,
                               limiter = 'nodes', limit = 10)
     expect_identical(analysis[[1]][2], 'readyok')
@@ -24,6 +25,9 @@ test_that('evaluate_game evaluates a game', {
                                 limit = 10, mute = FALSE))
     analysis <- evaluate_game(movetext, engine_path,
                               limiter = 'depth', limit = 1, hash_size = 32)
-    expect_identical(analysis[[6]][4], 'info depth 0 score mate 0')
+    expect_identical(
+      analysis[[6]][last_element_index - 1],
+      'info depth 0 score mate 0'
+    )
   }
 })

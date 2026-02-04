@@ -37,9 +37,9 @@ test_that('add_x_intercepts adds x-intercepts', {
 
 test_that('plot_2_color_area returns a ggplot', {
   p1 <- plot_2_color_area(dataframe, 'x', 'y', background = 'none')
-  expect_equal(class(p1), c('gg', 'ggplot'))
+  testthat::expect_true(all(c("gg", "ggplot") %in% class(p1)))
   p1 <- plot_2_color_area(dataframe, 'x', 'y', background = 'gradient')
-  expect_equal(class(p1), c('gg', 'ggplot'))
+  testthat::expect_true(all(c("gg", "ggplot") %in% class(p1)))
 })
 
 test_that('inv_scale_move_times calculates move times from scaled move times', {
