@@ -45,19 +45,9 @@ Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess
 engine that is compatible with the UCI protocol is required to use many
 of rbitr's functions. rbitr was developed using the [Stockfish
 13](https://stockfishchess.org/) chess engine running in Windows. It has
-currently only been tested in Windows with the following Stockfish
-engines:
-
-    stockfish_20090216_x64_bmi2.exe
-    stockfish_13_win_x64_bmi2.exe
-    stockfish_14_x64_avx2.exe
-    stockfish_14.1_win_x64_avx2.exe
-    stockfish_15_x64_avx2.exe
-    stockfish-windows-2022-x86-64-avx2.exe
-    stockfish-windows-x86-64-avx2.exe
-
-Other UCI-compatible engines should also work, but your mileage may
-vary.
+currently only been tested in Windows with the 64 bit Stockfish engine versions
+12, 13, 14, 14.1, 15, 15.1, 16, and 18. Other UCI-compatible engines should also
+work, but your mileage may vary.
 
 A big thanks is due to Wojciech Rosa for creating the package
 [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on

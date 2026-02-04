@@ -4,6 +4,7 @@
 # rbitr <img src="man/figures/rbitr_logo.png" align="right" width="150"/>
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 Arbiter: One who ensures adherence to the rules and laws of chess.
@@ -29,19 +30,9 @@ Protocol](http://wbec-ridderkerk.nl/html/UCIProtocol.html), so a chess
 engine that is compatible with the UCI protocol is required to use many
 of rbitr’s functions. rbitr was developed using the [Stockfish
 13](https://stockfishchess.org/) chess engine running in Windows. It has
-currently only been tested in Windows with the following Stockfish
-engines:
-
-    stockfish_20090216_x64_bmi2.exe
-    stockfish_13_win_x64_bmi2.exe
-    stockfish_14_x64_avx2.exe
-    stockfish_14.1_win_x64_avx2.exe
-    stockfish_15_x64_avx2.exe
-    stockfish-windows-2022-x86-64-avx2.exe
-    stockfish-windows-x86-64-avx2.exe
-
-Other UCI-compatible engines should also work, but your mileage may
-vary.
+currently only been tested in Windows with the 64 bit Stockfish engine
+versions 12, 13, 14, 14.1, 15, 15.1, 16, and 18. Other UCI-compatible
+engines should also work, but your mileage may vary.
 
 A big thanks is due to Wojciech Rosa for creating the package
 [bigchess](https://github.com/rosawojciech/bigchess). rbitr depends on
@@ -254,7 +245,7 @@ baseline of the plot. This same scaling function is available in rbitr’s
 time_plot(white_move_times, black_move_times)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" alt="" width="100%" />
 
 In chess, each time a player moves a piece is considered a “half-move”.
 So, in the strictest sense, anywhere we’ve said “move time”, we’ve
@@ -299,7 +290,7 @@ evals <- get_evals(pgn$Movetext, first_eval = 15, mate0 = TRUE)
 advantage_plot(evals[[1]])
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" alt="" width="100%" />
 
 The sign convention used here is that positive evaluations mean that
 white has the advantage, while negative evaluations mean that black has
@@ -353,35 +344,41 @@ gamelog <- evaluate_game(pgn$Movetext[[1]], engine_path, limiter = 'nodes',
 #> [1] "Analyzing position 13 of 14"
 #> [1] "Analyzing position 14 of 14"
 gamelog[[1]]
-#>  [1] "Stockfish 16 by the Stockfish developers (see AUTHORS file)"                                                                                                                                                                                                  
-#>  [2] "readyok"                                                                                                                                                                                                                                                      
-#>  [3] "readyok"                                                                                                                                                                                                                                                      
-#>  [4] "info string NNUE evaluation using nn-5af11540bbfe.nnue enabled"                                                                                                                                                                                               
-#>  [5] "info depth 1 seldepth 1 multipv 1 score cp 2 nodes 20 nps 20000 hashfull 0 tbhits 0 time 1 pv g1f3"                                                                                                                                                           
-#>  [6] "info depth 2 seldepth 2 multipv 1 score cp 2 nodes 40 nps 40000 hashfull 0 tbhits 0 time 1 pv g1f3"                                                                                                                                                           
-#>  [7] "info depth 3 seldepth 2 multipv 1 score cp 16 nodes 70 nps 70000 hashfull 0 tbhits 0 time 1 pv c2c3"                                                                                                                                                          
-#>  [8] "info depth 4 seldepth 2 multipv 1 score cp 29 nodes 101 nps 101000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                                                        
-#>  [9] "info depth 5 seldepth 3 multipv 1 score cp 42 nodes 131 nps 131000 hashfull 0 tbhits 0 time 1 pv e2e4 g8f6"                                                                                                                                                   
-#> [10] "info depth 6 seldepth 4 multipv 1 score cp 59 nodes 489 nps 489000 hashfull 0 tbhits 0 time 1 pv g1f3 d7d5 d2d4"                                                                                                                                              
-#> [11] "info depth 7 seldepth 6 multipv 1 score cp 31 nodes 1560 nps 780000 hashfull 1 tbhits 0 time 2 pv e2e4 d7d5 e4d5 d8d5 g1f3"                                                                                                                                   
-#> [12] "info depth 8 seldepth 6 multipv 1 score cp 40 nodes 2105 nps 1052500 hashfull 1 tbhits 0 time 2 pv e2e4 d7d5 e4d5 d8d5"                                                                                                                                       
-#> [13] "info depth 9 seldepth 8 multipv 1 score cp 48 nodes 4500 nps 1500000 hashfull 1 tbhits 0 time 3 pv e2e4 e7e5 g1f3 g8f6 f3e5 f6e4 d2d4 b8c6"                                                                                                                   
-#> [14] "info depth 10 seldepth 10 multipv 1 score cp 50 nodes 7548 nps 1509600 hashfull 2 tbhits 0 time 5 pv e2e4 e7e5 g1f3 g8f6 b1c3 d7d6 d2d4"                                                                                                                      
-#> [15] "info depth 11 seldepth 12 multipv 1 score cp 44 nodes 13058 nps 1632250 hashfull 3 tbhits 0 time 8 pv e2e4 e7e5 g1f3 g8f6 b1c3 d7d6 d2d4 e5d4 d1d4 b8c6 d4d3 f8e7"                                                                                            
-#> [16] "info depth 12 seldepth 16 multipv 1 score cp 40 nodes 35836 nps 1791800 hashfull 15 tbhits 0 time 20 pv e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f3e5 e4f6 f1c4 d7d5"                                                                                                    
-#> [17] "info depth 13 seldepth 18 multipv 1 score cp 43 nodes 59384 nps 1799515 hashfull 26 tbhits 0 time 33 pv e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f3e5 d7d5 f1d3 f8b4 c2c3 b4d6"                                                                                          
-#> [18] "info depth 14 seldepth 19 multipv 1 score cp 48 nodes 73942 nps 1803463 hashfull 30 tbhits 0 time 41 pv e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f1d3 d7d5 f3e5 f8b4 b1d2 e8g8 e1g1 b4d2 c1d2"                                                                           
-#> [19] "info depth 15 seldepth 19 multipv 1 score cp 33 nodes 173344 nps 1805666 hashfull 69 tbhits 0 time 96 pv e2e4 c7c5 b1c3 b8c6 g1f3 e7e5 f1c4 f8e7 d2d3 d7d6 e1g1 h7h6 h2h3 g8f6 f3h2 e8g8 f2f4 e5f4 c1f4"                                                      
-#> [20] "info depth 16 seldepth 22 multipv 1 score cp 24 nodes 302305 nps 1767865 hashfull 127 tbhits 0 time 171 pv e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 f1e1 f8e7 d4e5 c8e6 c1e3"                                                    
-#> [21] "info depth 17 seldepth 24 multipv 1 score cp 28 nodes 358119 nps 1746921 hashfull 155 tbhits 0 time 205 pv e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2 f8c5 d1e1 e4d2 c1d2 e8g8 c2c3"                                
-#> [22] "info depth 18 seldepth 28 multipv 1 score cp 32 nodes 406239 nps 1706886 hashfull 172 tbhits 0 time 238 pv e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 d1e2 f8b4 c2c3 b4c5 e4e5"                                                                        
-#> [23] "info depth 19 seldepth 25 multipv 1 score cp 38 nodes 517102 nps 1684371 hashfull 215 tbhits 0 time 307 pv e2e4 c7c5 d2d4 c5d4 g1f3 e7e5 c2c3 b8c6 f1c4 f8c5 d1b3 d8f6 c3d4 c6d4 f3d4 c5d4"                                                                   
-#> [24] "info depth 20 seldepth 30 multipv 1 score cp 38 nodes 768773 nps 1678543 hashfull 309 tbhits 0 time 458 pv e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7 c1e3 e4c5 b3c2 e6g4 h2h3 g4f3 d1f3 c6e5 f3h5"            
-#> [25] "info depth 21 seldepth 28 multipv 1 score cp 38 nodes 872083 nps 1673863 hashfull 352 tbhits 0 time 521 pv e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7 c1e3 e4c5 b3c2 e6g4 h2h3 g4f3 d1f3 c6e5 f3h5"            
-#> [26] "info depth 22 seldepth 34 multipv 1 score cp 42 nodes 1356583 nps 1685196 hashfull 517 tbhits 0 time 805 pv e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2 e4c5 c2c3 d5d4 c3d4 c6d4 f3d4 d8d4 d1f3"                     
-#> [27] "info depth 23 seldepth 38 multipv 1 score cp 32 nodes 2240135 nps 1676747 hashfull 744 tbhits 0 time 1336 pv e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 f1d3 d7d5 e4e5 f6g4 e1g1 f8c5 d1e2 d8e7 c1f4 f7f6 e5f6 e7e2 d3e2 e8g8 f4c7 f8f6 c7g3 g4h6 e2d3"
-#> [28] "info depth 24 seldepth 38 multipv 1 score cp 32 nodes 2250245 nps 1676784 hashfull 747 tbhits 0 time 1342 pv e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 f1d3 d7d5 e4e5 f6g4 e1g1 f8c5 d1e2 d8e7 c1f4 f7f6 e5f6 e7e2 d3e2 e8g8 f4c7 f8f6 c7g3 g4h6 e2d3"
-#> [29] "bestmove e2e4 ponder e7e5"
+#>  [1] "Stockfish 18 by the Stockfish developers (see AUTHORS file)"                                                                                                                                                                                                            
+#>  [2] "readyok"                                                                                                                                                                                                                                                                
+#>  [3] "info string Using 1 thread"                                                                                                                                                                                                                                             
+#>  [4] "readyok"                                                                                                                                                                                                                                                                
+#>  [5] "info string Available processors: 0-19"                                                                                                                                                                                                                                 
+#>  [6] "info string Using 1 thread"                                                                                                                                                                                                                                             
+#>  [7] "info string NNUE evaluation using nn-c288c895ea92.nnue (125MiB, (102384, 1024, 15, 32, 1))"                                                                                                                                                                             
+#>  [8] "info string NNUE evaluation using nn-37f18f62d772.nnue (6MiB, (22528, 128, 15, 32, 1))"                                                                                                                                                                                 
+#>  [9] "info string Network replica 1: Shared memory."                                                                                                                                                                                                                          
+#> [10] "info depth 1 seldepth 2 multipv 1 score cp -1 nodes 20 nps 20000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                                                                    
+#> [11] "info depth 2 seldepth 3 multipv 1 score cp 27 nodes 48 nps 48000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                                                                    
+#> [12] "info depth 3 seldepth 4 multipv 1 score cp 35 nodes 103 nps 103000 hashfull 0 tbhits 0 time 1 pv e2e4"                                                                                                                                                                  
+#> [13] "info depth 4 seldepth 5 multipv 1 score cp 37 nodes 258 nps 258000 hashfull 0 tbhits 0 time 1 pv d2d4"                                                                                                                                                                  
+#> [14] "info depth 5 seldepth 9 multipv 1 score cp 29 nodes 541 nps 541000 hashfull 0 tbhits 0 time 1 pv e2e4 c7c5"                                                                                                                                                             
+#> [15] "info depth 6 seldepth 12 multipv 1 score cp 35 nodes 900 nps 900000 hashfull 0 tbhits 0 time 1 pv e2e4 c7c5 g1f3 b8c6"                                                                                                                                                  
+#> [16] "info depth 7 seldepth 9 multipv 1 score cp 33 nodes 1546 nps 1546000 hashfull 1 tbhits 0 time 1 pv e2e4 e7e5 g1f3 b8c6 b1c3 g8f6"                                                                                                                                       
+#> [17] "info depth 8 seldepth 13 multipv 1 score cp 36 nodes 3260 nps 1086666 hashfull 1 tbhits 0 time 3 pv e2e4 e7e5 g1f3 b8c6 b1c3"                                                                                                                                           
+#> [18] "info depth 9 seldepth 12 multipv 1 score cp 38 nodes 3703 nps 1234333 hashfull 1 tbhits 0 time 3 pv e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4 f3d4"                                                                                                                       
+#> [19] "info depth 10 seldepth 12 multipv 1 score cp 69 nodes 4835 nps 1208750 hashfull 1 tbhits 0 time 4 pv e2e4 e7e5 g1f3 b8c6"                                                                                                                                               
+#> [20] "info depth 11 seldepth 24 multipv 1 score cp 51 nodes 32898 nps 1218444 hashfull 10 tbhits 0 time 27 pv e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4"                                                                                                                             
+#> [21] "info depth 12 seldepth 19 multipv 1 score cp 47 nodes 41065 nps 1244393 hashfull 11 tbhits 0 time 33 pv e2e4 c7c5 b1c3 a7a6 g1f3 e7e6 d2d4 c5d4 f3d4"                                                                                                                   
+#> [22] "info depth 13 seldepth 20 multipv 1 score cp 46 nodes 52822 nps 1228418 hashfull 16 tbhits 0 time 43 pv e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 f1e2 b8c6 f3d4 d8c7 b1c3 e7e6 d4c6"                                                                                               
+#> [23] "info depth 14 seldepth 19 multipv 1 score cp 48 nodes 57960 nps 1233191 hashfull 17 tbhits 0 time 47 pv e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 f3d4 e7e6 b1c3 d8c7 f1d3 g8f6 f2f4 b8c6 d4c6"                                                                                     
+#> [24] "info depth 15 seldepth 18 multipv 1 score cp 49 nodes 61564 nps 1256408 hashfull 18 tbhits 0 time 49 pv e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1e3 e7e6 f2f4 f8e7"                                                                                          
+#> [25] "info depth 16 seldepth 27 multipv 1 score cp 47 nodes 108990 nps 1184673 hashfull 36 tbhits 0 time 92 pv e2e4 c7c5 g1f3 e7e6 b1c3 a7a6 d2d4 c5d4 f3d4 d8c7 f1d3 b8c6"                                                                                                   
+#> [26] "info depth 17 seldepth 22 multipv 1 score cp 47 nodes 113959 nps 1187072 hashfull 38 tbhits 0 time 96 pv e2e4 c7c5 g1f3 e7e6 b1c3 a7a6 d2d4 c5d4 f3d4 d8c7 f1d3 b8c6 d4c6 b7c6 e1g1 f8d6 h2h3 g8f6 f1e1 d6e5 c3a4"                                                      
+#> [27] "info depth 18 seldepth 29 multipv 1 score cp 49 nodes 177777 nps 1177331 hashfull 64 tbhits 0 time 151 pv e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g7g6 b1c3 g8f6 g1f3"                                                                                                       
+#> [28] "info depth 19 seldepth 34 multipv 1 score cp 34 nodes 566379 nps 1148841 hashfull 223 tbhits 0 time 493 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 f8d6 c2c3 e8g8 e1g1 f8e8 c1g5 h7h6 g5h4 d6f8 b1d2 d7d6 b5a4"                                                              
+#> [29] "info depth 20 seldepth 33 multipv 1 score cp 34 nodes 782174 nps 1146882 hashfull 309 tbhits 0 time 682 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 c6e5 b1c3 f8e7 e1e5 e8g8 b5f1 e7f6 e5e1 d6f5 c3d5 f6h4 d2d4 c7c6 d5f4 d7d5 g2g3 h4e7 c2c3 c8d7 a2a4"  
+#> [30] "info depth 21 seldepth 42 multipv 1 score cp 24 nodes 1241950 nps 1156378 hashfull 455 tbhits 0 time 1074 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 d4d5 e7c5 b1c3 d7d6 e5e1 e8f6 c1g5 h7h6 g5h4"                    
+#> [31] "info depth 22 seldepth 31 multipv 1 score cp 24 nodes 1286543 nps 1155923 hashfull 464 tbhits 0 time 1113 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 d4d5 e7c5 b1c3 d7d6 e5e1 e8f6"                                   
+#> [32] "info depth 23 seldepth 41 multipv 1 score cp 31 nodes 1399975 nps 1152242 hashfull 497 tbhits 0 time 1215 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 c2c4 e7f6 e5e1 g8h8"                                             
+#> [33] "info depth 24 seldepth 49 multipv 1 score cp 35 nodes 2055087 nps 1138552 hashfull 663 tbhits 0 time 1805 pv e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 e7f6 e5e1 d6f5 c2c3 d7d5 c1f4 a7a5 b1d2 c7c6 d2f3 g7g6 f1d3 f5g7 d1c2"
+#> [34] "info depth 25 seldepth 47 multipv 1 score cp 36 lowerbound nodes 2250329 nps 1139407 hashfull 701 tbhits 0 time 1975 pv e2e4"                                                                                                                                           
+#> [35] "bestmove e2e4 ponder e7e5"
 ```
 
 The result of the analysis is a list of raw chess engine output for each
@@ -420,7 +417,7 @@ directory with the same base name as the PGN file.
 pgnlog <- evaluate_pgn(two_games_path, engine_path,
                        limiter = 'nodes', limit = 2250000)
 #> [1] "game 1 of 2"
-#> [1] "estimated time remaining 5.5 secs"
+#> [1] "estimated time remaining 8.7 secs"
 #> [1] "game 2 of 2"
 #> [1] "estimated time remaining 0 secs"
 ```
@@ -434,26 +431,26 @@ best moves the engine found (‘bestmove’), or the principal variations
 ``` r
 bestmoves <- unlist(parse_gamelog(gamelog, 'bestmove'))
 bestmoves
-#>  [1] "e2e4" "e7e5" "g1f3" "e5d4" "f1c4" "d8e7" "d1h5" "g7g6" "h5e5" "e7f7"
+#>  [1] "e2e4" "e7e5" "g1f3" "e5d4" "f1c4" "b8c6" "d1h5" "g7g6" "h5e5" "e7f7"
 #> [11] "f1c4" "d7d5" "e5f5" ""
 scores <- unlist(parse_gamelog(gamelog, 'score'))
 scores
-#>  [1] "32"     "-29"    "24"     "12"     "150"    "-166"   "619"    "-626"  
-#>  [9] "806"    "-805"   "829"    "-825"   "mate 1"
+#>  [1] "36"     "-26"    "23"     "15"     "163"    "-149"   "471"    "-500"  
+#>  [9] "700"    "-697"   "676"    "-676"   "mate 1"
 pvs <- unlist(parse_gamelog(gamelog, 'pv'))
 pvs
-#>  [1] "e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 f1d3 d7d5 e4e5 f6g4 e1g1 f8c5 d1e2 d8e7 c1f4 f7f6 e5f6 e7e2 d3e2 e8g8 f4c7 f8f6 c7g3 g4h6 e2d3"                              
-#>  [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 c2c4 e7f6 e5e1 d7d5 c4d5 d8d5 c1e3 c8f5 b1c3 d5d7 h2h3 a8d8 d4d5 b7b6"                    
-#>  [3] "g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 d4d5 e7c5 e5e1 d7d6 b1c3 f7f5 d1f3 c8d7 c1e3 c5e3 f3e3 d8f6"                                   
-#>  [4] "e5d4"                                                                                                                                                                          
-#>  [5] "f1c4 d7d6 h2h3 a7a6 g1f3 b8c6 e1g1 g7g6 a2a4 f8h6 a1a3 e8f8 d4e5 h6c1 d1c1 d6e5 b1c3"                                                                                          
-#>  [6] "d8e7 b1c3 f6e5 f2f4 d7d6 c3d5 e7h4 g2g3 h4d8 f4f5 g8f6 g1h3 c7c6 d5f6 g7f6 f1e2 e8d7 e1g1 d7c7 c1e3 a7a5 h3f2 b8a6 e2a6 a8a6"                                                  
-#>  [7] "d1h5 g7g6 h5e5 d8e7 e5h8 d7d5 h8g8 c8e6 g8h8 b8c6 h2h4 e8c8 c1g5 e7f7 g5d8 f8g7 h8h7 g7c3 b1c3 f7h7 d8g5 d5d4 c3b5 h7d7 g1f3 c8b8 e1c1 e6a2 b5d4"                              
-#>  [8] "g7g6 h5e5 d8e7 e5h8 d7d5 h8g8 c8e6 g8h8 b8c6 h2h4 e8c8 c1g5 e7f7 g5d8 f8g7 h8h7 g7c3 b1c3 f7h7 e4d5 c6d8 e1c1 e6d5 c1b1 d8c6 g1f3 c6b4 c3d5 b4d5 f1c4"                         
-#>  [9] "h5e5 e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 d5g5 g6f7 g5f4 f7e8 b1c3 b8c6 g1f3 g8f6 c3b5"                                                                                          
-#> [10] "e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7e8 d5h5 e8d8 h5f7 g8e7 b1c3 c8d7 c1g5 b8c6 g1f3 d8c8 e1c1 b7b6 d1d7 c8d7 c3b5 d7c8 h1d1 h7h6 g5f4 g7g5 b5c7 c8b7"                              
-#> [11] "f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 g1f3 h7h6 e4e5 g8e7 d5c4 b8c6 b1c3 a8b8 h2h4 b7b5 c3b5 b8b5 c4b5 c8g4 b5c4 g4f3 c4d3 g6f7 d3f3 f7e8"                                             
-#> [12] "d7d5 c4d5 d8d5 e5d5 f7g6 g1f3 h7h6 e4e5 g8e7 d5c4 b8c6 b1c3 c6a5 f3h4 g6h7 c4e4 g7g6 c3d5 c8f5 d5f6 h7g7 h4f5 e7f5 g2g4 f5h4 g4g5 h6h5 e4h4 a8d8 h4e4 a5c6 h2h4 f8e7 e5e6 h8f8"
+#>  [1] "e2e4"                                                                                                                        
+#>  [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 e7f6 e5e1 f8e8 c1f4 e8e1 d1e1 d6e8 c2c3 c7c5"
+#>  [3] "g1f3 b8c6"                                                                                                                   
+#>  [4] "e5d4 g1f3"                                                                                                                   
+#>  [5] "f1c4 b8c6 g1f3 d7d6 e1g1 g8e7 h2h3 a7a6 a2a4 h7h5 b1c3 d8d7 c4e2 c6d4 f3d4 e5d4 d1d4 e7c6 d4d1"                              
+#>  [6] "b8c6 g1f3 f8c5 f1c4 d8e7 c4g8 h8g8 d1d5 g8f8 e5f6 g7f6 d5h5 e8d8 e1g1 f8g8 b1c3 d7d6 c3d5 e7g7 f3e1 c6e7 d5f4 c5b6 e1d3"     
+#>  [7] "d1h5 g7g6 h5e5 d8e7 e5h8 d7d5 h8g8 c8e6 f1b5 b8d7 g8h8 e8c8 h8c3 d5e4 c3g3 e7b4 b1c3 f8d6 a2a4"                              
+#>  [8] "g7g6 h5e5 d8e7 e5h8 d7d5 h8g8 c8e6 f1b5 b8d7 g8h8 e8c8 h8c3 d7c5 g1e2 a7a6 c3d4"                                             
+#>  [9] "h5e5 e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 g1f3 h7h6 d5b3 b8c6 c1e3 g6h7 b1d2 g8f6 h1f1"                                        
+#> [10] "e7f7 f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 g1f3 h7h6 b1c3 b8c6 c1e3 g8f6 d5d3 f6g4 e4e5 c8f5"                                        
+#> [11] "f1c4 d7d5 c4d5 d8d5 e5d5 f7g6 g1f3 h7h6 b1c3 b8c6 d5b3 g8f6 e4e5 f6g4 b3b5 f8b4"                                             
+#> [12] "d7d5 c4d5 d8d5 e5d5 f7g6 d5g5 g6f7 g5h5 g7g6 h5d5 f7g7 d5b3 g8f6 g1f3 f8e7 e1f1"                                             
 #> [13] "e5f5"
 ```
 
@@ -472,7 +469,7 @@ and convert the rest to numeric values.
 ``` r
 evals <- convert_scores(scores)
 evals
-#>  [1]   32   29   24  -12  150  166  619  626  806  805  829  825 5000
+#>  [1]   36   26   23  -15  163  149  471  500  700  697  676  676 5000
 ```
 
 The output from `evaluate_pgn()` will be a list of game logs from the
@@ -483,10 +480,10 @@ The output from `evaluate_pgn()` will be a list of game logs from the
 pgn_scores <- parse_pgnlog(pgnlog, 'score')
 lapply(pgn_scores, unlist)
 #> [[1]]
-#> [1] "32"     "-29"    "184"    "-183"   "mate 1"
+#> [1] "36"     "-26"    "178"    "-174"   "mate 1"
 #> 
 #> [[2]]
-#> [1] "32"     "-29"    "140"    "-44"    "mate 1"
+#> [1] "36"     "-26"    "146"    "-54"    "mate 1"
 pgn_bestmoves <- parse_pgnlog(pgnlog, 'bestmove')
 lapply(pgn_bestmoves, unlist)
 #> [[1]]
@@ -497,17 +494,17 @@ lapply(pgn_bestmoves, unlist)
 pgn_pvs <- parse_pgnlog(pgnlog, 'pv')
 lapply(pgn_pvs, unlist)
 #> [[1]]
-#> [1] "e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 f1d3 d7d5 e4e5 f6g4 e1g1 f8c5 d1e2 d8e7 c1f4 f7f6 e5f6 e7e2 d3e2 e8g8 f4c7 f8f6 c7g3 g4h6 e2d3"          
-#> [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 c2c4 e7f6 e5e1 d7d5 c4d5 d8d5 c1e3 c8f5 b1c3 d5d7 h2h3 a8d8 d4d5 b7b6"
-#> [3] "d2d4 e7e6 b1c3 d7d5 h2h4 g5h4 g1f3 f8e7 f1b5 c7c6 b5d3 g8f6 c1d2 f6e4 c3e4 d5e4 d3e4 d8b6 c2c4 b8d7 d2c3 b6c7 d1e2 h8g8 e1c1 d7f6 e4c2 c8d7"               
-#> [4] "d7d6 d2d4 h7h6 h2h4 g5h4 g1f3 g8f6 c1f4 c7c6 h1h4 c8e6 d1d2 d8a5 a2a3 f8g7 e1c1 f6g4 d2e1 g7f6 f4d2 a5b6 h4h1"                                             
-#> [5] "d1h5"                                                                                                                                                      
+#> [1] "e2e4"                                                                                                                        
+#> [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 e7f6 e5e1 f8e8 c1f4 e8e1 d1e1 d6e8 c2c3 c7c5"
+#> [3] "d2d4 h7h6 b1c3 d7d6 h2h4 g5h4 g1f3 c8g4 d1d3 h4h3 g2h3 g4f3 d3f3 e7e6 c1e3 b8d7 e1c1 d8f6 f3e2 a7a6 h3h4 e8c8 h4h5 d7b6"     
+#> [4] "d7d6 d2d4 h7h6 h2h4 g5h4 g1f3 g8f6 h1h4 f8g7 c1f4 f6g4 e4e5 h6h5 d1e2 d6e5 d4e5 c7c6 g2g3 c8f5 f1h3 b8a6 a2a3 e7e6 f4g5"     
+#> [5] "d1h5"                                                                                                                        
 #> 
 #> [[2]]
-#> [1] "e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 f1d3 d7d5 e4e5 f6g4 e1g1 f8c5 d1e2 d8e7 c1f4 f7f6 e5f6 e7e2 d3e2 e8g8 f4c7 f8f6 c7g3 g4h6 e2d3"          
-#> [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 d6e8 c2c4 e7f6 e5e1 d7d5 c4d5 d8d5 c1e3 c8f5 b1c3 d5d7 h2h3 a8d8 d4d5 b7b6"
-#> [3] "e4f5 g8f6 d2d4 d7d5 f1d3 c7c5 c2c3 e7e6 f5e6 f8d6 g1f3 e8g8 e1g1 c8e6 d4c5 d6c5 c1g5 b8c6 b1d2 c5b6 d1c2 d8d7 g5h4 g8h8 f1e1 e6g4 a2a4 g4h5 d3b5 d7g4"     
-#> [4] "f5e4"                                                                                                                                                      
+#> [1] "e2e4"                                                                                                                        
+#> [2] "e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 f1e1 e4d6 f3e5 f8e7 b5f1 c6e5 e1e5 e8g8 d2d4 e7f6 e5e1 f8e8 c1f4 e8e1 d1e1 d6e8 c2c3 c7c5"
+#> [3] "e4f5 g8f6 d2d4 d7d5 f1d3 c7c5 c2c3 e7e6 f5e6 f8d6 g1f3 e8g8 d3f5 f8e8 e1g1 c8e6 f5e6 e8e6 f1e1 e6e1 d1e1 b8c6 g1f1"          
+#> [4] "f5e4"                                                                                                                        
 #> [5] "d1h5"
 ```
 
@@ -535,7 +532,7 @@ white_imb
 black_imb <- get_imb(evals, moves[[1]], bestmoves, 'black')
 black_imb
 #> $inaccuracies
-#> integer(0)
+#> [1] 4
 #> 
 #> $mistakes
 #> integer(0)
@@ -581,10 +578,10 @@ using the `cap_action` parameter.
 ``` r
 white_acpl <- get_acpl(evals, 'white', cap = 1000, cap_action = 'replace')
 white_acpl
-#> [1] 7
+#> [1] 10
 black_acpl <- get_acpl(evals, 'black', cap = 1000, cap_action = 'replace')
 black_acpl
-#> [1] 165
+#> [1] 170
 ```
 
 ### Summarizing Game Data
@@ -601,7 +598,7 @@ present in the file.
 game_summary_plot(pgn_path, game_number = 1, use_pgn_evals = FALSE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-21-1.png" alt="" width="100%" />
 
 If this plot looks familiar, that’s because it was inspired by the game
 analysis functions available on lichess.org. On the left, we see a

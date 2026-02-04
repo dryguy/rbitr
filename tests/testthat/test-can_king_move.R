@@ -1,4 +1,4 @@
-test_that("king_can_move works", {
+test_that("can_king_move works", {
   # King is blocked by own pieces and edge of board
   board <- fen_to_board()
   expect_false(can_king_move(board))
